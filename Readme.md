@@ -13,3 +13,23 @@ rmarkdown::run("01-intro/01_tutorial.Rmd")
 
 ## Run on shinyapps.io
 
+## Check results
+
+Since `lreanr` passes the defined objects from the student directly as `R` environment it is possible to use any checking or testing mechanism we like. There are two packages that are very suitable for that task:
+
+-   `testthat`: http://testthat.r-lib.org/
+-   `testwhat`: https://datacamp.github.io/testwhat/index.html
+
+### testthat
+
+> Testing your code can be painful and tedious, but it greatly increases the quality of your code. testthat tries to make testing as fun as possible, so that you get a visceral satisfaction from writing tests.
+
+*Example*
+
+### testwhat
+
+> Verify R code submissions and auto-generate meaningful feedback messages. Originally developed for R exercises on DataCamp for so-called Submission Correctness Tests, but can also be used independently.
+
+Using `testwhat` might be very useful in terms of parsing the submitted and solution code and checking multiple things like objects, functions, function definitions, and so on.
+
+*Example*
