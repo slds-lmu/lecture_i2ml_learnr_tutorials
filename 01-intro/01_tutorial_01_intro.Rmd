@@ -1,0 +1,33 @@
+## Introduction
+
+**Study Goals**
+
+- Learn what the main components of a machine learning model are
+- Get familiar with the three components of an inducer
+
+**Preparation**
+
+Watch the following video:
+<center>
+![](https://www.youtube.com/watch?v=sSqGCY_L6CY){width="50%"}
+</center>
+
+```{r basic-terminology, echo=FALSE}
+# quiz(caption = "Basic Terminology",
+  question("What statements are true?",
+    answer("The model $f$ is a mapping from the feature space $\\mathcal{X}$ into the target space $\\mathcal{Y}$", correct = TRUE),
+    answer("The goal of a ML algorithm is to be as good as possible on the already seen data"),
+    answer("We want to predict the target variable as good as possible depending on the input variables", correct = TRUE),
+    answer("The desired model $f$ is the result of an arbitrary optimization procedure", correct = TRUE),
+    answer("Giving an inducer two different datasets, results in the same model $f$")
+  )
+#   question("Where are you right now? (select ALL that apply)",
+#     answer("Planet Earth", correct = TRUE),
+#     answer("Pluto"),
+#     answer("At a computing device", correct = TRUE),
+#     answer("In the Milky Way", correct = TRUE),
+#     incorrect = "Incorrect. You're on Earth, in the Milky Way, at a computer."
+#   )
+# )
+```
+

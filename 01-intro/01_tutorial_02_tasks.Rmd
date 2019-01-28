@@ -1,0 +1,44 @@
+## Tasks
+
+**Study Goals**
+
+- Be able do differentiate between regression and classification tasks
+- Get to know how to create tasks in `mlr`
+
+**Preparation**
+
+1.  Watch the following video:
+    <center>
+    ![](https://www.youtube.com/watch?v=sSqGCY_L6CY){width="50%"}
+    </center>
+
+1.  Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html)
+
+### Creating tasks with `mlr`
+
+For this exercise, take a look at the [`iris` dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set):
+
+```{r}
+summary(iris)
+```
+
+1.  Define a new classification task based on the iris dataset:
+
+```{r iristask, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
+iris_task =
+```
+
+```{r iristask-check}
+iris_task = makeClassifTask(data = iris, target = "Species")
+```
+
+2. Now, try to define a regression task on iris
+
+```{r falseiristask, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
+iris_task =
+```
+
+```{r falseiristask-check}
+iris_task = makeRegrTask(data = iris, target = "Species")
+```
+

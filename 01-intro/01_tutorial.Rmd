@@ -1,0 +1,36 @@
+---
+title: "Introduction to Machine Learning - Part 1"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(testthat)
+library(mlr)
+
+# .test_funs = new.env()
+# lapply(list.files("ex_results"), function (file) source(paste0("ex_results/", file), local = .test_funs))
+
+checker = function(label, user_code, check_code, envir_result, evaluate_result, ...) {
+
+  test_case = paste0(label, "_test")
+  test_results = try(get(test_case, envir = .test_funs)(envir_result), silent = TRUE)
+
+  if (inherits(test_results, "try-error")) {
+    return(list(message = attr(test_results, "condition")$message, correct = FALSE, location = "append"))
+  } else {
+    return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+  }
+}
+
+options(width = 100)
+tutorial_options(exercise.eval = FALSE, exercise.timelimit = 60L)
+```
+
+
+```{r, child="01_tutorial_01_intro.Rmd"}
+```
+
+```{r, child="01_tutorial_02_tasks.Rmd"}
+```
