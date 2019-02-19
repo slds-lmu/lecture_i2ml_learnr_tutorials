@@ -9,7 +9,7 @@
 
 1.  Watch the following video:
     <center>
-    ![](https://www.youtube.com/watch?v=sSqGCY_L6CY){width="50%"}
+    ![](https://www.youtube.com/watch?v=pFWVIGPpupk){width="50%"}
     </center>
 
 1.  Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html)
