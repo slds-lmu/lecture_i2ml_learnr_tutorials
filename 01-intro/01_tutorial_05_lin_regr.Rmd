@@ -1,5 +1,10 @@
 ## Linear Regression
 
+```{r, include=FALSE}
+BostonHousing = data(BostonHousing, package = "mlbench")
+regr.task = makeRegrTask(id = "bh", data = BostonHousing, target = "medv")
+```
+
 **Study Goals**
 - Learn how linear regression model works
 - Get to know how to fit a linear regression model in `mlr`
@@ -10,3 +15,42 @@ Watch the following video  (sorry, rather low volume...):
 <center>
 ![](https://www.youtube.com/watch?v=v9eocCAfJ_w&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=6&t=0s){width="75%"}
 </center>
+
+2.  Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them.
+
+
+### Create the `mlr` learner
+
+Create a linear regression learner with `predict.type = 'se'` :
+
+```{r lm-definition, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
+lm_learner =
+```
+
+```{r lm-definition-check}
+lm_learner = makeLearner("regr.lm", predict.type = 'se')
+```
+
+
+
+### Train the `mlr` learner
+
+Now train the learner on the task defined in session 2:
+
+```{r lm-training, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
+lm_model =
+```
+
+```{r, include=FALSE}
+lm_learner = makeLearner("classif.kknn", k = 3)lm_learner = makeLearner("regr.lm", predict.type = 'se')
+```
+
+```{r lm-training-check}
+n = getTaskSize(bh.task)
+# Use 1/4 of the observations for training
+train.set = sample(n, size = n/4)
+mod.lm = train(lm_learner, regr.task, subset = train.set)
+
+```
+
+mod.lm$learner.model
