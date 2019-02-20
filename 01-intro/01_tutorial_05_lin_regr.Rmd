@@ -1,7 +1,8 @@
 ## Linear Regression
 
 **Study Goals**
-
+- Learn how linear regression model works
+- Get to know how to fit a linear regression model in `mlr`
 
 **Preparation**
 
