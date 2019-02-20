@@ -1,6 +1,9 @@
 ---
-title: "Introduction to Machine Learning - Part 1"
-output: learnr::tutorial
+title: "Introduction to Machine Learning - Day 1"
+output: 
+  learnr::tutorial:
+    theme: cosmo
+    css: ../custom.css
 runtime: shiny_prerendered
 ---
 
@@ -34,3 +37,13 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 60L)
 
 ```{r, child="01_tutorial_02_tasks.Rmd"}
 ```
+
+```{r, child="01_tutorial_03_knn.Rmd"}
+```
+
+```{r, child="01_tutorial_04_loss.Rmd"}
+```
+
+```{r, child="01_tutorial_05_lin_regr.Rmd"}
+```
+

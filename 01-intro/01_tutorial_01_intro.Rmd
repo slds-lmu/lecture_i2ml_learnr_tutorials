@@ -9,10 +9,10 @@
 
 Watch the following video:
 <center>
-![](https://youtu.be/xZRyi2xuCd0){width="50%"}
+![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
 </center>
 
-```{r basic-terminology, echo=FALSE}
+```{r basics-quiz, echo=FALSE}
 # quiz(caption = "Basic Terminology",
   question("What statements are true?",
     answer("The model $f$ is a mapping from the feature space $\\mathcal{X}$ into the target space $\\mathcal{Y}$", correct = TRUE),

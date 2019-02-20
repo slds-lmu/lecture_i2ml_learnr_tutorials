@@ -9,10 +9,29 @@
 
 1.  Watch the following video:
     <center>
-    ![](https://www.youtube.com/watch?v=pFWVIGPpupk){width="50%"}
+    ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
     </center>
 
 1.  Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html)
+
+```{r tasks-quiz, echo=FALSE}
+# quiz(caption = "Tasks",
+  question("What statements are true?",
+    answer("Every unsupervised task is internally treated as supervised task"),
+    answer("Unsupervised learning is learning without a target variable", correct = TRUE),
+    answer("Classification is a supervised leaning task", correct = TRUE),
+    answer("Regression is a supervised learning task", correct = TRUE),
+    answer("Clustering is a supervised learning task")
+  )
+#   question("Where are you right now? (select ALL that apply)",
+#     answer("Planet Earth", correct = TRUE),
+#     answer("Pluto"),
+#     answer("At a computing device", correct = TRUE),
+#     answer("In the Milky Way", correct = TRUE),
+#     incorrect = "Incorrect. You're on Earth, in the Milky Way, at a computer."
+#   )
+# )
+```
 
 ### Creating tasks with `mlr`
 
@@ -22,23 +41,13 @@ For this exercise, take a look at the [`iris` dataset](https://en.wikipedia.org/
 summary(iris)
 ```
 
-1.  Define a new classification task based on the iris dataset:
+1.  Define a new classification task based on the iris dataset with target variable `Species` and just two features `Sepal.Width` and `Petal.Width`:
 
 ```{r iristask, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
 iris_task =
 ```
 
 ```{r iristask-check}
-iris_task = makeClassifTask(data = iris, target = "Species")
-```
-
-2. Now, try to define a regression task on iris
-
-```{r falseiristask, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
-iris_task =
-```
-
-```{r falseiristask-check}
-iris_task = makeRegrTask(data = iris, target = "Species")
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
 ```
 

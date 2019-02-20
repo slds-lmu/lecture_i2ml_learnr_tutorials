@@ -1,0 +1,21 @@
+## Loss Functions
+
+**Study Goals**
+
+
+**Preparation**
+
+Watch the following video:
+<center>
+![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
+</center>
+
+```{r loss-quiz, echo=FALSE}
+question("What statements are true?",
+  answer("Every model can have an arbitrary loss function"),
+  answer("The empirical risk $\\mathcal{R}_\\text{emp}$ is induced by the loss", correct = TRUE),
+  answer("The loss/empirical risk corresponds to the evaluation part of the learner (inducer)", correct = TRUE),
+  answer("The absolute loss is more sensitive in terms of outliers"),
+  answer("The optimization of a learner highly depends on the properties of the loss function", correct = TRUE)
+)
+```

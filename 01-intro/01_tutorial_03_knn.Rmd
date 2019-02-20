@@ -1,0 +1,67 @@
+## K-Nearest-Neighbors
+
+```{r, include=FALSE}
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+```
+
+**Study Goals**
+
+- Learn how k-nearest-neighbors (k-NN) works
+- Learn how to train a K-NN model using `mlr`
+
+**Preparation**
+
+1.  Watch the following video:
+    <center>
+    ![](https://www.youtube.com/watch?v=hXQq-lryqtE&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=4&t=0s){width="75%"}
+    </center>
+
+2.  Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them
+
+```{r knn-quiz, echo=FALSE}
+question("What statements are true?",
+  answer("The properties of k-NN are induced by the used distance metric", correct = TRUE),
+  answer("k-NN is just suitable for classification"),
+  answer("1-NN does always predict perfectly on observations of the used dataset", correct = TRUE),
+  answer("k-NN with $k = n$ always predicts a constant", correct = TRUE),
+  answer("The stored model of k-NN is just the train dataset", correct = TRUE)
+)
+```
+
+### Create the `mlr` learner
+
+Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
+```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
+kknn_learner =
+```
+
+```{r kknn-definition-check}
+kknn_learner = makeLearner("classif.kknn", k = 3)
+```
+
+
+### Train the `mlr` learner
+
+Now train the learner on the task defined in session 2:
+
+```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=checker}
+kknn_model =
+```
+
+```{r, include=FALSE}
+kknn_learner = makeLearner("classif.kknn", k = 3)
+```
+
+```{r kknn-training-check}
+kknn_model = train(kknn_learner, iris_task)
+```
+
+
+### Visualize decision boundaries
+
+Again, define the `kknn_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `k`. What can you observe by varying the hyperparameter?
+
+```{r kknn-visualization, exercise=TRUE}
+kknn_learner =
+plotLearnerPrediction(kknn_learner, task = iris_task)
+```
