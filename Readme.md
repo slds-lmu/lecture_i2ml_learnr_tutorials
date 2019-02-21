@@ -11,6 +11,8 @@ To run a tutorial locally the only thing you have to do is to run `rmarkdown::ru
 rmarkdown::run("01-intro/01_tutorial.Rmd")
 ```
 
+**NOTE:** It seems that the app is not correctly loaded when calling `run` from the terminal. Opening the `tutorial.Rmd` in RStudio and clicking the `Run document` will properly build the app.
+
 ## Run on shinyapps.io
 
 ## Check results
@@ -24,12 +26,8 @@ Since `lreanr` passes the defined objects from the student directly as `R` envir
 
 > Testing your code can be painful and tedious, but it greatly increases the quality of your code. testthat tries to make testing as fun as possible, so that you get a visceral satisfaction from writing tests.
 
-*Example*
-
 ### testwhat
 
 > Verify R code submissions and auto-generate meaningful feedback messages. Originally developed for R exercises on DataCamp for so-called Submission Correctness Tests, but can also be used independently.
 
 Using `testwhat` might be very useful in terms of parsing the submitted and solution code and checking multiple things like objects, functions, function definitions, and so on.
-
-*Example*

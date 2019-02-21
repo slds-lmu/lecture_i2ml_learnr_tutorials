@@ -1,34 +1,31 @@
 ---
 title: "Introduction to Machine Learning - Day 1"
-output: 
+output:
   learnr::tutorial:
     theme: cosmo
-    css: ../custom.css
+    css: css/custom.css
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+library(magrittr)
 library(learnr)
-library(testthat)
+# library(testthat)
+# devtools::install_github("datacamp/testwhat")
+library(testwhat)
 library(mlr)
+library(kknn)
 
-# .test_funs = new.env()
-# lapply(list.files("ex_results"), function (file) source(paste0("ex_results/", file), local = .test_funs))
-
-checker = function(label, user_code, check_code, envir_result, evaluate_result, ...) {
-
-  test_case = paste0(label, "_test")
-  test_results = try(get(test_case, envir = .test_funs)(envir_result), silent = TRUE)
-
-  if (inherits(test_results, "try-error")) {
-    return(list(message = attr(test_results, "condition")$message, correct = FALSE, location = "append"))
-  } else {
-    return(list(message = "Great job! :)", correct = TRUE, location = "append"))
-  }
+errorToMessage = function (expr)
+{
+  e = try(expr = expr, silent = TRUE)
+  if (inherits(e, "try-error"))
+    return(list(message = attr(e, "condition")$message, correct = FALSE, location = "append"))
+  return(NULL)
 }
 
 options(width = 100)
-tutorial_options(exercise.eval = FALSE, exercise.timelimit = 60L)
+tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```
 
 

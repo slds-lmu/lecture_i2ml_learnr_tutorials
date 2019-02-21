@@ -10,6 +10,8 @@ Watch the following video:
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
 </center>
 
+**Exercises**
+
 ```{r loss-quiz, echo=FALSE}
 question("What statements are true?",
   answer("Every model can have an arbitrary loss function"),

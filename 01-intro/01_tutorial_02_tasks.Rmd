@@ -1,5 +1,22 @@
 ## Tasks
 
+```{r, include=FALSE}
+taskChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  print(user_code)
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    # checkRhs(user_code)
+    ex() %>% check_object("iris_task") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+```
+
 **Study Goals**
 
 - Be able do differentiate between regression and classification tasks
@@ -13,6 +30,8 @@
     </center>
 
 1.  Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html)
+
+**Exercises**
 
 ```{r tasks-quiz, echo=FALSE}
 # quiz(caption = "Tasks",
@@ -43,11 +62,30 @@ summary(iris)
 
 1.  Define a new classification task based on the iris dataset with target variable `Species` and just two features `Sepal.Width` and `Petal.Width`:
 
-```{r iristask, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
+```{r iristask, exercise=TRUE, exercise.lines=5, exercise.checker=taskChecker}
 iris_task =
 ```
 
+```{r iristask-hint-1}
+# Use the 'makeClassifTask' function of mlr
+makeClassifTask(...)
+```
+
+```{r iristask-hint-2}
+# Select just the three columns Sepal.Width, Petal.Width, and Species
+iris[, c("Species", "Sepal.Width", "Petal.Width")]
+```
+
+```{r iristask-hint-3}
+# The target variable has to be specified as character of length 1
+"Species"
+```
+
+```{r iristask-solution}
+makeClassifTask(data = iris[, c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+```
+
 ```{r iristask-check}
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+iris_task = makeClassifTask(data = iris[, c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
 ```
 

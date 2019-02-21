@@ -1,11 +1,168 @@
 ## Linear Regression
 
+```{r, include=FALSE}
+mtcarsTaskChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("task_data") %>% check_equal()
+    ex() %>% check_object("mtcars_task") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+
+lmLearnerChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("lm_learner") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+
+lmModelChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("lm_model") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+
+polynomialTrafo = function (data, feature, degree) {
+  feature_idx = which(feature == names(data))
+  df_poly = as.data.frame(poly(x = data[[feature]], degree = degree))
+  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
+}
+```
+
 **Study Goals**
 
 
 **Preparation**
 
-Watch the following video:
-<center>
-![](https://www.youtube.com/watch?v=v9eocCAfJ_w&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=6&t=0s){width="75%"}
-</center>
+1.  Watch the following video:
+    <center>
+    ![](https://www.youtube.com/watch?v=v9eocCAfJ_w&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=6&t=0s){width="75%"}
+    </center>
+
+1.  Make sure you have understand how to define tasks and learner as well as how to train a learner.
+
+**Exercises**
+
+```{r lm-quiz, echo=FALSE}
+question("What statements are true?",
+  answer("The target in linear regression has to be numeric", correct = TRUE),
+  answer("The features in the linear model can also just be numerical"),
+  answer("The linear model is linear regression with L2-loss", correct = TRUE),
+  answer("It's just possible to model linear effects of a feature"),
+  answer("Overfitting is a present danger in polynomial regression", correct = TRUE)
+)
+```
+
+### Create a regression task
+
+Create a regression task using the `mtcars` dataset with target variable `mpg` and polynomial feature `hp` of degree 3 (use the helper function below to generate a dataset for polynomial regression):
+
+```{r mtcars-task, exercise=TRUE, exercise.lines=5, exercise.checker=mtcarsTaskChecker}
+task_data =
+mtcars_task =
+```
+
+```{r mtcars-task-hint-1}
+# Use 'polynomialTrafo' to get the desired data.frame
+task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+```
+
+```{r mtcars-task-hint-2}
+# Use the 'task_data' in 'makeRegrTask'
+makeRegrTask(data = task_data, ...)
+```
+
+```{r mtcars-task-solution}
+task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+makeRegrTask(data = task_data, target = "mpg")
+```
+
+```{r mtcars-task-check}
+task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+mtcars_task = makeRegrTask(data = task_data, target = "mpg")
+```
+
+```{r poly-trafo, exercise=TRUE}
+# helper function to extract polynomial features:
+polynomialTrafo = function (data, feature, degree) {
+  feature_idx = which(feature == names(data))
+  df_poly = as.data.frame(poly(x = data[[feature]], degree = degree))
+  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
+}
+```
+
+### Define the linear model
+
+Now, as for k-NN, define a learner. This use a regression learner of the `lm` function.
+
+```{r lm-learner, exercise=TRUE, exercise.lines=5, exercise.checker=lmLearnerChecker}
+lm_learner =
+```
+
+```{r lm-learner-hint-1}
+# To see all available learners you can simply call
+listLearners()
+```
+
+```{r lm-learner-hint-2}
+# You can pass the task to get suitable learner
+listLearners(mtcars_task)
+```
+
+```{r lm-learner-check}
+lm_learner = makeLearner("regr.lm")
+```
+
+### Train the linear model
+
+```{r lm-train, exercise=TRUE, exericse.lines=5, exercise.checker=lmModelChecker}
+lm_model =
+```
+
+```{r lm-train-check}
+lm_model = train(lm_learner, mtcars_task)
+```
+
+### Visualize the polynomial regression
+
+To draw the lines you can use the code above, try different number of degrees. How does the curve change? What can you observe?
+
+```{r lm-poly-viz, exercise=TRUE}
+library(ggplot2)
+
+# Change degree here
+degree = 3
+
+# You can leave this code as it is:
+task_data = polynomialTrafo(mtcars[, c("mpg", "hp")], "hp", degree)
+mtcars_task = makeRegrTask(data = task_data, target = "mpg")
+lm_learner = makeLearner("regr.lm")
+lm_model = train(lm_learner, mtcars_task)
+
+hp_pred = seq(min(mtcars$hp), max(mtcars$hp), length.out = 100)
+pred_data = polynomialTrafo(data.frame(hp = hp_pred), "hp", degree)
+
+plot_data = data.frame(mpg_pred = predict(lm_model, newdata = pred_data)$data$response, hp = hp_pred)
+ggplot() + geom_point(data = mtcars, aes(x = hp, y = mpg)) + geom_line(data = plot_data, aes(x = hp, y = mpg_pred))
+```

@@ -12,6 +12,8 @@ Watch the following video:
 ![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
 </center>
 
+**Exercises**
+
 ```{r basics-quiz, echo=FALSE}
 # quiz(caption = "Basic Terminology",
   question("What statements are true?",

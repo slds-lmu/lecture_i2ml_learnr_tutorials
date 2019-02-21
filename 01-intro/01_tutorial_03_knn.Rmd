@@ -2,6 +2,32 @@
 
 ```{r, include=FALSE}
 iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+
+knnDefinitionChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("kknn_learner") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+
+knnModelChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("kknn_model") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
 ```
 
 **Study Goals**
@@ -18,6 +44,8 @@ iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Widt
 
 2.  Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them
 
+**Exercises**
+
 ```{r knn-quiz, echo=FALSE}
 question("What statements are true?",
   answer("The properties of k-NN are induced by the used distance metric", correct = TRUE),
@@ -31,8 +59,26 @@ question("What statements are true?",
 ### Create the `mlr` learner
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
-```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
+```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=knnDefinitionChecker}
 kknn_learner =
+```
+
+```{r kknn-definition-hint-1, eval=FALSE}
+# Use the 'makeLearner' function of mlr
+makeLearner(...)
+```
+
+```{r kknn-definition-hint-2}
+# Use the 'classif.kknn' learner
+"classif.kknn"
+```
+
+```{r kknn-definition-hint-3}
+# You can specify how many neighbors by setting 'k'
+```
+
+```{r kknn-definition-solution}
+makeLearner("classif.kknn", k = 3)
 ```
 
 ```{r kknn-definition-check}
@@ -44,8 +90,21 @@ kknn_learner = makeLearner("classif.kknn", k = 3)
 
 Now train the learner on the task defined in session 2:
 
-```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=checker}
+```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=knnModelChecker}
 kknn_model =
+```
+
+```{r kknn-training-hint-1}
+# Use the train function of mlr
+train(...)
+```
+
+```{r kknn-training-hint-2}
+# Just pass the 'kknn_learner' and the 'iris_task' to train
+```
+
+```{r kknn-training-solution}
+train(kknn_learner, iris_task)
 ```
 
 ```{r, include=FALSE}
