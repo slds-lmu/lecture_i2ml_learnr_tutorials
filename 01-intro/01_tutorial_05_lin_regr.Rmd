@@ -1,11 +1,21 @@
 ## Linear Regression
 
+```{r, include=FALSE}
+data(BostonHousing, package = "mlbench")
+regr.task = makeRegrTask(id = "bh", data = BostonHousing, target = "medv")
+```
+
 **Study Goals**
 
+- Learn how linear regression model works
+- Get to know how to fit a linear regression model in `mlr`
 
 **Preparation**
 
-Watch the following video  (sorry, rather low volume...):
+1. Watch the following video  (sorry, rather low volume...):
 <center>
 ![](https://www.youtube.com/watch?v=v9eocCAfJ_w&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=6&t=0s){width="75%"}
 </center>
+
+2. Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them.
+
