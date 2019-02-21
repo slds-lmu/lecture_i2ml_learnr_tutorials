@@ -24,32 +24,32 @@ taskChecker = function (label, user_code, check_code, envir_result, evaluate_res
 
 **Preparation**
 
-1.  Watch the following video:
+1.  Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
     </center>
 
-1.  Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html)
+1.  Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html).
 
 **Exercises**
 
 ```{r tasks-quiz, echo=FALSE}
 # quiz(caption = "Tasks",
-  question("What statements are true?",
-    answer("Every unsupervised task is internally treated as supervised task"),
-    answer("Unsupervised learning is learning without a target variable", correct = TRUE),
-    answer("Classification is a supervised leaning task", correct = TRUE),
-    answer("Regression is a supervised learning task", correct = TRUE),
-    answer("Clustering is a supervised learning task")
+  question("Which statements are true?",
+    answer("Supervised learning tasks are prediction problems.",
+           correct = TRUE),
+    answer("Unsupervised learning tries to discover structure and patterns in 
+           the training data.",
+           correct = TRUE),
+    answer("Every unsupervised task is internally treated as supervised task."),
+    answer("Unsupervised learning is learning without a target variable.", 
+           correct = TRUE),
+    answer("Classification is a supervised leaning task.", 
+           correct = TRUE),
+    answer("Regression is a supervised learning task.", 
+           correct = TRUE),
+    answer("Clustering is a supervised learning task.")
   )
-#   question("Where are you right now? (select ALL that apply)",
-#     answer("Planet Earth", correct = TRUE),
-#     answer("Pluto"),
-#     answer("At a computing device", correct = TRUE),
-#     answer("In the Milky Way", correct = TRUE),
-#     incorrect = "Incorrect. You're on Earth, in the Milky Way, at a computer."
-#   )
-# )
 ```
 
 ### Creating tasks with `mlr`

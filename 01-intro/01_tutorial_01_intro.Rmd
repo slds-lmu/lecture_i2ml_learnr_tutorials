@@ -7,7 +7,7 @@
 
 **Preparation**
 
-Watch the following video:
+Watch the following video (sorry, rather low volume...):
 <center>
 ![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
 </center>
@@ -16,20 +16,13 @@ Watch the following video:
 
 ```{r basics-quiz, echo=FALSE}
 # quiz(caption = "Basic Terminology",
-  question("What statements are true?",
-    answer("The model $f$ is a mapping from the feature space $\\mathcal{X}$ into the target space $\\mathcal{Y}$", correct = TRUE),
-    answer("The goal of an ML algorithm is to be as accurate as possible on the already seen data"),
-    answer("We want to predict the target variable as accurately as possible depending on the input variables", correct = TRUE),
-    answer("The desired model $f$ is the result of an arbitrary optimization procedure", correct = TRUE),
-    answer("Giving an inducer two different datasets will result in the same model $f$")
+  question("Which statements are true?",
+    answer("A model $f$  is a mapping from the feature space $\\mathcal{X}$ to the target space $\\mathcal{Y}$.", correct = TRUE),
+    answer("The goal of an ML algorithm is to yield a model that reproduces the already seen data as accurately as possible."),
+    answer("ML algorithms try to predict the target variable as accurately as possible based on the values of the features.", correct = TRUE),
+    answer("For a given hypothesis class $H$, different optimization procedures can be used to find the best model $f \\in H$.", correct = TRUE),
+    answer("Providing two different training data sets to a learner will result in the same optimal model $f$."),
+    answer("The *representation* of a learner defines its hypothesis class $H$.", correct = TRUE)
   )
-#   question("Where are you right now? (select ALL that apply)",
-#     answer("Planet Earth", correct = TRUE),
-#     answer("Pluto"),
-#     answer("At a computing device", correct = TRUE),
-#     answer("In the Milky Way", correct = TRUE),
-#     incorrect = "Incorrect. You're on Earth, in the Milky Way, at a computer."
-#   )
-# )
 ```
 
