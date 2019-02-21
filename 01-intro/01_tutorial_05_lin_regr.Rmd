@@ -19,34 +19,3 @@ regr.task = makeRegrTask(id = "bh", data = BostonHousing, target = "medv")
 
 2. Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them.
 
-### Create the `mlr` learner
-
-Create a linear regression learner with `predict.type = 'se'` :
-  
-```{r lm-definition, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
-lm_learner =
-```
-
-```{r lm-definition-check}
-lm_learner = makeLearner("regr.lm", predict.type = 'se')
-```
-
-### Train the `mlr` learner
-
-Now train the learner on the task defined in session 2:
-  
-```{r lm-training, exercise=TRUE, exercise.lines=5, exercise.checker=checker}
-mod.lm =
-```
-
-```{r, include=FALSE}
-lm_learner = makeLearner("regr.lm", predict.type = 'se')
-```
-
-```{r lm-training-check}
-n = getTaskSize(regr.task)
-# Use 1/4 of the observations for training
-train.set = sample(n, size = n/4)
-mod.lm = train(lm_learner, regr.task, subset = train.set)
-
-```
