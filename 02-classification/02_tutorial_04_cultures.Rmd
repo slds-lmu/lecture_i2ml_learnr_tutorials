@@ -2,7 +2,7 @@
 
 **Study Goals**
 - Learn the ideas of the data modeling culture and the algorithmic modeling culture
-- Know the difference of two cultures
+- Know the differences of two cultures
 
 **Preparation**
 

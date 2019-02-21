@@ -3,7 +3,7 @@
 **Study Goals**
 
 - Know how logistic regression works
-- Understand the idea of two approaches, which can make logistic regressions
+- Understand the ideas of two approaches, which can make logistic regressions
 - Know the extension of logistic regression
 
 **Preparation**
