@@ -13,6 +13,7 @@ library(learnr)
 # library(testthat)
 # devtools::install_github("datacamp/testwhat")
 library(testwhat)
+library(checkmate)
 library(mlr)
 library(kknn)
 
@@ -22,6 +23,29 @@ errorToMessage = function (expr)
   if (inherits(e, "try-error"))
     return(list(message = attr(e, "condition")$message, correct = FALSE, location = "append"))
   return(NULL)
+}
+
+createChecker = function (object_names)
+{
+  assert_character(object_names)
+  fun = paste('
+  fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+  {
+    setup_state(sol_code = check_code, stu_code = user_code)
+
+    msg = errorToMessage(expr = {
+    ',
+    paste(paste0("ex() %>% check_object(\"", object_names, "\") %>% check_equal()"), collapse = "\n      "),
+    '
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+  }
+  ', collapse = "\n")
+  eval(parse(text = fun))
+  return(fun)
 }
 
 options(width = 100)

@@ -2,32 +2,6 @@
 
 ```{r, include=FALSE}
 iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-
-knnDefinitionChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
-{
-  setup_state(sol_code = check_code, stu_code = user_code)
-
-  msg = errorToMessage(expr = {
-    ex() %>% check_object("kknn_learner") %>% check_equal()
-  })
-  if (! is.null(msg))
-    return(msg)
-
-  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
-}
-
-knnModelChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
-{
-  setup_state(sol_code = check_code, stu_code = user_code)
-
-  msg = errorToMessage(expr = {
-    ex() %>% check_object("kknn_model") %>% check_equal()
-  })
-  if (! is.null(msg))
-    return(msg)
-
-  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
-}
 ```
 
 **Study Goals**
@@ -88,7 +62,7 @@ question("Which statements are true?",
 ### Create the `mlr` learner
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
-```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=knnDefinitionChecker}
+```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("kknn_learner")}
 kknn_learner =
 ```
 
@@ -119,7 +93,7 @@ kknn_learner = makeLearner("classif.kknn", k = 3)
 
 Now train the learner on the task defined in session 2:
 
-```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=knnModelChecker}
+```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=createChecker("kknn_model")}
 kknn_model =
 ```
 

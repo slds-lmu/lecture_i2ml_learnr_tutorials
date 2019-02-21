@@ -1,47 +1,6 @@
 ## Linear Regression
 
 ```{r, include=FALSE}
-
-mtcarsTaskChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
-{
-  setup_state(sol_code = check_code, stu_code = user_code)
-
-  msg = errorToMessage(expr = {
-    ex() %>% check_object("task_data") %>% check_equal()
-    ex() %>% check_object("mtcars_task") %>% check_equal()
-  })
-  if (! is.null(msg))
-    return(msg)
-
-  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
-}
-
-lmLearnerChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
-{
-  setup_state(sol_code = check_code, stu_code = user_code)
-
-  msg = errorToMessage(expr = {
-    ex() %>% check_object("lm_learner") %>% check_equal()
-  })
-  if (! is.null(msg))
-    return(msg)
-
-  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
-}
-
-lmModelChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
-{
-  setup_state(sol_code = check_code, stu_code = user_code)
-
-  msg = errorToMessage(expr = {
-    ex() %>% check_object("lm_model") %>% check_equal()
-  })
-  if (! is.null(msg))
-    return(msg)
-
-  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
-}
-
 polynomialTrafo = function (data, feature, degree) {
   feature_idx = which(feature == names(data))
   df_poly = as.data.frame(poly(x = data[[feature]], degree = degree))
@@ -80,7 +39,7 @@ question("What statements are true?",
 
 Create a regression task using the `mtcars` dataset with target variable `mpg` and polynomial feature `hp` of degree 3 (use the helper function below to generate a dataset for polynomial regression):
 
-```{r mtcars-task, exercise=TRUE, exercise.lines=5, exercise.checker=mtcarsTaskChecker}
+```{r mtcars-task, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker(c("task_data", "mtcars_task"))}
 task_data =
 mtcars_task =
 ```
@@ -119,7 +78,7 @@ polynomialTrafo = function (data, feature, degree) {
 
 Now, as for k-NN, define a learner. This use a regression learner of the `lm` function.
 
-```{r lm-learner, exercise=TRUE, exercise.lines=5, exercise.checker=lmLearnerChecker}
+```{r lm-learner, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("lm_learner")}
 lm_learner =
 ```
 
@@ -139,7 +98,7 @@ lm_learner = makeLearner("regr.lm")
 
 ### Train the linear model
 
-```{r lm-train, exercise=TRUE, exericse.lines=5, exercise.checker=lmModelChecker}
+```{r lm-train, exercise=TRUE, exericse.lines=5, exercise.checker=createChecker("lm_model")}
 lm_model =
 ```
 
