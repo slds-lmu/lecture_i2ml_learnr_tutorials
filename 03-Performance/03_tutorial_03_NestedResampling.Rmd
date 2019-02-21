@@ -1,0 +1,13 @@
+## Nested Resampling
+
+**Study Goals**
+
+- Know the background of the nested resampling
+- Learn how the nested resampling works
+
+**Preparation**
+
+1.  Watch the following video  (sorry, rather low volume...):
+    <center>
+    ![](https://www.youtube.com/watch?v=hXQq-lryqtE&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=4&t=0s){width="75%"}
+    </center>

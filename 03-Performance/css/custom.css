@@ -1,0 +1,12 @@
+body {
+  margin-top: 20px;
+}
+
+/*.topicsList {
+  padding: 1%;
+}*/
+
+.topics {
+  border-left: 2px solid #f8f8f8;
+  padding-left: 20px;
+}

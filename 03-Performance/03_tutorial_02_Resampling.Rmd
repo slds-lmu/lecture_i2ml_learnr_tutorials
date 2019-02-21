@@ -1,0 +1,14 @@
+## Resampling
+
+**Study Goals**
+
+- Know the goal of resampling
+- Get familiar with 4 methods of resampling
+
+**Preparation**
+
+1.  Watch the following video  (sorry, rather low volume...):
+    <center>
+    ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
+    </center>
+
