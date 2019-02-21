@@ -1,13 +1,9 @@
-## K-Nearest-Neighbors
-
-```{r, include=FALSE}
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-```
+## Approaches to Classification
 
 **Study Goals**
 
-- Learn how k-nearest-neighbors (k-NN) works
-- Learn how to train a k-NN model using `mlr`
+- Learn how generative model works
+- Get familiar with three generative approaches
 
 **Preparation**
 

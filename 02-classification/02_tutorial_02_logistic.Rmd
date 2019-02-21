@@ -1,9 +1,9 @@
-## Tasks
+## Logistic Regression
 
 **Study Goals**
 
-- Know how logistic regressions works
-- Understand the idea of two approach, which can make logistic regressions.
+- Know how logistic regression works
+- Understand the idea of two approaches, which can make logistic regressions
 - Know the extension of logistic regression
 
 **Preparation**

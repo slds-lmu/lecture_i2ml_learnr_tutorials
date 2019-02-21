@@ -1,8 +1,8 @@
-## Loss Functions
+## The Two Cultures of Statistical
 
 **Study Goals**
-- Learn why and how the goodness of the predictions is measured
-- Learn how to get the loss of a model by using `mlr`
+- Learn the ideas of the data modeling culture and the algorithmic modeling culture
+- Know the difference of two cultures
 
 **Preparation**
 
