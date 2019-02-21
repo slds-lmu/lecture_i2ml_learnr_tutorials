@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Machine Learning - Day 1"
+title: "Introduction to Machine Learning - Day 2"
 output:
   learnr::tutorial:
     theme: cosmo
@@ -11,11 +11,11 @@ runtime: shiny_prerendered
 library(magrittr)
 library(learnr)
 # library(testthat)
-# devtools::install_github("datacamp/testwhat")
+devtools::install_github("datacamp/testwhat")
 library(testwhat)
 library(checkmate)
 library(mlr)
-library(kknn)
+
 
 errorToMessage = function (expr)
 {
