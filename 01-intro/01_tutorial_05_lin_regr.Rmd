@@ -9,21 +9,28 @@ polynomialTrafo = function (data, feature, degree) {
 }
 ```
 
-**Study Goals**
+### Study Goals
+
+*Theoretical (T)*
 
 - Learn how linear regression model works
+
+*Practical (P)*
+
 - Get to know how to fit a linear regression model in `mlr`
 
-**Preparation**
+### Preparation
 
-1.  Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=v9eocCAfJ_w&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=6&t=0s){width="75%"}
     </center>
 
-1.  Make sure you have understand how to define tasks and learner as well as how to train a learner.
+1.  *(P)* Make sure you have understand how to define tasks and learner as well as how to train a learner.
 
-**Exercises**
+### Exercises
+
+#### *(T)* Quiz
 
 ```{r lm-quiz, echo=FALSE}
 question("What statements are true?",
@@ -35,7 +42,7 @@ question("What statements are true?",
 )
 ```
 
-### Create a regression task
+#### *(P)* Create a regression task
 
 Create a regression task using the `mtcars` dataset with target variable `mpg` and polynomial feature `hp` of degree 3 (use the helper function below to generate a dataset for polynomial regression):
 
@@ -74,7 +81,7 @@ polynomialTrafo = function (data, feature, degree) {
 }
 ```
 
-### Define the linear model
+#### *(P)* Define the linear model
 
 Now, as for k-NN, define a learner. This use a regression learner of the `lm` function.
 
@@ -96,7 +103,7 @@ listLearners(mtcars_task)
 lm_learner = makeLearner("regr.lm")
 ```
 
-### Train the linear model
+#### *(P)* Train the linear model
 
 ```{r lm-train, exercise=TRUE, exericse.lines=5, exercise.checker=createChecker("lm_model")}
 lm_model =
@@ -106,7 +113,7 @@ lm_model =
 lm_model = train(lm_learner, mtcars_task)
 ```
 
-### Visualize the polynomial regression
+#### *(P)* Visualize the polynomial regression
 
 To draw the lines you can use the code above, try different number of degrees. How does the curve change? What can you observe?
 

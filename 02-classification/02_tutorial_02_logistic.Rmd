@@ -1,27 +1,20 @@
 ## Tasks
 
-### Study Goals
-
-*Theoretical (T)*
+**Study Goals**
 
 - Be able do differentiate between regression and classification tasks
-
-*Practical (P)*
-
 - Get to know how to create tasks in `mlr`
 
-### Preparation
+**Preparation**
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
     </center>
 
-1.  *(P)* Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html).
+1.  Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html).
 
-### Exercises
-
-#### *(T)* Quiz
+**Exercises**
 
 ```{r tasks-quiz, echo=FALSE}
 # quiz(caption = "Tasks",
@@ -42,7 +35,7 @@
   )
 ```
 
-#### *(P)* Creating tasks with `mlr`
+### Creating tasks with `mlr`
 
 For this exercise, take a look at the [`iris` dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set):
 

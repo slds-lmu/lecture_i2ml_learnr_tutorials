@@ -4,17 +4,12 @@
 iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
 ```
 
-### Study Goals
-
-*Theoretical (T)*
+**Study Goals**
 
 - Learn how k-nearest-neighbors (k-NN) works
-
-*Practical (P)*
-
 - Learn how to train a k-NN model using `mlr`
 
-### Preparation
+**Preparation**
 
 1.  Watch the following video  (sorry, rather low volume...):
     <center>
@@ -23,9 +18,7 @@ iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Widt
 
 2.  Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them.
 
-### Exercises
-
-#### *(T)* Quiz
+**Exercises**
 
 ```{r knn-quiz, echo=FALSE}
 question("Which statements are true?",
@@ -66,7 +59,7 @@ question("Which statements are true?",
 )
 ```
 
-#### *(P)* Create the `mlr` learner
+### Create the `mlr` learner
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
 ```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("kknn_learner")}
@@ -96,7 +89,7 @@ kknn_learner = makeLearner("classif.kknn", k = 3)
 ```
 
 
-#### *(P)* Train the `mlr` learner
+### Train the `mlr` learner
 
 Now train the learner on the task defined in session 2:
 
@@ -126,7 +119,7 @@ kknn_model = train(kknn_learner, iris_task)
 ```
 
 
-#### *(P)* Visualize decision boundaries
+### Visualize decision boundaries
 
 Again, define the `kknn_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `k`. What can you observe by varying the hyperparameter?
 

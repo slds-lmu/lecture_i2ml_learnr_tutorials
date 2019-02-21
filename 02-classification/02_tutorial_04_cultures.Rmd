@@ -1,17 +1,17 @@
 ## Loss Functions
 
-### Study Goals
+**Study Goals**
 - Learn why and how the goodness of the predictions is measured
 - Learn how to get the loss of a model by using `mlr`
 
-### Preparation
+**Preparation**
 
 Watch the following video  (sorry, rather low volume...):
 <center>
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
 </center>
 
-### Exercises
+**Exercises**
 
 ```{r loss-quiz, echo=FALSE}
 question("Which statements are true?",
@@ -25,19 +25,19 @@ question("Which statements are true?",
   answer("Loss functions are always positive.",
          correct = TRUE),
   answer("Loss functions are always smaller than 1."),
-  answer("$L(y, f(x))$ quantifies how accurately a model predicts the target
+  answer("$L(y, f(x))$ quantifies how accurately a model predicts the target 
          variable on the training data set."),
   answer("$\\mathcal{R}_\\text{emp}(f)$ tells us exactly how accurately a model
          will predict new observations."),
-  answer("Empirical risk minimization is a very general mathematical framework
-         that turns 'finding a good model' into a mathematically tractable
+  answer("Empirical risk minimization is a very general mathematical framework 
+         that turns 'finding a good model' into a mathematically tractable 
          optimization problem.",
          correct = TRUE),
-  answer("Since empirical risk minimization is a completely abstract and very
+  answer("Since empirical risk minimization is a completely abstract and very 
          general mathematical procedure, the choice of loss function should not
          depend on background knowledge about the data set at hand or what the
          model is going to be used for."),
-  answer("If two models achieve the same empirical risk, they yield identical
+  answer("If two models achieve the same empirical risk, they yield identical 
          predictions."),
   answer("The absolute loss function is more sensitive to outliers than
          the quadratic loss function."),
