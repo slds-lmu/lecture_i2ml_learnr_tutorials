@@ -2,8 +2,9 @@
 
 **Study Goals**
 
-- Be able do differentiate between regression and classification tasks
-- Get to know how to create tasks in `mlr`
+- Know how logistic regressions works
+- Understand the idea of two approach, which can make logistic regressions.
+- Know the extension of logistic regression
 
 **Preparation**
 

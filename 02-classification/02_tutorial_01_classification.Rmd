@@ -2,8 +2,10 @@
 
 **Study Goals**
 
-- Learn what the main components of a machine learning model are
-- Get familiar with the three components of an inducer
+- Learn how classification works.
+- Know the difference of generative approach and discriminant approach
+or ?????????
+- Know the basic idea of generative approach and discriminant approach
 
 **Preparation**
 
