@@ -1,28 +1,32 @@
 ## Introduction
 
-**Study Goals**
+### Study Goals
 
-- Learn what the main components of a machine learning model are
-- Get familiar with the three components of an inducer
+- Learn what a classifier is
+- Difference between linear and non-linear classifiers
+- Generative vs. discriminative approach
 
-**Preparation**
+### Preparation
 
 Watch the following video (sorry, rather low volume...):
 <center>
-![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
+![](https://www.youtube.com/watch?v=T2Zc_n_E9o4&t=0s&index=2&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
 </center>
 
-**Exercises**
+### Exercises
+
+#### Quiz
 
 ```{r basics-quiz, echo=FALSE}
-# quiz(caption = "Basic Terminology",
-  question("Which statements are true?",
-    answer("A model $f$  is a mapping from the feature space $\\mathcal{X}$ to the target space $\\mathcal{Y}$.", correct = TRUE),
-    answer("The goal of an ML algorithm is to yield a model that reproduces the already seen data as accurately as possible."),
-    answer("ML algorithms try to predict the target variable as accurately as possible based on the values of the features.", correct = TRUE),
-    answer("For a given hypothesis class $H$, different optimization procedures can be used to find the best model $f \\in H$.", correct = TRUE),
-    answer("Providing two different training data sets to a learner will result in the same optimal model $f$."),
-    answer("The *representation* of a learner defines its hypothesis class $H$.", correct = TRUE)
-  )
+question("Which statements are true?",
+  answer("Classification is part of supervised learning.", correct = TRUE),
+  answer("The decision boundary is independent of the used model."),
+  answer("Binary classification uses two discriminant functions."),
+  answer("Linear classifiers can just learn linear decision boundaries."),
+  answer("The generative and discriminant approach are basically the same."),
+  answer("The generative approach is a probabilistic approach.", correct = TRUE),
+  answer("The linear discriminant analysis is a discriminant approach."),
+  answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE)
+)
 ```
 

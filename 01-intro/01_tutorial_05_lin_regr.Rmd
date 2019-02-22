@@ -26,7 +26,7 @@ polynomialTrafo = function (data, feature, degree) {
     ![](https://www.youtube.com/watch?v=v9eocCAfJ_w&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=6&t=0s){width="75%"}
     </center>
 
-1.  *(P)* Make sure you have understand how to define tasks and learner as well as how to train a learner.
+1.  *(P)* Make sure that you have understand how to define tasks and learner as well as how to train a learner.
 
 ### Exercises
 
