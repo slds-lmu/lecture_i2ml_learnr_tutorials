@@ -66,6 +66,15 @@ question("Which statements are true?",
 )
 ```
 
+```{r knn-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("The presence of irrelevant features haven't any effect on accuracy of k-NN."),
+  answer("k-NN has no training-step and is a very local model.", correct = TRUE),
+  answer("k-NN makes no assumptions about the underlying data distribution.",
+         correct = TRUE),
+  answer("Choosing an odd k can avoid ties in binary classification", correct = TRUE)
+)
+```
 #### *(P)* Create the `mlr` learner
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
