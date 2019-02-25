@@ -13,63 +13,17 @@
     ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
     </center>
 
-1.  Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html).
+
 
 **Exercises**
 
-```{r tasks-quiz, echo=FALSE}
-# quiz(caption = "Tasks",
+```{r basics-quiz1, echo=FALSE}
+# quiz(caption = "Basic Terminology",
   question("Which statements are true?",
-    answer("Supervised learning tasks are prediction problems.",
-           correct = TRUE),
-    answer("Unsupervised learning tries to discover structure and patterns in
-           the training data.",
-           correct = TRUE),
-    answer("Every unsupervised task is internally treated as supervised task."),
-    answer("Unsupervised learning is learning without a target variable.",
-           correct = TRUE),
-    answer("Classification is a supervised leaning task.",
-           correct = TRUE),
-    answer("Regression is a supervised learning task.",
-           correct = TRUE),
-    answer("Clustering is a supervised learning task.")
+    answer("Logistic regression is usually fitted by maximum likelihood with numerical optimization or it can be solved analytically."),
+    answer("softmax is a generalization of the logistic function.", correct = TRUE),
+    answer("In Logistic regression, the estimator $\\theta$ by optimizing maximum likelihood is identical to the one by minimizing the empirical risk.", correct = TRUE),
+    answer("In a softmax, a numerical trick for avoiding overparameterized is to set $\\theta_{g} = 0$ and only optimize the other $\\theta_{k}$ ($k\\neq g$).", correct = TRUE)
   )
-```
-
-### Creating tasks with `mlr`
-
-For this exercise, take a look at the [`iris` dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set):
-
-```{r}
-summary(iris)
-```
-
-1.  Define a new classification task based on the iris dataset with target variable `Species` and just two features `Sepal.Width` and `Petal.Width`:
-
-```{r iristask, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("iris_task")}
-iris_task =
-```
-
-```{r iristask-hint-1}
-# Use the 'makeClassifTask' function of mlr
-makeClassifTask(...)
-```
-
-```{r iristask-hint-2}
-# Select just the three columns Sepal.Width, Petal.Width, and Species
-iris[, c("Species", "Sepal.Width", "Petal.Width")]
-```
-
-```{r iristask-hint-3}
-# The target variable has to be specified as character of length 1
-"Species"
-```
-
-```{r iristask-solution}
-makeClassifTask(data = iris[, c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-```
-
-```{r iristask-check}
-iris_task = makeClassifTask(data = iris[, c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
 ```
 
