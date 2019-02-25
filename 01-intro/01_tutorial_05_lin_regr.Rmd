@@ -109,6 +109,13 @@ lm_learner = makeLearner("regr.lm")
 lm_model =
 ```
 
+```{r, include=FALSE}
+task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+mtcars_task = makeRegrTask(data = task_data, target = "mpg")
+lm_learner = makeLearner("regr.lm")
+
+```
+
 ```{r lm-train-check}
 lm_model = train(lm_learner, mtcars_task)
 ```
@@ -124,6 +131,20 @@ library(ggplot2)
 degree = 3
 
 # You can leave this code as it is:
+task_data = 
+mtcars_task = 
+lm_learner = 
+lm_model = 
+
+hp_pred = seq(min(mtcars$hp), max(mtcars$hp), length.out = 100)
+pred_data = polynomialTrafo(data.frame(hp = hp_pred), "hp", degree)
+
+plot_data = data.frame(mpg_pred = predict(lm_model, newdata = pred_data)$data$response, hp = hp_pred)
+ggplot() + geom_point(data = mtcars, aes(x = hp, y = mpg)) + geom_line(data = plot_data, aes(x = hp, y = mpg_pred))
+```
+
+```{r lm-poly-viz-check}
+
 task_data = polynomialTrafo(mtcars[, c("mpg", "hp")], "hp", degree)
 mtcars_task = makeRegrTask(data = task_data, target = "mpg")
 lm_learner = makeLearner("regr.lm")
