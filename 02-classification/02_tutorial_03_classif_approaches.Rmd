@@ -7,7 +7,7 @@
 
 **Preparation**
 
-1. Watch the following video  (sorry, rather low volume...):
+1.  Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=hXQq-lryqtE&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=4&t=0s){width="75%"}
     </center>
@@ -18,8 +18,8 @@
 
 ```{r knn-quiz, echo=FALSE}
 question("Which statements are false?",
-  answer("In the LDA, each class density is modeled as a multivariate Gaussian with unequal covariance.",             correct = TRUE),
-  answer("In the QDA, each class density is modeled as a multivariate Gaussian with equal covariance",             correct = TRUE),
+  answer("In the LDA, each class density is modeled as a multivariate Gaussian with unequal covariance.", correct = TRUE),
+  answer("In the QDA, each class density is modeled as a multivariate Gaussian with equal covariance", correct = TRUE),
   answer("In the Naive Bayes classifier, covariance matrices can differ over both classes but have to be diagonal.")
 )
 ```
