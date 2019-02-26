@@ -1,7 +1,13 @@
 ## Loss Functions
 
 ### Study Goals
+
+*Theoretical (T)*
+
 - Learn why and how the goodness of the predictions is measured
+
+*Practical (P)*
+
 - Learn how to get the loss of a model by using `mlr`
 
 ### Preparation
