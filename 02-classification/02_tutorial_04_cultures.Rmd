@@ -1,8 +1,7 @@
 ## The Two Cultures of Statistical
 
 **Study Goals**
-- Learn the ideas of the data modeling culture and the algorithmic modeling culture
-- Know the differences of two cultures
+- The data modeling culture vs the algorithmic modeling culture
 
 **Preparation**
 
@@ -16,10 +15,10 @@ Watch the following video  (sorry, rather low volume...):
 
 ```{r Two Cultures of Statistical-quiz, echo=FALSE}
 question("Which statements are true?",
-  answer(" The data modeling culture can lead to irrelevant theory and questionable statistical conclusions.", 
+  answer("The data modeling culture can lead to irrelevant theory and questionable statistical conclusions.", 
          correct = TRUE),
   answer("In the algorithmic modeling culture, the true mechanism is treated as unknown, while the data modeling                 culture tries to find the true data-generating mechanism.", correct = TRUE),
-  answer(" the models that are good in prediction are always complex."),
-  answer(" decision trees (random forest) has an excellent prediction accuracy, but it is impossible to interpret the model structure.", correct = TRUE)
+  answer("The models that are good in prediction are always complex."),
+  answer("Decision trees (random forest) has an excellent prediction accuracy, but it is impossible to interpret the model structure.", correct = TRUE)
 )
 ```
