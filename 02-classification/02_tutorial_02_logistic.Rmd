@@ -2,12 +2,7 @@
 
 ### Study Goals
 
-- Know how logistic regression works
-- Understand the ideas of two approaches, which can make logistic regressions
-- Know the extension of logistic regression
-
 *Theoretical (T)*
-
 
 - Idea of logistic regression
 - Transforming scores to model probabilities with the logistic function
@@ -27,22 +22,17 @@
     ![](https://www.youtube.com/watch?v=l3yBsf7Jq5E&t=0s&index=3&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
     </center>
 
-
-
-
 1.  *(P)* Make sure that you have understand how to define tasks and learner as well as how to train a learner.
 
 ### Exercises
 
-
 #### *(T)* Quiz
-
 
 ```{r basics-quiz1, echo=FALSE}
 # quiz(caption = "Basic Terminology",
   question("Which statements are true?",
     answer("Logistic regression is usually fitted by maximum likelihood with numerical optimization or it can be solved analytically."),
-    answer("softmax is a generalization of the logistic function.", correct = TRUE),
+    answer("Softmax is a generalization of the logistic function.", correct = TRUE),
     answer("In Logistic regression, the estimator $\\theta$ by optimizing maximum likelihood is identical to the one by minimizing the empirical risk.", correct = TRUE),
     answer("In a softmax, a numerical trick for avoiding overparameterized is to set $\\theta_{g} = 0$ and only optimize the other $\\theta_{k}$ ($k\\neq g$).", correct = TRUE)
   )
