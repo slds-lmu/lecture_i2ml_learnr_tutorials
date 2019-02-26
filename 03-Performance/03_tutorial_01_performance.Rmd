@@ -3,14 +3,15 @@
 **Study Goals**
 
 - Learn why and what performance estimation is
-- Get familiar with the training error and test error
+- Get familiar with the training error and the test error
 
 **Preparation**
 
-Watch the following video (sorry, rather low volume...):
+1.  Watch the following video (sorry, rather low volume...):
 <center>
 ![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
 </center>
+
 
 **Exercises**
 
