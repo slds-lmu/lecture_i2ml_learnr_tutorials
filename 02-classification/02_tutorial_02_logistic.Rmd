@@ -1,21 +1,42 @@
 ## Logistic Regression
 
-**Study Goals**
+### Study Goals
 
 - Know how logistic regression works
 - Understand the ideas of two approaches, which can make logistic regressions
 - Know the extension of logistic regression
 
-**Preparation**
+*Theoretical (T)*
 
-1.  Watch the following video  (sorry, rather low volume...):
+
+- Idea of logistic regression
+- Transforming scores to model probabilities with the logistic function
+- Binary classification losses
+- Idea of multinomial regression
+
+*Practical (P)*
+
+- Be able to train a logistic regression with `R` and `mlr`
+- See how to transform linear into non-linear decision boundaries
+
+
+### Preparation
+
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
-    ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
+    ![](https://www.youtube.com/watch?v=l3yBsf7Jq5E&t=0s&index=3&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
     </center>
 
 
 
-**Exercises**
+
+1.  *(P)* Make sure that you have understand how to define tasks and learner as well as how to train a learner.
+
+### Exercises
+
+
+#### *(T)* Quiz
+
 
 ```{r basics-quiz1, echo=FALSE}
 # quiz(caption = "Basic Terminology",
@@ -25,5 +46,109 @@
     answer("In Logistic regression, the estimator $\\theta$ by optimizing maximum likelihood is identical to the one by minimizing the empirical risk.", correct = TRUE),
     answer("In a softmax, a numerical trick for avoiding overparameterized is to set $\\theta_{g} = 0$ and only optimize the other $\\theta_{k}$ ($k\\neq g$).", correct = TRUE)
   )
+```
+
+
+```{r tasks-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("Supervised learning tasks are prediction problems.",
+         correct = TRUE),
+  answer("Unsupervised learning tries to discover structure and patterns in
+         the training data.",
+         correct = TRUE),
+  answer("Every unsupervised task is internally treated as supervised task."),
+  answer("Unsupervised learning is learning without a target variable.",
+         correct = TRUE),
+  answer("Classification is a supervised leaning task.",
+         correct = TRUE),
+  answer("Regression is a supervised learning task.",
+         correct = TRUE),
+  answer("Clustering is a supervised learning task.")
+)
+```
+
+### *(P)* Training a logistic regression with `mlr`
+
+For this exercise, take a look at the `titanic` dataset from the `titanic` package. Just keep the features `Survived`, `Age`, and `Fare`. Remove all observations with missing values `NA`s:
+
+```{r titanic-data, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("my_titanic")}
+library(titanic)
+
+my_titanic =
+```
+
+```{r titanic-data-1}
+# Install and library the titanic package or use the namespace titanic to load the 'titanic_train' dataset
+titanic::titanic_train
+```
+
+```{r titanic-data-2}
+# Use 'na.omit' to remove all observations that contains missing values
+na.omit(...)
+```
+
+```{r titanic-data-solution}
+na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+```
+
+```{r iristask-check}
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+```
+
+Now define a classification task `task_titanic` on that dataset with target `Survived`, define a logistic regression learner, and train that learner:
+
+```{r titanic-train, exercise=TRUE, exercise.lines=8, exercise.checker=createChecker(c("task_titanic", "learner_titanic", "model_titanic"))}
+task_titanic =
+learner_titanic =
+model_titanic =
+```
+
+```{r titanic-train-check}
+task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
+learner_titanic = makeLearner("classif.logreg")
+model_titanic = train(learner_titanic, task_titanic)
+```
+
+Finally, visualize the model with `plotLearnerPrediction()`:
+
+```{r titanic-viz, exercise=TRUE}
+plotLearnerPrediction(learner = ..., task = ...)
+```
+
+### *(P)* Training a logistic regression with non-linear decision boundaries
+
+```{r, include=FALSE}
+polynomialTrafo = function (data, feature, degree) {
+  feature_idx = which(feature == names(data))
+  df_poly = as.data.frame(poly(x = data[[feature]], degree = degree))
+  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
+}
+
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+```
+
+The next demonstration shows how to include the features `Age` and `Fare` as polynomials and the effect on the decision boundary:
+
+```{r titanic-non-linear, exercise=TRUE}
+library(ggplot2)
+
+# Change degree here
+degree = 3
+
+# You can leave this code as it is:
+task_data = polynomialTrafo(my_titanic, "Age", degree)
+task_data = polynomialTrafo(task_data, "Fare", degree)
+
+titanic_task = makeClassifTask(data = task_data, target = "Survived")
+logreg_learner = makeLearner("classif.logreg")
+logreg_model = train(logreg_learner, titanic_task)
+
+age_pred = seq(min(titanic_data$Age), max(titanic_data$Age), length.out = 100)
+fare_pred = seq(min(titanic_data$Fare), max(titanic_data$Fare), length.out = 100)
+pred_data = polynomialTrafo(data.frame(hp = hp_pred), "hp", degree)
+
+plot_data = data.frame(mpg_pred = predict(lm_model, newdata = pred_data)$data$response, hp = hp_pred)
+ggplot() + geom_point(data = mtcars, aes(x = hp, y = mpg)) + geom_line(data = plot_data, aes(x = hp, y = mpg_pred))
 ```
 
