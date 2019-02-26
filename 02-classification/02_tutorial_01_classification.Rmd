@@ -1,4 +1,4 @@
-## Introduction
+## Introduction to Classification
 
 ### Study Goals
 
@@ -28,5 +28,15 @@ question("Which statements are true?",
   answer("The linear discriminant analysis is a discriminant approach."),
   answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE)
 )
+```
+
+```{r basics-quiz2, echo=FALSE}
+# quiz(caption = "Basic Terminology",
+  question("Which statements are true?",
+    answer("The discriminant approach assumes a data generating process, in which the data have different distributions, depending on the class. The generative approach attempts to minimize a loss function."),
+    answer("Linear discriminant analysis is a discriminant approach, while Quadratic discriminant analysis is not."),
+    answer("The discriminant approach tries to model the discriminant score function directly.", correct = TRUE),
+    answer("Logistic regression is a discriminant approach", correct = TRUE)
+  )
 ```
 

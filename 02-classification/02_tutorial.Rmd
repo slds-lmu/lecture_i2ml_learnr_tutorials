@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Machine Learning - Day 1"
+title: "Introduction to Machine Learning - Day 2"
 output:
   learnr::tutorial:
     theme: cosmo
@@ -15,7 +15,7 @@ library(learnr)
 library(testwhat)
 library(checkmate)
 library(mlr)
-library(kknn)
+
 
 errorToMessage = function (expr)
 {

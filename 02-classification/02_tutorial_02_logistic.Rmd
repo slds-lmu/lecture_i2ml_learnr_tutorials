@@ -1,4 +1,4 @@
-## Tasks
+## Logistic Regression
 
 ### Study Goals
 
@@ -27,6 +27,17 @@
 ### Exercises
 
 #### *(T)* Quiz
+
+```{r basics-quiz1, echo=FALSE}
+# quiz(caption = "Basic Terminology",
+  question("Which statements are true?",
+    answer("Logistic regression is usually fitted by maximum likelihood with numerical optimization or it can be solved analytically."),
+    answer("Softmax is a generalization of the logistic function.", correct = TRUE),
+    answer("In Logistic regression, the estimator $\\theta$ by optimizing maximum likelihood is identical to the one by minimizing the empirical risk.", correct = TRUE),
+    answer("In a softmax, a numerical trick for avoiding overparameterized is to set $\\theta_{g} = 0$ and only optimize the other $\\theta_{k}$ ($k\\neq g$).", correct = TRUE)
+  )
+```
+
 
 ```{r tasks-quiz, echo=FALSE}
 question("Which statements are true?",
@@ -130,3 +141,4 @@ pred_data = polynomialTrafo(data.frame(hp = hp_pred), "hp", degree)
 plot_data = data.frame(mpg_pred = predict(lm_model, newdata = pred_data)$data$response, hp = hp_pred)
 ggplot() + geom_point(data = mtcars, aes(x = hp, y = mpg)) + geom_line(data = plot_data, aes(x = hp, y = mpg_pred))
 ```
+

@@ -1,8 +1,10 @@
-## Loss Functions
+## The Two Cultures of Statistical
 
 **Study Goals**
-- Learn why and how the goodness of the predictions is measured
-- Learn how to get the loss of a model by using `mlr`
+
+- Learn how to get a model with the data modeling culture or the algorithmic modeling culture
+- Interpretability vs predictive accuracy
+- Goodness of model
 
 **Preparation**
 
@@ -11,38 +13,15 @@ Watch the following video  (sorry, rather low volume...):
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
 </center>
 
+ 
 **Exercises**
 
-```{r loss-quiz, echo=FALSE}
+```{r Two Cultures of Statistical-quiz, echo=FALSE}
 question("Which statements are true?",
-  answer("Any model can use any arbitrary loss function."),
-  answer("The empirical risk $\\mathcal{R}_\\text{emp}(f)$ is defined by the loss
-         function.",
+  answer("The data modeling culture can lead to irrelevant theory and questionable statistical conclusions.", 
          correct = TRUE),
-  answer("The loss function defines the evaluation part of a learner (inducer).",
-         correct = TRUE),
-  answer("Loss functions are always symmetric around zero."),
-  answer("Loss functions are always positive.",
-         correct = TRUE),
-  answer("Loss functions are always smaller than 1."),
-  answer("$L(y, f(x))$ quantifies how accurately a model predicts the target 
-         variable on the training data set."),
-  answer("$\\mathcal{R}_\\text{emp}(f)$ tells us exactly how accurately a model
-         will predict new observations."),
-  answer("Empirical risk minimization is a very general mathematical framework 
-         that turns 'finding a good model' into a mathematically tractable 
-         optimization problem.",
-         correct = TRUE),
-  answer("Since empirical risk minimization is a completely abstract and very 
-         general mathematical procedure, the choice of loss function should not
-         depend on background knowledge about the data set at hand or what the
-         model is going to be used for."),
-  answer("If two models achieve the same empirical risk, they yield identical 
-         predictions."),
-  answer("The absolute loss function is more sensitive to outliers than
-         the quadratic loss function."),
-  answer("How difficult the optimization of a learner is depends strongly on the
-         properties of its loss function.",
-         correct = TRUE)
+  answer("In the algorithmic modeling culture, the true mechanism is treated as unknown, while the data modeling                 culture tries to find the true data-generating mechanism.", correct = TRUE),
+  answer("The models that are good in prediction are always complex."),
+  answer("Decision trees (random forest) has an excellent prediction accuracy, but it is impossible to interpret the model structure.", correct = TRUE)
 )
 ```
