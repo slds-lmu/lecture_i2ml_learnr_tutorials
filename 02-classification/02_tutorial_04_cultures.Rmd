@@ -1,7 +1,10 @@
 ## The Two Cultures of Statistical
 
 **Study Goals**
-- The data modeling culture vs the algorithmic modeling culture
+
+- Learn how to get a model with the data modeling culture or the algorithmic modeling culture
+- Interpretability vs predictive accuracy
+- Goodness of model
 
 **Preparation**
 
