@@ -2,8 +2,9 @@
 
 ### Study Goals
 
-- Learn how classification works.
-- Know the differences of generative approach and discriminant approach
+- Learn what a classifier is
+- Difference between linear and non-linear classifiers
+- Generative vs. discriminative approach
 
 ### Preparation
 
@@ -32,7 +33,7 @@ question("Which statements are true?",
 ```{r basics-quiz2, echo=FALSE}
 # quiz(caption = "Basic Terminology",
   question("Which statements are true?",
-    answer(" The discriminant approach assumes a data generating process, in which the x have different distributions, depending on the class. The generative approach attempts to minimize a loss function."),
+    answer("The discriminant approach assumes a data generating process, in which the x have different distributions, depending on the class. The generative approach attempts to minimize a loss function."),
     answer("Linear discriminant analysis is a discriminant approach, while Quadratic discriminant analysis is not."),
     answer("The discriminant approach tries to model the discriminant score function directly.", correct = TRUE),
     answer("Logistic regression is a discriminant approach", correct = TRUE)
