@@ -62,10 +62,13 @@ question("Which statements are true?",
   answer("The size of $k$ does not really affect the computational effort that is
          required to predict a new target variable value from a k-NN model."),
   answer("The dimension $p$ of $x$ does not really affect the computational effort
-         that is required to predict a new target variable value from a k-NN model.")
+         that is required to predict a new target variable value from a k-NN model."),
+  answer("The presence of irrelevant features haven't any effect on accuracy of k-NN."),
+  answer("k-NN makes no assumptions about the underlying data distribution.",
+         correct = TRUE),
+  answer("Choosing an odd k can avoid ties in binary classification", correct = TRUE)
 )
 ```
-
 #### *(P)* Create the `mlr` learner
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
@@ -118,6 +121,7 @@ train(kknn_learner, iris_task)
 ```
 
 ```{r, include=FALSE}
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
 kknn_learner = makeLearner("classif.kknn", k = 3)
 ```
 
