@@ -2,8 +2,13 @@
 
 **Study Goals**
 
+*Theoretical (T)*
+
 - Learn how generative model works
-- Get familiar with three generative approaches
+- Get familiar with LDA, QDA and naive Bayes classifier
+
+*Practical (P)*
+- Get to know how to fit a generative model in `mlr`
 
 **Preparation**
 
