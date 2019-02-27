@@ -2,8 +2,8 @@
 
 **Study Goals**
 
-- Learn the ROC analysis
-- Know how to evaluate the performance of a (multiclass) classifier with confusion matrix
+- Get familiar with confusion matrix and ROC
+- Know how to evaluate the performance of a (multiclass) classifier
 
 **Preparation**
 
@@ -11,3 +11,16 @@ Watch the following video  (sorry, rather low volume...):
 <center>
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
 </center>
+
+
+```{r ROC-quiz, echo=FALSE}
+  question("Which statements are false?",
+    answer("If the proportion of positive to negative instances changes, the ROC curve will not     change."),
+    answer("The evaluation of binary classifiers is only the misclassification error.", correct = TRUE),
+    answer("Several evaluation metrics can be derived from a confusion matrix."),
+    answer("ROC curves are sensitive to class distribution.", correct = TRUE),
+    answer("The area under the ROC curve is AUC and AUC $\\in (0, 1]$.", correct = TRUE),
+    answer("In a ROC curve, the best classifier lies on the top-right corner.", correct = TRUE),
+    answer("AUC = 0 means that all negatives are ranked higher than all positives.")
+  )
+```
