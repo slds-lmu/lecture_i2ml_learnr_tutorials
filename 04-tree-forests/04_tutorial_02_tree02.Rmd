@@ -1,9 +1,8 @@
-## Resampling
+## Tree cont.
 
 **Study Goals**
 
-- Know the goal of resampling
-- Get familiar with 4 methods of resampling
+- Get familiar with CART
 
 **Preparation**
 
@@ -12,3 +11,18 @@
     ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
     </center>
 
+
+**Exercises**
+
+```{r tree-quiz2, echo=FALSE}
+  question("Which statements about CART are true?",
+    answer("Monotone transformations of several features will change structure of the tree."),
+    answer("The CART-Algorithm could just continue until there is a single observation in each node.",correct = TRUE),
+    answer("Prediction function isn't smooth because a step function is fftted.",correct = TRUE),
+    answer("Really not the best predictor.",correct = TRUE),
+    answer("Getting into trouble with outliers in features."),
+    answer("Missing values can be handled.",correct = TRUE),
+    answer("Decisions on the upper level influence decisions
+on lower levels.",correct = TRUE)
+)
+```

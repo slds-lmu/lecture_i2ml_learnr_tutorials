@@ -1,9 +1,14 @@
-## ROC and confusion matrix
+## Bagging and Random Forests
 
 **Study Goals**
 
-- Learn the ROC analysis
-- Know how to evaluate the performance of a (multiclass) classifier with confusion matrix
+*Theoretical (T)*
+- Learn why and how bagging and random forests works
+- Bagging algorithm vs random Forest algorithm
+
+*Practical (P)*
+- Know how to get a model with random forests by using `mlr`
+
 
 **Preparation**
 
@@ -11,3 +16,19 @@ Watch the following video  (sorry, rather low volume...):
 <center>
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
 </center>
+
+
+**Exercises**
+
+```{r random forest-quiz1, echo=FALSE}
+  question("Which statements are true?",
+    answer("Bagging works best for unstable learners.", correct = TRUE),
+    answer("For stable estimation methods bagging has mostly degrade performance."),
+    answer("Random forests is modification of bagging for trees.", correct = TRUE),
+    answer("The OOB error is similar to cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
+    answer("Random forests for regression is $//sprt(p)$ recommended for mtry", correct = TRUE)
+    
+    
+)
+```
+

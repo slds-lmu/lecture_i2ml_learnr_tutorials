@@ -1,9 +1,10 @@
-## ROC and confusion matrix
+## Random Forest cont.
 
 **Study Goals**
 
-- Learn the ROC analysis
-- Know how to evaluate the performance of a (multiclass) classifier with confusion matrix
+- Learn how to measure variable importance
+= Get familiar with properties of random forests
+
 
 **Preparation**
 
@@ -11,3 +12,16 @@ Watch the following video  (sorry, rather low volume...):
 <center>
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
 </center>
+
+
+**Exercises**
+
+```{r randomforest-quiz2, echo=FALSE}
+  question("Which statements about random forests are true?",
+    answer("Often works well enough.", correct = TRUE),
+    answer("It can work also on high-dimensional data.",correct = TRUE),
+    answer("Proximities are used in replacing missing data, but not locating outliers."),
+    answer("For each variable, this improvement is accumulated over all trees for the importance measure.",correct = TRUE)
+)
+```
+
