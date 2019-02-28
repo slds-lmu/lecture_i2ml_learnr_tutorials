@@ -15,7 +15,8 @@ library(learnr)
 library(testwhat)
 library(checkmate)
 library(mlr)
-
+library(BBmisc)
+library(mlbench)
 errorToMessage = function (expr)
 {
   e = try(expr = expr, silent = TRUE)

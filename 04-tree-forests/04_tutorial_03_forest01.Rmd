@@ -31,9 +31,75 @@
     answer("For stable estimation methods bagging has mostly degrade performance."),
     answer("Random forests is modification of bagging for trees.", correct = TRUE),
     answer("The OOB error is similar to cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
-    answer("Random forests for regression is $//sprt(p)$ recommended for mtry", correct = TRUE)
+    answer("Random forests for regression is $\\sqrt(p)$ recommended for mtry", correct = TRUE)
     
     
 )
 ```
+
+
+#### *(P)* Create the `mlr` learner
+
+Create a random forest task with the following data using the `randomForest` function from the same named package `randomForest`:
+
+```{r randomForest-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("rf_task")}
+data = mlbench.spirals(500, sd = 0.1)
+data = as.data.frame(data)
+rf_task = 
+```
+
+```{r randomForest-definition-hint-1, eval=FALSE}
+# Use the 'makeClassifTask' function of mlr
+makeClassifTask(...)
+```
+
+
+```{r randomForest-definition-check}
+data = mlbench.spirals(500, sd = 0.1)
+data = as.data.frame(data)
+rf_task = makeClassifTask(data = data, target = "classes")
+```
+
+
+#### *(P)* Train the `mlr` learner
+
+Now train the learner on the rf_task:
+```{r randomForest-definition1, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("rf_learner")}
+rf_learner =
+```
+
+```{r randomForest-definition1-hint-1, eval=FALSE}
+# Use the 'makeLearner' function of mlr
+makeLearner(...)
+```
+
+```{r randomForest-definition1-check}
+rf_learner = makeLearner("classif.randomForest")
+```
+
+
+#### *(P)* Visualize decision boundaries
+
+Again, define the `rf_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `ntrees`. What can you observe by varying the hyperparameter?
+
+```{r, include=FALSE}
+data = mlbench.spirals(500, sd = 0.1)
+data = as.data.frame(data)
+rf_task = makeClassifTask(data = data, target = "classes")
+rf_learner = makeLearner("classif.randomForest")
+```
+
+```{r randomForest-definition-visualization, exercise=TRUE}
+ntrees = c(1, 10, 20, 100, 1000)
+
+for (nt in ntrees) {
+  print(plotLearnerPrediction(rf_learner, rf_task, ntree = nt))
+  pause()
+}
+```
+
+
+
+
+
 
