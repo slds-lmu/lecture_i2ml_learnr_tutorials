@@ -29,3 +29,62 @@
 )
 ```
 
+#### *(P)* Create the `mlr` learner
+
+Create a task for classification with simple tree and the following data:
+
+```{r tree-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("tr_task")}
+data = mlbench.spirals(500, sd = 0.1)
+data = as.data.frame(data)
+tr_task = 
+```
+
+```{r tree-definition-hint-1, eval=FALSE}
+# Use the 'makeClassifTask' function of mlr
+makeClassifTask(...)
+```
+
+
+```{r tree-definition-check}
+data = mlbench.spirals(500, sd = 0.1)
+data = as.data.frame(data)
+tr_task = makeClassifTask(data = data, target = "classes")
+```
+
+
+#### *(P)* Train the `mlr` learner
+
+Now train the learner on the tr_task:
+```{r tree-definition1, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("tr_learner")}
+tr_learner =
+```
+
+```{r tree-definition1-hint-1, eval=FALSE}
+# Use the 'makeLearner' function of mlr
+makeLearner(...)
+```
+
+```{r tree-definition1-check}
+tr_learner = makeLearner("classif.rpart")
+```
+
+
+#### *(P)* Visualize decision boundaries
+
+Again, define the `tr_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `mds`. What can you observe by varying the hyperparameter?
+
+```{r, include=FALSE}
+data = mlbench.spirals(500, sd = 0.1)
+data = as.data.frame(data)
+tr_task = makeClassifTask(data = data, target = "classes")
+tr_learner = makeLearner("classif.rpart")
+```
+
+```{r tree-definition-visualization, exercise=TRUE}
+mds = 1:5
+
+for (md in mds) {
+  print(plotLearnerPrediction(learner =  , task =  , maxdepth = md))
+  pause()
+}
+```

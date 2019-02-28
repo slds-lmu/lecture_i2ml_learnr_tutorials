@@ -93,7 +93,7 @@ rf_learner = makeLearner("classif.randomForest")
 ntrees = c(1, 10, 20, 100, 1000)
 
 for (nt in ntrees) {
-  print(plotLearnerPrediction(rf_learner, rf_task, ntree = nt))
+  print(plotLearnerPrediction(learner = , task = , ntree = nt))
   pause()
 }
 ```

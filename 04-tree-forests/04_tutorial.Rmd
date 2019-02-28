@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Machine Learning - Day 3"
+title: "Introduction to Machine Learning - Day 4"
 output:
   learnr::tutorial:
     theme: cosmo
