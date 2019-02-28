@@ -1,13 +1,15 @@
 ## Resampling
 
-**Study Goals**
+### Study Goals
+
+*Theoretical (T)*
 
 - Know the goals and the idea of resampling
 - Get familiar with Cross-Validation, Bootstrap and Subsampling
 
-**Preparation**
+### Preparation
 
-1.  Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
     </center>
