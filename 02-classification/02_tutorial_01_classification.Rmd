@@ -23,11 +23,11 @@
   
 ```{r classi-quiz1, echo=FALSE}
 question("Which statements are true?",
-         answer("Classification is part of supervised learning.", correct = TRUE),
-         answer("The decision boundary is independent of the used model."),
-         answer("Binary classification uses two discriminant functions."),
-         answer("Linear classifiers can just learn linear decision boundaries."),
-         answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE),
+    answer("Classification is part of supervised learning.", correct = TRUE),
+    answer("The decision boundary is independent of the used model."),
+    answer("Binary classification uses two discriminant functions."),
+    answer("Linear classifiers can just learn linear decision boundaries."),
+    answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE),
          answer("The generative and discriminant approach are basically the same."),
          answer("The generative approach is a probabilistic approach.", correct = TRUE)
          

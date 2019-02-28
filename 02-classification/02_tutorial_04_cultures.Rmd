@@ -1,20 +1,24 @@
 ## The Two Cultures of Statistical
 
-**Study Goals**
+### Study Goals
 
+*Theoretical (T)*
+  
 - Learn how to get a model with the data modeling culture or the algorithmic modeling culture
 - Interpretability vs predictive accuracy
 - Goodness of model
 
-**Preparation**
+### Preparation
 
-Watch the following video  (sorry, rather low volume...):
-<center>
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+  <center>
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
-</center>
+  </center>
 
  
-**Exercises**
+### Exercises
+  
+#### *(T)* Quiz
 
 ```{r Two Cultures of Statistical-quiz, echo=FALSE}
 question("Which statements are true?",
