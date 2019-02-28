@@ -1,24 +1,29 @@
 ## Bagging and Random Forests
 
-**Study Goals**
+
+### Study Goals
 
 *Theoretical (T)*
+
 - Learn why and how bagging and random forests works
 - Bagging algorithm vs random Forest algorithm
 
 *Practical (P)*
+
 - Know how to get a model with random forests by using `mlr`
 
 
-**Preparation**
 
-Watch the following video  (sorry, rather low volume...):
-<center>
+### Preparation
+
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
-</center>
+    </center>
 
+### Exercises
 
-**Exercises**
+#### *(T)* Quiz
 
 ```{r random forest-quiz1, echo=FALSE}
   question("Which statements are true?",

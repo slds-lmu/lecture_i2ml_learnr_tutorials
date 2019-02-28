@@ -1,18 +1,22 @@
 ## Tree cont.
 
-**Study Goals**
+### Study Goals
+
+*Theoretical (T)*
 
 - Get familiar with CART
 
-**Preparation**
+### Preparation
 
-1.  Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
     </center>
 
 
-**Exercises**
+### Exercises
+
+#### *(T)* Quiz
 
 ```{r tree-quiz2, echo=FALSE}
   question("Which statements about CART are true?",

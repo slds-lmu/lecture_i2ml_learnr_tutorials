@@ -1,20 +1,22 @@
 ## Random Forest cont.
 
-**Study Goals**
+### Study Goals
+
+*Theoretical (T)*
 
 - Learn how to measure variable importance
-= Get familiar with properties of random forests
+- Get familiar with properties of random forests
 
+### Preparation
 
-**Preparation**
-
-Watch the following video  (sorry, rather low volume...):
-<center>
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
-</center>
+    </center>
 
+### Exercises
 
-**Exercises**
+#### *(T)* Quiz
 
 ```{r randomforest-quiz2, echo=FALSE}
   question("Which statements about random forests are true?",

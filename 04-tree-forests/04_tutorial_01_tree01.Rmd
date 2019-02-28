@@ -1,20 +1,25 @@
 ## Tree
 
-**Study Goals**
+### Study Goals
 
 *Theoretical (T)*
+
 - Get to know the idea of CART
+
 *Practical (P)*
+
 - Learn how to train a model for classification or Regression with CART using `mlr`
 
-**Preparation**
+### Preparation
 
-Watch the following video (sorry, rather low volume...):
-<center>
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
 ![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
-</center>
+    </center>
 
-**Exercises**
+### Exercises
+
+#### *(T)* Quiz
 
 ```{r tree-quiz1, echo=FALSE}
   question("Which statements about CART are true?",
