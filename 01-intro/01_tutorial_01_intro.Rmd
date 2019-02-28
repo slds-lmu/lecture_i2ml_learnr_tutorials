@@ -1,11 +1,14 @@
 ## Introduction
 
-**Study Goals**
+
+### Study Goals
+
+*Theoretical (T)*
 
 - Learn what the main components of a machine learning model are
 - Get familiar with the three components of an inducer
 
-**Preparation**
+### Preparation
 
 Watch the following video (sorry, rather low volume...):
 <center>
@@ -14,7 +17,7 @@ Watch the following video (sorry, rather low volume...):
 
 ### Exercises
 
-#### Quiz
+#### *(T)* Quiz
 
 ```{r basics-quiz, echo=FALSE}
 # quiz(caption = "Basic Terminology",
