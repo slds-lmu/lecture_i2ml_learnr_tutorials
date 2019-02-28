@@ -2,41 +2,44 @@
 
 ### Study Goals
 
+*Theoretical (T)*
+  
 - Learn what a classifier is
 - Difference between linear and non-linear classifiers
 - Generative vs. discriminative approach
 
 ### Preparation
 
-Watch the following video (sorry, rather low volume...):
-<center>
-![](https://www.youtube.com/watch?v=T2Zc_n_E9o4&t=0s&index=2&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+  <center>
+  ![](https://www.youtube.com/watch?v=T2Zc_n_E9o4&t=0s&index=2&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
 </center>
 
+
 ### Exercises
-
-#### Quiz
-
-```{r basics-quiz, echo=FALSE}
+  
+#### *(T)* Quiz
+  
+  
+```{r classi-quiz1, echo=FALSE}
 question("Which statements are true?",
-  answer("Classification is part of supervised learning.", correct = TRUE),
-  answer("The decision boundary is independent of the used model."),
-  answer("Binary classification uses two discriminant functions."),
-  answer("Linear classifiers can just learn linear decision boundaries."),
-  answer("The generative and discriminant approach are basically the same."),
-  answer("The generative approach is a probabilistic approach.", correct = TRUE),
-  answer("The linear discriminant analysis is a discriminant approach."),
-  answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE)
+         answer("Classification is part of supervised learning.", correct = TRUE),
+         answer("The decision boundary is independent of the used model."),
+         answer("Binary classification uses two discriminant functions."),
+         answer("Linear classifiers can just learn linear decision boundaries."),
+         answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE),
+         answer("The generative and discriminant approach are basically the same."),
+         answer("The generative approach is a probabilistic approach.", correct = TRUE)
+         
 )
 ```
 
-```{r basics-quiz2, echo=FALSE}
-# quiz(caption = "Basic Terminology",
-  question("Which statements are true?",
-    answer("The discriminant approach assumes a data generating process, in which the data have different distributions, depending on the class. The generative approach attempts to minimize a loss function."),
-    answer("Linear discriminant analysis is a discriminant approach, while Quadratic discriminant analysis is not."),
-    answer("The discriminant approach tries to model the discriminant score function directly.", correct = TRUE),
-    answer("Logistic regression is a discriminant approach", correct = TRUE)
-  )
+```{r classi-quiz2, echo=FALSE}
+question("Which statements are false?",
+         answer("The discriminant approach assumes a data generating process, in which the data have different distributions, depending on the class. The generative approach attempts to minimize a loss function.", correct = TRUE),
+         answer("Linear discriminant analysis is a discriminant approach, while Quadratic discriminant analysis is not.", correct = TRUE),
+         answer("The discriminant approach tries to model the discriminant score function directly."),
+         answer("Logistic regression is a discriminant approach")
+)
 ```
 
