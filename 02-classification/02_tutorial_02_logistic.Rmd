@@ -14,10 +14,9 @@
 - Be able to train a logistic regression with `R` and `mlr`
 - See how to transform linear into non-linear decision boundaries
 
-
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=l3yBsf7Jq5E&t=0s&index=3&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
     </center>
@@ -28,8 +27,7 @@
 
 #### *(T)* Quiz
 
-```{r basics-quiz1, echo=FALSE}
-# quiz(caption = "Basic Terminology",
+```{r logi-quiz1, echo=FALSE}
   question("Which statements are true?",
     answer("Logistic regression is usually fitted by maximum likelihood with numerical optimization or it can be solved analytically."),
     answer("Softmax is a generalization of the logistic function.", correct = TRUE),
@@ -39,7 +37,7 @@
 ```
 
 
-```{r tasks-quiz, echo=FALSE}
+```{r logi-quiz2, echo=FALSE}
 question("Which statements are true?",
   answer("Supervised learning tasks are prediction problems.",
          correct = TRUE),
@@ -81,7 +79,7 @@ titanic::titanic_train
 na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 ```
 
-```{r iristask-check}
+```{r titanic-data-check}
 my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 ```
 
@@ -93,6 +91,10 @@ learner_titanic =
 model_titanic =
 ```
 
+```{r, include=FALSE}
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+```
+
 ```{r titanic-train-check}
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
 learner_titanic = makeLearner("classif.logreg")
@@ -100,6 +102,13 @@ model_titanic = train(learner_titanic, task_titanic)
 ```
 
 Finally, visualize the model with `plotLearnerPrediction()`:
+
+```{r, include=FALSE}
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
+learner_titanic = makeLearner("classif.logreg")
+model_titanic = train(learner_titanic, task_titanic)
+```
 
 ```{r titanic-viz, exercise=TRUE}
 plotLearnerPrediction(learner = ..., task = ...)
@@ -120,6 +129,12 @@ my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 
 The next demonstration shows how to include the features `Age` and `Fare` as polynomials and the effect on the decision boundary:
 
+```{r, include=FALSE}
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
+learner_titanic = makeLearner("classif.logreg")
+model_titanic = train(learner_titanic, task_titanic)
+```
 ```{r titanic-non-linear, exercise=TRUE}
 library(ggplot2)
 
@@ -130,9 +145,9 @@ degree = 3
 task_data = polynomialTrafo(my_titanic, "Age", degree)
 task_data = polynomialTrafo(task_data, "Fare", degree)
 
-titanic_task = makeClassifTask(data = task_data, target = "Survived")
-logreg_learner = makeLearner("classif.logreg")
-logreg_model = train(logreg_learner, titanic_task)
+titanic_task = 
+logreg_learner = 
+logreg_model = 
 
 age_pred = seq(min(titanic_data$Age), max(titanic_data$Age), length.out = 100)
 fare_pred = seq(min(titanic_data$Fare), max(titanic_data$Fare), length.out = 100)
