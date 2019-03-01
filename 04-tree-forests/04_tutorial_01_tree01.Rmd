@@ -8,7 +8,7 @@
 
 *Practical (P)*
 
-- Learn how to train a model for classification or Regression with CART using `mlr`
+- Learn how to train a model for classification or regression with CART using `mlr`
 
 ### Preparation
 
@@ -23,20 +23,27 @@
 
 ```{r tree-quiz1, echo=FALSE}
   question("Which statements about CART are true?",
-    answer("For each node, one iterates over all features, and for each feature over all split points.", correct = TRUE),
-    answer("Entropy and Gini index are more sensitive to changes in the node probabilities.",correct = TRUE),
-    answer("For metric features the exact split points is always ambiguous.")
+    answer("The prediction function defined by a CART divides the target variable into colored rectangles"),
+    answer("The prediction function defined by a CART can be described in terms of a nested series of if-else statements about feature values.", correct = TRUE),
+    answer("The prediction function defined by a CART divides the feature space into disjoint rectangles", correct = TRUE),
+    answer("To find optimal splits, one iterates over all features, and for each feature over all possible split points.", correct = TRUE),
+    answer("To find optimal splits, we use the one that splits the data approximately in half in each step."),
+    answer("To find optimal splits, we evaluate the possible splits only on the data that ended up in the parent node we are trying to split.", correct = TRUE),
+    answer("The optimal split results in the lowest child node impurity of all possible splits.",correct = TRUE),
+    answer("Entropy and Gini index are more sensitive to how pure a node is than misclassification error.",correct = TRUE),
+    answer("For metric variables, the optimal split point is often not unique in the sense that all values in a certain interval yield the same split of observations in the child nodes.",correct = TRUE)
 )
 ```
 
 #### *(P)* Create the `mlr` learner
 
-Create a task for classification with simple tree and the following data:
+Create a task for classification using the following data:
 
-```{r tree-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("tr_task")}
-data = mlbench.spirals(500, sd = 0.1)
-data = as.data.frame(data)
-tr_task = 
+```{r tree-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("spirals_task")}
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = 
 ```
 
 ```{r tree-definition-hint-1, eval=FALSE}
@@ -46,17 +53,18 @@ makeClassifTask(...)
 
 
 ```{r tree-definition-check}
-data = mlbench.spirals(500, sd = 0.1)
-data = as.data.frame(data)
-tr_task = makeClassifTask(data = data, target = "classes")
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
 ```
 
 
 #### *(P)* Train the `mlr` learner
 
-Now train the learner on the tr_task:
-```{r tree-definition1, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("tr_learner")}
-tr_learner =
+Now train the learner on the spirals_task:
+```{r tree-definition1, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("tree_learner")}
+tree_learner =
 ```
 
 ```{r tree-definition1-hint-1, eval=FALSE}
@@ -65,26 +73,27 @@ makeLearner(...)
 ```
 
 ```{r tree-definition1-check}
-tr_learner = makeLearner("classif.rpart")
+tree_learner = makeLearner("classif.rpart")
 ```
 
 
 #### *(P)* Visualize decision boundaries
 
-Again, define the `tr_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `mds`. What can you observe by varying the hyperparameter?
+Again, define the `tree_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different sizes of tree `md`. What can you observe by varying the hyperparameter?
 
 ```{r, include=FALSE}
-data = mlbench.spirals(500, sd = 0.1)
-data = as.data.frame(data)
-tr_task = makeClassifTask(data = data, target = "classes")
-tr_learner = makeLearner("classif.rpart")
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+tree_learner = makeLearner("classif.rpart")
 ```
 
 ```{r tree-definition-visualization, exercise=TRUE}
-mds = 1:5
+maxdepths = c(1, 3, 5, 7)
 
-for (md in mds) {
-  print(plotLearnerPrediction(learner =  , task =  , maxdepth = md))
-  pause()
+for (maxdepth in maxdepths) {
+  print(plotLearnerPrediction(learner =  , task =  , maxdepth = maxdepth))
+  BBmisc::pause()
 }
 ```

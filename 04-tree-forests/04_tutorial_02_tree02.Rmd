@@ -27,6 +27,7 @@
     answer("Getting into trouble with outliers in features."),
     answer("Missing values can be handled.",correct = TRUE),
     answer("Decisions on the upper level influence decisions
-on lower levels.",correct = TRUE)
+on lower levels.",correct = TRUE),
+ answer("To fit a linear function $y \approx a + b*x$ with a regression tree well, you only need a very simple tree")
 )
 ```

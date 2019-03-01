@@ -6,11 +6,11 @@
 *Theoretical (T)*
 
 - Learn why and how bagging and random forests works
-- Bagging algorithm vs random Forest algorithm
+- Bagging algorithm vs random forest algorithm
 
 *Practical (P)*
 
-- Know how to get a model with random forests by using `mlr`
+- Know how to train a random forest model using `mlr`
 
 
 
@@ -28,12 +28,12 @@
 ```{r random forest-quiz1, echo=FALSE}
   question("Which statements are true?",
     answer("Bagging works best for unstable learners.", correct = TRUE),
-    answer("For stable estimation methods bagging has mostly degrade performance."),
-    answer("Random forests is modification of bagging for trees.", correct = TRUE),
-    answer("The OOB error is similar to cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
-    answer("Random forests for regression is $\\sqrt(p)$ recommended for mtry", correct = TRUE)
-    
-    
+    answer("For stable estimation methods, bagging mostly degrades performance."),
+    answer("Random forests is a kind of bagging model for trees.", correct = TRUE),
+    answer("The OOB error is similar to cross-validation estimation. It can also be used for a quicker model selection.", 
+           correct = TRUE),
+    answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$",
+           correct = TRUE)
 )
 ```
 
