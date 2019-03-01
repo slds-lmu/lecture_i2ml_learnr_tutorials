@@ -1,0 +1,27 @@
+## Nested Resampling
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn why and how nested resampling works
+
+### Preparation
+
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
+    ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r tree-quiz2, echo=FALSE}
+  question("Which statements about nested resampling are true?",
+    answer("The result is based on pure randomness.",correct = TRUE),
+    answer("Danger of overfitting to the resampling splits / overtuning!",correct = TRUE),
+    answer("The final performance estimate will not be optimistically biased.")
+)
+```
