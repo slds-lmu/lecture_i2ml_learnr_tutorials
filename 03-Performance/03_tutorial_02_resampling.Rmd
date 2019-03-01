@@ -1,14 +1,33 @@
 ## Resampling
 
-**Study Goals**
+### Study Goals
 
-- Know the goal of resampling
-- Get familiar with 4 methods of resampling
+*Theoretical (T)*
 
-**Preparation**
+- Know the goals and the idea of resampling
+- Get familiar with Cross-Validation, Bootstrap and Subsampling
 
-1.  Watch the following video  (sorry, rather low volume...):
+### Preparation
+
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
     </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r resampling-quiz, echo=FALSE}
+  question("Which statements are true?",
+    answer("The method of resampling is a nonparametric method of statistical inference.", correct = TRUE),
+    answer("Subsampling is basically a repeated holdout and is also very similar to
+           bootstrapping, so subsampling is done with replacement."),
+    answer("Estimating the expected generalization error is a goal of resampling.", correct = TRUE),
+    answer("In Resampling, the data set is split repeatedly into training and tests
+          sets.", correct = TRUE)
+
+  )
+```
 

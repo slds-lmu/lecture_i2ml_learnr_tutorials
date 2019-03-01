@@ -52,11 +52,11 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```
 
 
-```{r, child="03_tutorial_01_Performance Estimation.Rmd"}
+```{r, child="03_tutorial_01_performance.Rmd"}
 ```
 
-```{r, child="03_tutorial_02_Resampling.Rmd"}
+```{r, child="03_tutorial_02_resampling.Rmd"}
 ```
 
-```{r, child="03_tutorial_03_ROC and confusion matrix.Rmd"}
+```{r, child="03_tutorial_03_ROC.Rmd"}
 ```

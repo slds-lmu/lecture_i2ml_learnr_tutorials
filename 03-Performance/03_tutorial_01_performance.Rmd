@@ -1,20 +1,24 @@
 ## Performance Estimation
 
-**Study Goals**
+### Study Goals
+
+*Theoretical (T)*
 
 - Learn why and what performance estimation is
-- Get familiar with the training error and test error
+- Get familiar with the training error and the test error
 
-**Preparation**
+### Preparation
 
-Watch the following video (sorry, rather low volume...):
-<center>
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
 ![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
-</center>
+    </center>
 
-**Exercises**
+### Exercises
 
-```{r basics-quiz, echo=FALSE}
+#### *(T)* Quiz
+
+```{r performance-quiz, echo=FALSE}
 # quiz(caption = "Basic Terminology",
   question("Which statements are true?",
     answer("We can reduce the model's variance on the cost of its bias and vice versa by controlling the model complexity.", correct = TRUE),
