@@ -40,12 +40,13 @@
 
 #### *(P)* Create the `mlr` learner
 
-Create a random forest task with the following data using the `randomForest` function from the same named package `randomForest`:
+Create a random forest task with the `spirals` data using the `randomForest` function from package `randomForest`:
 
-```{r randomForest-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("rf_task")}
-data = mlbench.spirals(500, sd = 0.1)
-data = as.data.frame(data)
-rf_task = 
+```{r randomForest-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("spirals_task")}
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = 
 ```
 
 ```{r randomForest-definition-hint-1, eval=FALSE}
@@ -55,15 +56,16 @@ makeClassifTask(...)
 
 
 ```{r randomForest-definition-check}
-data = mlbench.spirals(500, sd = 0.1)
-data = as.data.frame(data)
-rf_task = makeClassifTask(data = data, target = "classes")
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
 ```
 
 
 #### *(P)* Train the `mlr` learner
 
-Now train the learner on the rf_task:
+Now train the learner on the spirals_task:
 ```{r randomForest-definition1, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("rf_learner")}
 rf_learner =
 ```
@@ -83,9 +85,10 @@ rf_learner = makeLearner("classif.randomForest")
 Again, define the `rf_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `ntrees`. What can you observe by varying the hyperparameter?
 
 ```{r, include=FALSE}
-data = mlbench.spirals(500, sd = 0.1)
-data = as.data.frame(data)
-rf_task = makeClassifTask(data = data, target = "classes")
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
 rf_learner = makeLearner("classif.randomForest")
 ```
 
