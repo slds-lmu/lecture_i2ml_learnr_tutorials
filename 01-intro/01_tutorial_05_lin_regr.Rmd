@@ -3,7 +3,7 @@
 ```{r, include=FALSE}
 polynomialTrafo = function (data, feature, degree) {
   feature_idx = which(feature == names(data))
-  df_poly = as.data.frame(poly(x = data[[feature]], degree = degree))
+  df_poly = as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
   names(df_poly) = paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
@@ -75,15 +75,18 @@ mtcars_task = makeRegrTask(data = task_data, target = "mpg")
 # helper function to extract polynomial features:
 polynomialTrafo = function (data, feature, degree) {
   feature_idx = which(feature == names(data))
-  df_poly = as.data.frame(poly(x = data[[feature]], degree = degree))
+  df_poly = as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
   names(df_poly) = paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
+# Example: Create polynomial feature map with degree 2 of wt
+data_trafo = polynomialTrafo(mtcars[, c("mpg", "wt")], "wt", 2)
+head(data_trafo)
 ```
 
 #### *(P)* Define the linear model
 
-Now, as for k-NN, define a learner. This use a regression learner of the `lm` function.
+Now, as for k-NN, define a learner. Use a regression learner of the `lm` function.
 
 ```{r lm-learner, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("lm_learner")}
 lm_learner =
@@ -105,15 +108,16 @@ lm_learner = makeLearner("regr.lm")
 
 #### *(P)* Train the linear model
 
-```{r lm-train, exercise=TRUE, exericse.lines=5, exercise.checker=createChecker("lm_model")}
-lm_model =
-```
-
 ```{r, include=FALSE}
 task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
 mtcars_task = makeRegrTask(data = task_data, target = "mpg")
 lm_learner = makeLearner("regr.lm")
 
+```
+
+
+```{r lm-train, exercise=TRUE, exericse.lines=5, exercise.checker=createChecker("lm_model")}
+lm_model =
 ```
 
 ```{r lm-train-check}
@@ -122,7 +126,7 @@ lm_model = train(lm_learner, mtcars_task)
 
 #### *(P)* Visualize the polynomial regression
 
-To draw the lines you can use the code above, try different number of degrees. How does the curve change? What can you observe?
+To draw the curve you can use the code below, try different number of degrees. How does the curve change? What can you observe?
 
 ```{r lm-poly-viz, exercise=TRUE}
 library(ggplot2)
@@ -130,7 +134,8 @@ library(ggplot2)
 # Change degree here
 degree = 3
 
-# You can leave this code as it is:
+# You can leave this code as it is, just use the objects from above and 
+# and use degree as variable in the task data generation:
 task_data = 
 mtcars_task = 
 lm_learner = 

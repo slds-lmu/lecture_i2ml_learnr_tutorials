@@ -101,6 +101,11 @@ kknn_learner = makeLearner("classif.kknn", k = 3)
 
 #### *(P)* Train the `mlr` learner
 
+```{r, include=FALSE}
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+kknn_learner = makeLearner("classif.kknn", k = 3)
+```
+
 Now train the learner on the task defined in session 2:
 
 ```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=createChecker("kknn_model")}
@@ -116,13 +121,9 @@ train(...)
 # Just pass the 'kknn_learner' and the 'iris_task' to train
 ```
 
+
 ```{r kknn-training-solution}
 train(kknn_learner, iris_task)
-```
-
-```{r, include=FALSE}
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-kknn_learner = makeLearner("classif.kknn", k = 3)
 ```
 
 ```{r kknn-training-check}
