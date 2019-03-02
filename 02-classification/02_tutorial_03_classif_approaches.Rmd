@@ -1,6 +1,6 @@
 ## Approaches to Classification
 
-**Study Goals**
+### Study Goals
 
 *Theoretical (T)*
 
@@ -8,9 +8,10 @@
 - Get familiar with LDA, QDA and naive Bayes classifier
 
 *Practical (P)*
+
 - Get to know how to fit a generative model in `mlr`
 
-**Preparation**
+### Preparation
 
 1.  Watch the following video  (sorry, rather low volume...):
     <center>
@@ -19,8 +20,10 @@
 
 
 
-**Exercises**
-
+### Exercises
+  
+#### *(T)* Quiz
+  
 ```{r knn-quiz, echo=FALSE}
 question("Which statements are false?",
   answer("In the LDA, each class density is modeled as a multivariate Gaussian with unequal covariance.", correct = TRUE),

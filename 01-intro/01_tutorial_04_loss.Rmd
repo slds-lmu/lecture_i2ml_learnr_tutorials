@@ -4,11 +4,11 @@
 
 *Theoretical (T)*
 
-- Learn why and how the goodness of the predictions is measured
+- Learn why and how the accuracy of a learner's predictions are measured
 
 *Practical (P)*
 
-- Learn how to get the loss of a model by using `mlr`
+- Learn how to compute the loss of a model using `mlr`
 
 ### Preparation
 

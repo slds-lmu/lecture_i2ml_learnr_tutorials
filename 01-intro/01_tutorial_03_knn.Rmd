@@ -63,12 +63,13 @@ question("Which statements are true?",
          required to predict a new target variable value from a k-NN model."),
   answer("The dimension $p$ of $x$ does not really affect the computational effort
          that is required to predict a new target variable value from a k-NN model."),
-  answer("The presence of irrelevant features haven't any effect on accuracy of k-NN."),
+  answer("The presence of irrelevant features doesn't affect the accuracy of k-NN."),
   answer("k-NN makes no assumptions about the underlying data distribution.",
          correct = TRUE),
   answer("Choosing an odd k can avoid ties in binary classification", correct = TRUE)
 )
 ```
+
 #### *(P)* Create the `mlr` learner
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
@@ -106,7 +107,8 @@ iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Widt
 kknn_learner = makeLearner("classif.kknn", k = 3)
 ```
 
-Now train the learner on the task defined in session 2:
+Now train the learner `kknn_learner` defined above on the task `iris_task` defined in session 2 and
+save the learnt model as `kknn_model`:
 
 ```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=createChecker("kknn_model")}
 kknn_model =
