@@ -1,0 +1,32 @@
+## Practical tips
+
+### Study Goals
+
+- Get familiar with deal with big data
+- Be able know when and which model for a given data is suitable
+- Get to know which algorithms work best
+- How to select a best model
+
+*Theoretical (T)*
+
+
+### Preparation
+
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
+![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
+    </center>
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r randomforest-quiz2, echo=FALSE}
+  question("Which statements are true?",
+    answer("The choice of model depends on the problem structure.", correct = TRUE),
+    answer("In real data sets, missing values are not common."),
+    answer("For good prediction on tabular data, tree ensembles like \textbf{Random Forest} and \textbf{xgboost} (boosted tree stumps) work generally well.",correct = TRUE),
+    answer("If only a small portion of the data contains missing values and the values are MCAR, these observations can be omitted.",correct = TRUE)
+)
+```
+
