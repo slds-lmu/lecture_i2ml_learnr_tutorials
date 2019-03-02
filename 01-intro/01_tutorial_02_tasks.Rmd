@@ -50,7 +50,7 @@ For this exercise, take a look at the [`iris` dataset](https://en.wikipedia.org/
 summary(iris)
 ```
 
-1.  Define a new classification task based on the iris dataset with target variable `Species` and just two features `Sepal.Width` and `Petal.Width`:
+1.  Define a new classification task called `iris_task` based on the `iris` dataset with target variable `Species` and just two features `Sepal.Width` and `Petal.Width`:
 
 ```{r iristask, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("iris_task")}
 iris_task =
