@@ -1,0 +1,108 @@
+## Bagging and Random Forests
+
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn why and how bagging and random forests works
+- Bagging algorithm vs random forest algorithm
+
+*Practical (P)*
+
+- Know how to train a random forest model using `mlr`
+
+
+
+### Preparation
+
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
+![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
+    </center>
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r random forest-quiz1, echo=FALSE}
+  question("Which statements are true?",
+    answer("Bagging works best for unstable learners.", correct = TRUE),
+    answer("For stable estimation methods, bagging mostly degrades performance."),
+    answer("Random forests is a kind of bagging model for trees.", correct = TRUE),
+    answer("The OOB error is similar to cross-validation estimation. It can also be used for a quicker model selection.", 
+           correct = TRUE),
+    answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$",
+           correct = TRUE)
+)
+```
+
+
+#### *(P)* Create the `mlr` learner
+
+Create a random forest task with the `spirals` data using the `randomForest` function from package `randomForest`:
+
+```{r randomForest-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("spirals_task")}
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = 
+```
+
+```{r randomForest-definition-hint-1, eval=FALSE}
+# Use the 'makeClassifTask' function of mlr
+makeClassifTask(...)
+```
+
+
+```{r randomForest-definition-check}
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+```
+
+
+#### *(P)* Train the `mlr` learner
+
+Now train the learner on the spirals_task:
+```{r randomForest-definition1, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("rf_learner")}
+rf_learner =
+```
+
+```{r randomForest-definition1-hint-1, eval=FALSE}
+# Use the 'makeLearner' function of mlr
+makeLearner(...)
+```
+
+```{r randomForest-definition1-check}
+rf_learner = makeLearner("classif.randomForest")
+```
+
+
+#### *(P)* Visualize decision boundaries
+
+Again, define the `rf_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `ntrees`. What can you observe by varying the hyperparameter?
+
+```{r, include=FALSE}
+set.seed(1337)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+rf_learner = makeLearner("classif.randomForest")
+```
+
+```{r randomForest-definition-visualization, exercise=TRUE}
+ntrees = c(1, 10, 20, 100, 1000)
+
+for (nt in ntrees) {
+  print(plotLearnerPrediction(learner = , task = , ntree = nt))
+  pause()
+}
+```
+
+
+
+
+
+
