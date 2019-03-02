@@ -4,11 +4,8 @@
 
 *Theoretical (T)*
 
-- Learn why and how the accuracy of a learner's predictions are measured
-
-*Practical (P)*
-
-- Learn how to compute the loss of a model using `mlr`
+- Learn what a model uses to evaluate how good it performs on the data
+- Learn how the loss choice affects properties of the model
 
 ### Preparation
 
@@ -18,6 +15,8 @@ Watch the following video  (sorry, rather low volume...):
 </center>
 
 ### Exercises
+
+#### *(T)* Quiz
 
 ```{r loss-quiz, echo=FALSE}
 question("Which statements are true?",

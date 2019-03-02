@@ -26,6 +26,9 @@ question("Which statements are true?",
          correct = TRUE),
   answer("In the algorithmic modeling culture, the true mechanism is treated as unknown, while the data modeling                 culture tries to find the true data-generating mechanism.", correct = TRUE),
   answer("The models that are good in prediction are always complex."),
-  answer("Decision trees (random forest) has an excellent prediction accuracy, but it is impossible to interpret the model structure.", correct = TRUE)
+  answer("Decision trees (random forest) has an excellent prediction accuracy, but it is impossible to interpret the model structure.", correct = TRUE),
+  answer("The modeling culture is obsolete because the modeling culture is often better."),
+  answer("In the algorithmic culture much effort is spend in how to get better in generalizing on new data.", correct = TRUE),
+  answer("In the modeling culture much effort is spend in how to correctly model the true unknown (statistical) process.", correct = TRUE)
 )
 ```

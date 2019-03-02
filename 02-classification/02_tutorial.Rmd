@@ -15,6 +15,7 @@ library(learnr)
 library(testwhat)
 library(checkmate)
 library(mlr)
+library(gridExtra)
 
 
 errorToMessage = function (expr)

@@ -6,7 +6,6 @@
   
 - Learn what a classifier is
 - Difference between linear and non-linear classifiers
-- Generative vs. discriminative approach
 
 ### Preparation
 
@@ -22,24 +21,22 @@
   
   
 ```{r classi-quiz1, echo=FALSE}
-question("Which statements are true?",
+quiz(caption = "",
+  question("Which statements are true?",
     answer("Classification is part of supervised learning.", correct = TRUE),
     answer("The decision boundary is independent of the used model."),
     answer("Binary classification uses two discriminant functions."),
     answer("Linear classifiers can just learn linear decision boundaries."),
     answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE),
-         answer("The generative and discriminant approach are basically the same."),
-         answer("The generative approach is a probabilistic approach.", correct = TRUE)
-         
-)
-```
-
-```{r classi-quiz2, echo=FALSE}
-question("Which statements are false?",
-         answer("The discriminant approach assumes a data generating process, in which the data have different distributions, depending on the class. The generative approach attempts to minimize a loss function.", correct = TRUE),
-         answer("Linear discriminant analysis is a discriminant approach, while Quadratic discriminant analysis is not.", correct = TRUE),
-         answer("The discriminant approach tries to model the discriminant score function directly."),
-         answer("Logistic regression is a discriminant approach")
+    answer("The generative and discriminant approach are basically the same."),
+    answer("The generative approach is a probabilistic approach.", correct = TRUE)       
+  ),
+  question("Which statements are false?",
+    answer("The discriminant approach assumes a data generating process, in which the data have different distributions, depending on the class. The generative approach attempts to minimize a loss function.", correct = TRUE),
+    answer("Linear discriminant analysis is a discriminant approach, while Quadratic discriminant analysis is not.", correct = TRUE),
+    answer("The discriminant approach tries to model the discriminant score function directly."),
+    answer("Logistic regression is a discriminant approach")
+  )
 )
 ```
 

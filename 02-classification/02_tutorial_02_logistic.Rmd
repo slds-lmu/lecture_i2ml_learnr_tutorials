@@ -16,7 +16,7 @@
 
 ### Preparation
 
-1.  Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
     ![](https://www.youtube.com/watch?v=l3yBsf7Jq5E&t=0s&index=3&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
     </center>
@@ -28,17 +28,11 @@
 #### *(T)* Quiz
 
 ```{r logi-quiz1, echo=FALSE}
-  question("Which statements are true?",
-    answer("Logistic regression is usually fitted by maximum likelihood with numerical optimization or it can be solved analytically."),
-    answer("Softmax is a generalization of the logistic function.", correct = TRUE),
-    answer("In Logistic regression, the estimator $\\theta$ by optimizing maximum likelihood is identical to the one by minimizing the empirical risk.", correct = TRUE),
-    answer("In a softmax, a numerical trick for avoiding overparameterized is to set $\\theta_{g} = 0$ and only optimize the other $\\theta_{k}$ ($k\\neq g$).", correct = TRUE)
-  )
-```
-
-
-```{r logi-quiz2, echo=FALSE}
 question("Which statements are true?",
+  answer("Logistic regression is usually fitted by maximum likelihood with numerical optimization or it can be solved analytically."),
+  answer("Softmax is a generalization of the logistic function.", correct = TRUE),
+  answer("In Logistic regression, the estimator $\\theta$ by optimizing maximum likelihood is identical to the one by minimizing the empirical risk.", correct = TRUE),
+  answer("In a softmax, a numerical trick for avoiding overparameterized is to set $\\theta_{g} = 0$ and only optimize the other $\\theta_{k}$ ($k\\neq g$).", correct = TRUE),
   answer("Supervised learning tasks are prediction problems.",
          correct = TRUE),
   answer("Unsupervised learning tries to discover structure and patterns in
@@ -55,7 +49,7 @@ question("Which statements are true?",
 )
 ```
 
-### *(P)* Training a logistic regression with `mlr`
+#### *(P)* Training a logistic regression with `mlr`
 
 For this exercise, take a look at the `titanic` dataset from the `titanic` package. Just keep the features `Survived`, `Age`, and `Fare`. Remove all observations with missing values `NA`s:
 
@@ -65,14 +59,14 @@ library(titanic)
 my_titanic =
 ```
 
-```{r titanic-data-1}
+```{r titanic-data-hint-1}
 # Install and library the titanic package or use the namespace titanic to load the 'titanic_train' dataset
 titanic::titanic_train
 ```
 
-```{r titanic-data-2}
+```{r titanic-data-hint-2}
 # Use 'na.omit' to remove all observations that contains missing values
-# na.omit(...)
+na.omit(...)
 ```
 
 ```{r titanic-data-solution}
@@ -85,15 +79,37 @@ my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 
 Now define a classification task `task_titanic` on that dataset with target `Survived`, define a logistic regression learner, and train that learner:
 
+```{r, include=FALSE}
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+```
+
 ```{r titanic-train, exercise=TRUE, exercise.lines=8, exercise.checker=createChecker(c("task_titanic", "learner_titanic", "model_titanic"))}
 task_titanic =
 learner_titanic =
 model_titanic =
 ```
 
-```{r, include=FALSE}
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+```{r titanic-train-hint-1}
+# We have to define a classification task since we are classifying if a passenger survived or not we
+task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
 ```
+
+```{r titanic-train-hint-2}
+# The learner we are looking for is 'classif.logreg'
+learner_titanic = makeLearner("classif.logreg")
+```
+
+```{r titanic-train-hint-3}
+# Finally we have to train the learner
+model_titanic = train(learner_titanic, task_titanic)
+```
+
+```{r titanic-train-solution}
+task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
+learner_titanic = makeLearner("classif.logreg")
+model_titanic = train(learner_titanic, task_titanic)
+```
+
 
 ```{r titanic-train-check}
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
@@ -107,19 +123,18 @@ Finally, visualize the model with `plotLearnerPrediction()`:
 my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
 learner_titanic = makeLearner("classif.logreg")
-model_titanic = train(learner_titanic, task_titanic)
 ```
 
 ```{r titanic-viz, exercise=TRUE}
 plotLearnerPrediction(learner = ..., task = ...)
 ```
 
-### *(P)* Training a logistic regression with non-linear decision boundaries
+#### *(P)* Training a logistic regression with non-linear decision boundaries
 
 ```{r, include=FALSE}
 polynomialTrafo = function (data, feature, degree) {
   feature_idx = which(feature == names(data))
-  df_poly = as.data.frame(poly(x = data[[feature]], degree = degree))
+  df_poly = as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
   names(df_poly) = paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
@@ -127,33 +142,39 @@ polynomialTrafo = function (data, feature, degree) {
 my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 ```
 
-The next demonstration shows how to include the features `Age` and `Fare` as polynomials and the effect on the decision boundary:
+The next demonstration shows how to include the features `Age` and `Fare` as polynomials and the effect on the decision boundary. As mentioned in the video, it is possible to transform a linear classifier into a non-linear classifier by just mapping features into a higher dimensional feature space (feature map):
 
-```{r, include=FALSE}
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
-task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
-learner_titanic = makeLearner("classif.logreg")
-model_titanic = train(learner_titanic, task_titanic)
-```
 ```{r titanic-non-linear, exercise=TRUE}
 library(ggplot2)
 
-# Change degree here
+# Change degree and threshold here:
 degree = 3
+threshold = 0.5
 
-# You can leave this code as it is:
+# You can leave this code as it is, just vary degree and threshold above
+# and see how the prediction surface change:
 task_data = polynomialTrafo(my_titanic, "Age", degree)
 task_data = polynomialTrafo(task_data, "Fare", degree)
 
-titanic_task = 
-logreg_learner = 
-logreg_model = 
+titanic_task = makeClassifTask(data = task_data, target = "Survived")
+titanic_learner = makeLearner("classif.logreg", predict.type = "prob")
+logreg_model = train(titanic_learner, titanic_task)
 
-age_pred = seq(min(titanic_data$Age), max(titanic_data$Age), length.out = 100)
-fare_pred = seq(min(titanic_data$Fare), max(titanic_data$Fare), length.out = 100)
-pred_data = polynomialTrafo(data.frame(hp = hp_pred), "hp", degree)
-
-plot_data = data.frame(mpg_pred = predict(lm_model, newdata = pred_data)$data$response, hp = hp_pred)
-ggplot() + geom_point(data = mtcars, aes(x = hp, y = mpg)) + geom_line(data = plot_data, aes(x = hp, y = mpg_pred))
+age_fare_pred = expand.grid(
+  Age = seq(min(my_titanic$Age), max(my_titanic$Age), length.out = 100),
+  Fare = seq(min(my_titanic$Fare), max(my_titanic$Fare), length.out = 100)
+)
+pred_data = cbind(
+  polynomialTrafo(age_fare_pred[,"Age",drop=FALSE], "Age", degree),
+  polynomialTrafo(age_fare_pred[,"Fare",drop=FALSE], "Fare", degree)
+)
+pred = setThreshold(predict(logreg_model, newdata = pred_data), threshold)
+plot_data = data.frame(pred = pred$data$response, 
+  Age = age_fare_pred$Age, Fare = age_fare_pred$Fare)
+pred_task = setThreshold(predict(logreg_model, titanic_task), threshold)$data$response
+my_titanic$Classified = ifelse(pred_task == my_titanic$Survived, "correct", "wrong")
+ggplot() + 
+  geom_point(data = plot_data, aes(x = Age, y = Fare, color = as.factor(pred)), alpha = 0.2, show.legend = FALSE) +
+  geom_point(data = my_titanic, aes(x = Age, y = Fare, color = as.factor(Survived), shape = Classified), size = 2, show.legend = FALSE)
 ```
 
