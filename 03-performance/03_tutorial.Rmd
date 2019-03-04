@@ -58,5 +58,5 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```{r, child="03_tutorial_02_resampling.Rmd"}
 ```
 
-```{r, child="03_tutorial_03_ROC.Rmd"}
+```{r, child="03_tutorial_03_roc.Rmd"}
 ```
