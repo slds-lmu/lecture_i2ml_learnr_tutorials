@@ -4,9 +4,9 @@
 
 *Theoretical (T)*
   
-- Learn how to get a model with the data modeling culture or the algorithmic modeling culture
-- Interpretability vs predictive accuracy
-- Goodness of model
+- Appreciate the different approaches of the data modeling culture and the algorithmic modeling culture
+- Understand the trade-off betwen interpretability and predictive accuracy
+- Understand the problems of model evaluation and model choice
 
 ### Preparation
 
@@ -24,11 +24,11 @@
 question("Which statements are true?",
   answer("The data modeling culture can lead to irrelevant theory and questionable statistical conclusions.", 
          correct = TRUE),
-  answer("In the algorithmic modeling culture, the true mechanism is treated as unknown, while the data modeling                 culture tries to find the true data-generating mechanism.", correct = TRUE),
-  answer("The models that are good in prediction are always complex."),
-  answer("Decision trees (random forest) has an excellent prediction accuracy, but it is impossible to interpret the model structure.", correct = TRUE),
-  answer("The modeling culture is obsolete because the modeling culture is often better."),
-  answer("In the algorithmic culture much effort is spend in how to get better in generalizing on new data.", correct = TRUE),
-  answer("In the modeling culture much effort is spend in how to correctly model the true unknown (statistical) process.", correct = TRUE)
+  answer("In the algorithmic modeling culture, the true data-generating process is treated as unknown and irrelevant, while the data modeling culture assumes the true data-generating mechanism can be estimated.", correct = TRUE),
+  answer("Models with good predictive performance are always complex."),
+  answer("Random forests often have excellent prediction accuracy, but are impossible to interpret.", correct = TRUE),
+  answer("Data-modeling culture is obsolete because methods developed in the algorithmic modeling culture often perform better."),
+  answer("In the algorithmic modeling culture, much effort is spent on how to improve the generalizability of the model for new data.", correct = TRUE),
+  answer("In the data modeling culture, much effort is spent on how to correctly model the true unknown data-generating process.", correct = TRUE)
 )
 ```
