@@ -4,15 +4,15 @@
 
 *Theoretical (T)*
 
-- Idea of logistic regression
-- Transforming scores to model probabilities with the logistic function
-- Binary classification losses
-- Idea of multinomial regression
+- Understand the way logistic regression works
+- Learn how to transform model scores to model probabilities with the logistic function
+- Get to know binary classification losses
+- Understand the basic idea of multinomial regression
 
 *Practical (P)*
 
 - Be able to train a logistic regression with `R` and `mlr`
-- See how to transform linear into non-linear decision boundaries
+- Practice how to transform linear into (simple) non-linear classifiers
 
 ### Preparation
 
@@ -21,7 +21,7 @@
     ![](https://www.youtube.com/watch?v=l3yBsf7Jq5E&t=0s&index=3&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
     </center>
 
-1.  *(P)* Make sure that you have understand how to define tasks and learner as well as how to train a learner.
+1.  *(P)* Make sure that you have understood how to define tasks and learners and how to train a learner in `mlr`.
 
 ### Exercises
 
@@ -29,29 +29,16 @@
 
 ```{r logi-quiz1, echo=FALSE}
 question("Which statements are true?",
-  answer("Logistic regression is usually fitted by maximum likelihood with numerical optimization or it can be solved analytically."),
-  answer("Softmax is a generalization of the logistic function.", correct = TRUE),
-  answer("In Logistic regression, the estimator $\\theta$ by optimizing maximum likelihood is identical to the one by minimizing the empirical risk.", correct = TRUE),
-  answer("In a softmax, a numerical trick for avoiding overparameterized is to set $\\theta_{g} = 0$ and only optimize the other $\\theta_{k}$ ($k\\neq g$).", correct = TRUE),
-  answer("Supervised learning tasks are prediction problems.",
-         correct = TRUE),
-  answer("Unsupervised learning tries to discover structure and patterns in
-         the training data.",
-         correct = TRUE),
-  answer("Every unsupervised task is internally treated as supervised task."),
-  answer("Unsupervised learning is learning without a target variable.",
-         correct = TRUE),
-  answer("Classification is a supervised leaning task.",
-         correct = TRUE),
-  answer("Regression is a supervised learning task.",
-         correct = TRUE),
-  answer("Clustering is a supervised learning task.")
+  answer("Logistic regression can be fitted by maximum likelihood with numerical optimization or solved analytically."),
+  answer("The softmax function is a generalization of the logistic function.", correct = TRUE),
+  answer("In logistic regression, the parameter vector $\\theta$ that maximizes the model's likelihood is identical to the one minimizing its empirical risk.", correct = TRUE),
+  answer("In softmax regression, we often set $\\theta_{g} = (0, \\dots, 0)^T$ and only optimize the other $\\theta_{k}$ ($k\\neq g$) to avoid overparameterization.", correct = TRUE)
 )
 ```
 
 #### *(P)* Training a logistic regression with `mlr`
 
-For this exercise, take a look at the `titanic` dataset from the `titanic` package. Just keep the features `Survived`, `Age`, and `Fare`. Remove all observations with missing values `NA`s:
+For this exercise, take a look at the `titanic_train` dataset from the `titanic` package. Just keep the features `Survived`, `Age`, and `Fare`. Remove all observations with missing values `NA`s:
 
 ```{r titanic-data, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("my_titanic")}
 library(titanic)
@@ -83,9 +70,9 @@ Now define a classification task `task_titanic` on that dataset with target `Sur
 my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 ```
 
-```{r titanic-train, exercise=TRUE, exercise.lines=8, exercise.checker=createChecker(c("task_titanic", "learner_titanic", "model_titanic"))}
+```{r titanic-train, exercise=TRUE, exercise.lines=8, exercise.checker=createChecker(c("task_titanic", "learner_logreg", "model_titanic"))}
 task_titanic =
-learner_titanic =
+learner_logreg =
 model_titanic =
 ```
 
@@ -96,25 +83,25 @@ task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
 
 ```{r titanic-train-hint-2}
 # The learner we are looking for is 'classif.logreg'
-learner_titanic = makeLearner("classif.logreg")
+learner_logreg = makeLearner("classif.logreg")
 ```
 
 ```{r titanic-train-hint-3}
 # Finally we have to train the learner
-model_titanic = train(learner_titanic, task_titanic)
+model_titanic = train(learner_logreg, task_titanic)
 ```
 
 ```{r titanic-train-solution}
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
-learner_titanic = makeLearner("classif.logreg")
-model_titanic = train(learner_titanic, task_titanic)
+learner_logreg = makeLearner("classif.logreg")
+model_titanic = train(learner_logreg, task_titanic)
 ```
 
 
 ```{r titanic-train-check}
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
-learner_titanic = makeLearner("classif.logreg")
-model_titanic = train(learner_titanic, task_titanic)
+learner_logreg = makeLearner("classif.logreg")
+model_titanic = train(learner_logreg, task_titanic)
 ```
 
 Finally, visualize the model with `plotLearnerPrediction()`:
@@ -122,7 +109,7 @@ Finally, visualize the model with `plotLearnerPrediction()`:
 ```{r, include=FALSE}
 my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
-learner_titanic = makeLearner("classif.logreg")
+learner_logreg = makeLearner("classif.logreg")
 ```
 
 ```{r titanic-viz, exercise=TRUE}
@@ -134,7 +121,7 @@ plotLearnerPrediction(learner = ..., task = ...)
 ```{r, include=FALSE}
 polynomialTrafo = function (data, feature, degree) {
   feature_idx = which(feature == names(data))
-  df_poly = as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
+  df_poly = as.data.frame(poly(data[[feature]], degree))
   names(df_poly) = paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
