@@ -4,8 +4,8 @@
 
 *Theoretical (T)*
   
-- Learn what a classifier is
-- Difference between linear and non-linear classifiers
+- Understand the structure of classification problems
+- Understand the difference between linear and non-linear classifiers
 
 ### Preparation
 
@@ -32,8 +32,9 @@ quiz(caption = "",
     answer("The generative approach is a probabilistic approach.", correct = TRUE)       
   ),
   question("Which statements are false?",
-    answer("The discriminant approach assumes a data generating process, in which the data have different distributions, depending on the class. The generative approach attempts to minimize a loss function.", correct = TRUE),
-    answer("Linear discriminant analysis is a discriminant approach, while Quadratic discriminant analysis is not.", correct = TRUE),
+    answer("The discriminant approach assumes a data generating process in which the features have different distributions conditional on the class of the target variable.", correct = TRUE),
+    answer("The generative approach attempts to minimize a loss function.", correct = TRUE), 
+    answer("Linear discriminant analysis is a discriminant approach, while quadratic discriminant analysis is not.", correct = TRUE),
     answer("The discriminant approach tries to model the discriminant score function directly."),
     answer("Logistic regression is a discriminant approach")
   )
