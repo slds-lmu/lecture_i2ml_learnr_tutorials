@@ -3,7 +3,7 @@
 ```{r, include=FALSE}
 polynomialTrafo = function (data, feature, degree) {
   feature_idx = which(feature == names(data))
-  df_poly = as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
+  df_poly = as.data.frame(poly(data[[feature]], degree))
   names(df_poly) = paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
@@ -75,7 +75,8 @@ mtcars_task = makeRegrTask(data = task_data, target = "mpg")
 # helper function to extract polynomial features:
 polynomialTrafo = function (data, feature, degree) {
   feature_idx = which(feature == names(data))
-  df_poly = as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
+  # function 'poly' creates numerically well-behaved polynomials: orthogonal, etc.
+  df_poly = as.data.frame(poly(data[[feature]], degree))
   names(df_poly) = paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
