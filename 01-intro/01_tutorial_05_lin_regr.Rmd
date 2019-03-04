@@ -136,7 +136,7 @@ library(ggplot2)
 degree = 3
 
 # You can leave this code as it is, just use the objects from above and 
-# and use degree as variable in the task data generation:
+# degree as variable in the task data generation:
 task_data = 
 mtcars_task = 
 lm_learner = 
