@@ -5,7 +5,7 @@
 *Theoretical (T)*
 
 - Learn what a model uses to evaluate how good it performs on the data
-- Learn how the loss choice affects properties of the model
+- Learn how the choice of loss function affects properties of the learner
 
 ### Preparation
 

@@ -13,11 +13,13 @@ polynomialTrafo = function (data, feature, degree) {
 
 *Theoretical (T)*
 
-- Learn how linear regression model works
+- Learn how linear regression models work
+- Learn how to transform linear regression into a nonlinear method
 
 *Practical (P)*
 
 - Get to know how to fit a linear regression model in `mlr`
+- Get to know how to fit a simple non-linear regression model in `mlr`
 
 ### Preparation
 
