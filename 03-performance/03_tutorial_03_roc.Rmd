@@ -13,7 +13,7 @@
     <center>
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
     </center>
-
+1. *(P)* Read the `mlr` tutorial about [Predicting Outcomes for New Data](https://mlr.mlr-org.com/articles/tutorial/predict.html#classification-confusion-matrix)
 
 ```{r ROC-quiz, echo=FALSE}
   question("Which statements are false?",
@@ -25,4 +25,42 @@
     answer("In a ROC curve, the best classifier lies on the top-right corner.", correct = TRUE),
     answer("AUC = 0 means that all negatives are ranked higher than all positives.")
   )
+```
+#### *(P)* Define a 
+
+For this exercise we want to predicte the class labels on the iris task (iris.task) with the LDA learner ("classif.lda") and calculate the confusion matrix of the predictions.
+
+
+
+```{r confusion, exercise=TRUE, exercise.lines=10, exercise.checker=confusionChecker}
+learner = "classif.lda"
+task = iris.task
+mod = train(learner , task)
+pred = 
+con_matrix =
+```
+
+```{r confusion-hint-1}
+predict(...)
+```
+
+```{r confusion-hint-2}
+calculateConfusionMatrix(...)
+```
+
+
+```{r resample-solution}
+learner = "classif.lda"
+task = iris.task
+mod = train(learner , task)
+pred = predict(mod, task)
+con_matrix = calculateConfusionMatrix(pred)
+```
+
+```{r resample-check}
+learner = "classif.lda"
+task = iris.task
+mod = train(learner , task)
+pred = predict(mod, task)
+con_matrix = calculateConfusionMatrix(pred)
 ```
