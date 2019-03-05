@@ -3,7 +3,7 @@
 ### Study Goals
 
 *Theoretical (T)*
-  
+
 - Appreciate the different approaches of the data modeling culture and the algorithmic modeling culture
 - Understand the trade-off betwen interpretability and predictive accuracy
 - Understand the problems of model evaluation and model choice
@@ -11,18 +11,19 @@
 ### Preparation
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
-  <center>
-![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
-  </center>
+    <center>
+    ![](https://youtu.be/7YTswPpzxO4){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-cultures.pdf" target="_blank">Slideset</a>
 
- 
+
 ### Exercises
-  
+
 #### *(T)* Quiz
 
 ```{r Two Cultures of Statistical-quiz, echo=FALSE}
 question("Which statements are true?",
-  answer("The data modeling culture can lead to irrelevant theory and questionable statistical conclusions.", 
+  answer("The data modeling culture can lead to irrelevant theory and questionable statistical conclusions.",
          correct = TRUE),
   answer("In the algorithmic modeling culture, the true data-generating process is treated as unknown and irrelevant, while the data modeling culture assumes the true data-generating mechanism can be estimated.", correct = TRUE),
   answer("Models with good predictive performance are always complex."),

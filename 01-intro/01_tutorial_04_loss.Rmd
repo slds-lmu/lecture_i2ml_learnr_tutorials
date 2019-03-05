@@ -9,10 +9,11 @@
 
 ### Preparation
 
-Watch the following video  (sorry, rather low volume...):
-<center>
-![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
-</center>
+1. *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
+    ![](https://youtu.be/PIj0HR4lUOg){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-loss.pdf" target="_blank">Slideset</a>
 
 ### Exercises
 

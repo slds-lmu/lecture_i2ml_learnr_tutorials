@@ -25,8 +25,9 @@ polynomialTrafo = function (data, feature, degree) {
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
-    ![](https://www.youtube.com/watch?v=v9eocCAfJ_w&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=6&t=0s){width="75%"}
+    ![](https://youtu.be/saf0rLmoEjE){width="75%"}
     </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-limo.pdf" target="_blank">Slideset</a>
 
 1.  *(P)* Make sure that you have understand how to define tasks and learner as well as how to train a learner.
 
@@ -48,7 +49,7 @@ question("What statements are true?",
 
 Create a regression task using the `mtcars` dataset with target variable `mpg` and polynomial feature `hp` of degree 3 (use the helper function below to generate a dataset for polynomial regression):
 
-```{r mtcars-task, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker(c("task_data", "mtcars_task"))}
+```{r mtcars-task, exercise=TRUE, exercise.lines=5, exercise.checker=taskChecker("mtcars_task")}
 task_data =
 mtcars_task =
 ```
@@ -91,7 +92,7 @@ head(data_trafo)
 
 Now, as for k-NN, define a learner. Use a regression learner of the `lm` function.
 
-```{r lm-learner, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("lm_learner")}
+```{r lm-learner, exercise=TRUE, exercise.lines=5, exercise.checker=learnerChecker("lm_learner")}
 lm_learner =
 ```
 
@@ -103,6 +104,10 @@ listLearners()
 ```{r lm-learner-hint-2}
 # You can pass the task to get suitable learner
 listLearners(mtcars_task)
+```
+
+```{r lm-learner-solution}
+lm_learner = makeLearner("regr.lm")
 ```
 
 ```{r lm-learner-check}
@@ -119,8 +124,12 @@ lm_learner = makeLearner("regr.lm")
 ```
 
 
-```{r lm-train, exercise=TRUE, exericse.lines=5, exercise.checker=createChecker("lm_model")}
+```{r lm-train, exercise=TRUE, exericse.lines=5, exercise.checker=modelChecker("lm_model")}
 lm_model =
+```
+
+```{r lm-train-solution}
+lm_model = train(lm_learner, mtcars_task)
 ```
 
 ```{r lm-train-check}
@@ -137,16 +146,23 @@ library(ggplot2)
 # Change degree here
 degree = 3
 
-# You can leave this code as it is, just use the objects from above and 
+# You can leave this code as it is, just use the objects from above and
 # degree as variable in the task data generation:
-task_data = 
-mtcars_task = 
-lm_learner = 
-lm_model = 
+task_data =
+mtcars_task =
+lm_learner =
+lm_model =
 
 hp_pred = seq(min(mtcars$hp), max(mtcars$hp), length.out = 100)
 pred_data = polynomialTrafo(data.frame(hp = hp_pred), "hp", degree)
 
 plot_data = data.frame(mpg_pred = predict(lm_model, newdata = pred_data)$data$response, hp = hp_pred)
 ggplot() + geom_point(data = mtcars, aes(x = hp, y = mpg)) + geom_line(data = plot_data, aes(x = hp, y = mpg_pred))
+```
+
+```{r lm-poly-viz-hint}
+task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = degree)
+mtcars_task = makeRegrTask(data = task_data, target = "mpg")
+lm_learner = makeLearner("regr.lm")
+lm_model = train(lm_learner, mtcars_task)
 ```

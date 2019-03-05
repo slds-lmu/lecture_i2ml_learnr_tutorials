@@ -16,10 +16,11 @@ iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Widt
 
 ### Preparation
 
-1.  Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
-    ![](https://www.youtube.com/watch?v=hXQq-lryqtE&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=4&t=0s){width="75%"}
+    ![](https://youtu.be/GOsXMlzsSiQ){width="75%"}
     </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-knn.pdf" target="_blank">Slideset</a>
 
 2.  Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them.
 
@@ -73,7 +74,7 @@ question("Which statements are true?",
 #### *(P)* Create the `mlr` learner
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
-```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("kknn_learner")}
+```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=learnerChecker("kknn_learner")}
 kknn_learner =
 ```
 
@@ -110,7 +111,7 @@ kknn_learner = makeLearner("classif.kknn", k = 3)
 Now train the learner `kknn_learner` defined above on the task `iris_task` defined in session 2 and
 save the learnt model as `kknn_model`:
 
-```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=createChecker("kknn_model")}
+```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=modelChecker("kknn_model")}
 kknn_model =
 ```
 
@@ -134,6 +135,10 @@ kknn_model = train(kknn_learner, iris_task)
 
 
 #### *(P)* Visualize decision boundaries
+
+```{r, include=FALSE}
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+```
 
 Again, define the `kknn_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `k`. What can you observe by varying the hyperparameter?
 

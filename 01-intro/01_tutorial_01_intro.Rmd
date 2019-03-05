@@ -10,9 +10,10 @@
 ### Preparation
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
-   <center>
-![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
-   </center>
+    <center>
+    ![](https://youtu.be/2BWKlAOayQI){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-intro.pdf" target="_blank">Slideset</a>
 
 ### Exercises
 

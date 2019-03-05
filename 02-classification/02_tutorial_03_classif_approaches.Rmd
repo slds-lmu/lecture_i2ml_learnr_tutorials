@@ -16,13 +16,14 @@
 
 1.  Watch the following video  (sorry, rather low volume...):
     <center>
-    ![](https://www.youtube.com/watch?v=hXQq-lryqtE&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=4&t=0s){width="75%"}
+    ![](https://youtu.be/yZ5SUWm2zbg){width="75%"}
     </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-classification-approaches.pdf" target="_blank">Slideset</a>
 
 ### Exercises
-  
+
 #### *(T)* Quiz
-  
+
 ```{r classif-approaches-quiz, echo=FALSE}
 question("Which statements are false?",
   answer("In LDA, each class density is modeled as a multivariate Gaussian with unequal covariance.", correct = TRUE),
@@ -54,17 +55,17 @@ gridExtra::grid.arrange(gg1, gg2, gg3, ncol = 1)
 ```
 
 ```{r generative-approaches-hint-2}
-# You can specify the used features in 'plotLearnerPrediction()' by setting the features argument: 
+# You can specify the used features in 'plotLearnerPrediction()' by setting the features argument:
 plotLearnerPrediction("classif.lda", task = iris.task, features = c("Sepal.Length", "Sepal.Width"))
 ```
 
 
 ```{r generative-approaches-solution}
-gg1 = plotLearnerPrediction("classif.lda", task = iris.task, 
+gg1 = plotLearnerPrediction("classif.lda", task = iris.task,
                             features = c("Sepal.Length", "Sepal.Width"))
-gg2 = plotLearnerPrediction("classif.qda", task = iris.task, 
+gg2 = plotLearnerPrediction("classif.qda", task = iris.task,
                             features = c("Sepal.Length", "Sepal.Width"))
-gg3 = plotLearnerPrediction("classif.naiveBayes", task = iris.task, 
+gg3 = plotLearnerPrediction("classif.naiveBayes", task = iris.task,
                             features = c("Sepal.Length", "Sepal.Width"))
 
 gridExtra::grid.arrange(gg1, gg2, gg3, ncol = 1)

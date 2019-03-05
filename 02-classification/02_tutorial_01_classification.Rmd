@@ -3,23 +3,24 @@
 ### Study Goals
 
 *Theoretical (T)*
-  
+
 - Understand the structure of classification problems
 - Understand the difference between linear and non-linear classifiers
 
 ### Preparation
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
-  <center>
-  ![](https://www.youtube.com/watch?v=T2Zc_n_E9o4&t=0s&index=2&list=PLMyWaJl2LoXxjj3A-nctKtkG5xJqrdFMU){width="75%"}
-</center>
+    <center>
+    ![](https://youtu.be/ZuGbjJAETdA){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-classification.pdf" target="_blank">Slideset</a>
 
 
 ### Exercises
-  
+
 #### *(T)* Quiz
-  
-  
+
+
 ```{r classi-quiz1, echo=FALSE}
 quiz(caption = "",
   question("Which statements are true?",
@@ -29,11 +30,11 @@ quiz(caption = "",
     answer("Linear classifiers can just learn linear decision boundaries."),
     answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE),
     answer("The generative and discriminant approach are basically the same."),
-    answer("The generative approach is a probabilistic approach.", correct = TRUE)       
+    answer("The generative approach is a probabilistic approach.", correct = TRUE)
   ),
   question("Which statements are false?",
     answer("The discriminant approach assumes a data generating process in which the features have different distributions conditional on the class of the target variable.", correct = TRUE),
-    answer("The generative approach attempts to minimize a loss function.", correct = TRUE), 
+    answer("The generative approach attempts to minimize a loss function.", correct = TRUE),
     answer("Linear discriminant analysis is a discriminant approach, while quadratic discriminant analysis is not.", correct = TRUE),
     answer("The discriminant approach tries to model the discriminant score function directly."),
     answer("Logistic regression is a discriminant approach")
