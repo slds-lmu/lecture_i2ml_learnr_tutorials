@@ -26,9 +26,9 @@
     answer("AUC = 0 means that all negatives are ranked higher than all positives.")
   )
 ```
-#### *(P)* Define a 
+#### *(P)* Define a confusion matrix
 
-For this exercise we want to predicte the class labels on the iris task (iris.task) with the LDA learner ("classif.lda") and calculate the confusion matrix of the predictions.
+For this exercise we want to predicte the class labels on the iris task (iris.task) with the LDA learner ("classif.lda") and calculate the confusion matrix of these predictions.
 
 
 
@@ -39,25 +39,23 @@ mod = train(learner , task)
 pred = 
 con_matrix =
 ```
-
 ```{r confusion-hint-1}
-predict(...)
+# Function predict() can be useful to get predictions.
 ```
 
 ```{r confusion-hint-2}
-calculateConfusionMatrix(...)
+# A confusion matrix can be obtained by calling calculateConfusionMatrix().
 ```
 
 
-```{r resample-solution}
+```{r confusion-solution}
 learner = "classif.lda"
 task = iris.task
 mod = train(learner , task)
 pred = predict(mod, task)
 con_matrix = calculateConfusionMatrix(pred)
 ```
-
-```{r resample-check}
+```{r confusion-check}
 learner = "classif.lda"
 task = iris.task
 mod = train(learner , task)
