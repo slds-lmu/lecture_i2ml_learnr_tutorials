@@ -25,6 +25,46 @@ errorToMessage = function (expr)
   return(NULL)
 }
 
+taskChecker = function (task_name)
+{
+  # Super ugly, but scoping within the Rmds semms weird...
+  fun_txt = paste0('
+  fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+  {
+    setup_state(sol_code = check_code, stu_code = user_code)
+    msg = errorToMessage(expr = {
+      ex() %>% check_object("', task_name, '", undefined_msg = "No object \'', task_name,
+        '\' found! Please name your task as \'', task_name, '\'.")
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    # Hashing of the data to check independently of column order etc.
+    task_processor = paste0("
+    task = ', task_name, '
+    task_hash = digest::digest(c(
+      digest::digest(sort(sapply(task$env$data, digest::digest))),
+      class(task),
+      digest::digest(task$task.desc$target)
+    ))
+    ")
+    setup_state(sol_code = paste0(check_code, task_processor), stu_code = paste0(user_code, task_processor))
+
+    msg = errorToMessage(expr = {
+      ex() %>% check_object("task") %>% check_element("task.desc")
+      ex() %>% check_object("task") %>% check_element("env")
+      ex() %>% check_object("task_hash") %>% check_equal()
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+  }
+  ')
+  eval(parse(text = fun_txt))
+  return(fun)
+}
+
 createChecker = function (object_names)
 {
   assert_character(object_names)
