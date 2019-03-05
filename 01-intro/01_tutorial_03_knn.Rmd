@@ -93,7 +93,7 @@ makeLearner(...)
 ```
 
 ```{r kknn-definition-solution}
-makeLearner("classif.kknn", k = 3)
+kknn_learner = makeLearner("classif.kknn", k = 3)
 ```
 
 ```{r kknn-definition-check}
@@ -112,24 +112,39 @@ Now train the learner `kknn_learner` defined above on the task `iris_task` defin
 save the learnt model as `kknn_model`:
 
 ```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=modelChecker("kknn_model")}
+iris_task =
+kknn_learner =
+
 kknn_model =
 ```
 
 ```{r kknn-training-hint-1}
+# Use iris_task and kknn_learner from above
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+kknn_learner = makeLearner("classif.kknn", k = 3)
+```
+
+```{r kknn-training-hint-2}
 # Use the train function of mlr
 train(...)
 ```
 
-```{r kknn-training-hint-2}
+```{r kknn-training-hint-3}
 # Just pass the 'kknn_learner' and the 'iris_task' to train
 ```
 
 
 ```{r kknn-training-solution}
-train(kknn_learner, iris_task)
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+kknn_learner = makeLearner("classif.kknn", k = 3)
+
+kknn_model = train(kknn_learner, iris_task)
 ```
 
 ```{r kknn-training-check}
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+kknn_learner = makeLearner("classif.kknn", k = 3)
+
 kknn_model = train(kknn_learner, iris_task)
 ```
 
@@ -144,5 +159,14 @@ Again, define the `kknn_learner` and visualize the prediction of the learner wit
 
 ```{r kknn-visualization, exercise=TRUE}
 kknn_learner =
-plotLearnerPrediction(kknn_learner, task = iris_task)
+iris_task =
+
+plotLearnerPrediction(learner = kknn_learner, task = iris_task)
+```
+
+```{r kknn-visualization-solution}
+kknn_learner = makeLearner("classif.kknn", k = 3)
+iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+
+plotLearnerPrediction(learner = kknn_learner, task = iris_task)
 ```

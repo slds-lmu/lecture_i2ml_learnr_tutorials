@@ -61,12 +61,9 @@ plotLearnerPrediction("classif.lda", task = iris.task, features = c("Sepal.Lengt
 
 
 ```{r generative-approaches-solution}
-gg1 = plotLearnerPrediction("classif.lda", task = iris.task,
-                            features = c("Sepal.Length", "Sepal.Width"))
-gg2 = plotLearnerPrediction("classif.qda", task = iris.task,
-                            features = c("Sepal.Length", "Sepal.Width"))
-gg3 = plotLearnerPrediction("classif.naiveBayes", task = iris.task,
-                            features = c("Sepal.Length", "Sepal.Width"))
+gg1 = plotLearnerPrediction("classif.lda", task = iris.task, features = c("Sepal.Length", "Sepal.Width"))
+gg2 = plotLearnerPrediction("classif.qda", task = iris.task, features = c("Sepal.Length", "Sepal.Width"))
+gg3 = plotLearnerPrediction("classif.naiveBayes", task = iris.task, features = c("Sepal.Length", "Sepal.Width"))
 
 gridExtra::grid.arrange(gg1, gg2, gg3, ncol = 1)
 ```

@@ -76,7 +76,7 @@ na.omit(...)
 ```
 
 ```{r titanic-data-solution}
-na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 ```
 
 ```{r titanic-data-check}
@@ -90,6 +90,7 @@ my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 ```
 
 ```{r titanic-train, exercise=TRUE, exercise.lines=8, exercise.checker=modelChecker("model_titanic")}
+my_titanic =
 task_titanic =
 learner_logreg =
 model_titanic =
@@ -111,6 +112,7 @@ model_titanic = train(learner_logreg, task_titanic)
 ```
 
 ```{r titanic-train-solution}
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
 learner_logreg = makeLearner("classif.logreg")
 model_titanic = train(learner_logreg, task_titanic)
@@ -118,6 +120,7 @@ model_titanic = train(learner_logreg, task_titanic)
 
 
 ```{r titanic-train-check}
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
 learner_logreg = makeLearner("classif.logreg")
 model_titanic = train(learner_logreg, task_titanic)
@@ -125,19 +128,25 @@ model_titanic = train(learner_logreg, task_titanic)
 
 Finally, visualize the model with `plotLearnerPrediction()`:
 
-```{r, include=FALSE}
+```{r titanic-viz, exercise=TRUE}
+my_titanic =
+task_titanic =
+learner_logreg =
+
+plotLearnerPrediction(learner = ..., task = ...)
+```
+
+```{r titanic-viz-solution}
 my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
 learner_logreg = makeLearner("classif.logreg")
-```
 
-```{r titanic-viz, exercise=TRUE}
-plotLearnerPrediction(learner = ..., task = ...)
+plotLearnerPrediction(learner = learner_logreg, task = task_titanic)
 ```
 
 #### *(P)* Training a logistic regression with non-linear decision boundaries
 
-```{r, include=FALSE}
+```{r titanic-non-linear-setup}
 polynomialTrafo = function (data, feature, degree) {
   feature_idx = which(feature == names(data))
   # df_poly = as.data.frame(poly(data[[feature]], degree))
@@ -147,8 +156,6 @@ polynomialTrafo = function (data, feature, degree) {
   names(df_poly) = paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
-
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 ```
 
 The next demonstration shows how to include the features `Age` and `Fare` as polynomials and the effect on the decision boundary. As mentioned in the video, it is possible to transform a linear classifier into a non-linear classifier by just mapping features into a higher dimensional feature space (feature map):
@@ -162,6 +169,8 @@ threshold = 0.5
 
 # You can leave this code as it is, just vary degree and threshold above
 # and see how the prediction surface change:
+my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+
 task_data = polynomialTrafo(my_titanic, "Age", degree)
 task_data = polynomialTrafo(task_data, "Fare", degree)
 

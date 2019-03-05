@@ -73,7 +73,7 @@ iris[, c("Species", "Sepal.Width", "Petal.Width")]
 ```
 
 ```{r iristask-solution}
-makeClassifTask(data = iris[, c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+iris_task = makeClassifTask(data = iris[, c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
 ```
 
 ```{r iristask-check}
