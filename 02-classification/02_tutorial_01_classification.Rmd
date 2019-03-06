@@ -5,7 +5,7 @@
 *Theoretical (T)*
 
 - Understand the structure of classification problems
-- Understand the difference between linear and non-linear classifiers
+- Understand the differences between linear and non-linear classifiers
 
 ### Preparation
 
@@ -24,7 +24,7 @@
 ```{r classi-quiz1, echo=FALSE}
 quiz(caption = "",
   question("Which statements are true?",
-    answer("Classification is part of supervised learning.", correct = TRUE),
+    answer("Classification is a supervised learning task.", correct = TRUE),
     answer("The decision boundary is independent of the used model."),
     answer("Binary classification uses two discriminant functions."),
     answer("Linear classifiers can just learn linear decision boundaries."),

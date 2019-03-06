@@ -5,7 +5,7 @@
 *Theoretical (T)*
 
 - Appreciate the different approaches of the data modeling culture and the algorithmic modeling culture
-- Understand the trade-off betwen interpretability and predictive accuracy
+- Understand the trade-off between interpretability and predictive accuracy
 - Understand the problems of model evaluation and model choice
 
 ### Preparation

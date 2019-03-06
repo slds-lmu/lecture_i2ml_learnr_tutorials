@@ -12,7 +12,7 @@
 *Practical (P)*
 
 - Be able to train a logistic regression with `R` and `mlr`
-- Practice how to transform linear into (simple) non-linear classifiers
+- Practice how to transform linear classifiers into (simple) non-linear classifiers
 
 ### Preparation
 
@@ -39,7 +39,7 @@ question("Which statements are true?",
 
 #### *(P)* Training a logistic regression with `mlr`
 
-For this exercise, take a look at the `titanic_train` dataset from the `titanic` package. Just keep the features `Survived`, `Age`, and `Fare`. Remove all observations with missing values `NA`s:
+For this exercise, take a look at the `titanic_train` dataset from the `titanic` package. Just keep the features `Survived`, `Age`, and `Fare`. Remove all observations with missing values (`NA`s):
 
 ```{r, include=FALSE}
 titanicChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)

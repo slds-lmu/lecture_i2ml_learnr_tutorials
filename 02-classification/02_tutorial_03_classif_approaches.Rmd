@@ -28,13 +28,13 @@
 question("Which statements are false?",
   answer("In LDA, each class density is modeled as a multivariate Gaussian with unequal covariance.", correct = TRUE),
   answer("In QDA, each class density is modeled as a multivariate Gaussian with equal covariance", correct = TRUE),
-  answer("In the Naive Bayes classifier, covariance matrices can differ over the classes but are assumed to be diagonal.")
+  answer("In the naive Bayes classifier, covariance matrices can differ over the classes but are assumed to be diagonal.")
 )
 ```
 
 #### *(P)* Qualitative comparison of LDA, QDA, and naive Bayes
 
-In this demo we want to compare LDA, QDA, and naive Bayes by looking at the decision boundaries (hint: with `listLearners(properties = "multiclass")` you get a list with all available learner suited for multiclass classification). Use `plotLearnerPrediction()` to visualize the decision boundaries for the features `Sepal.Length` and `Sepal.Width`. You can use the build in iris task `iris.task` of `mlr`. Store the plot for each model and plot them underneath each other with `grid.arrange()` from the `gridExtra` package:
+In this demo we want to compare LDA, QDA, and naive Bayes by looking at the decision boundaries (hint: with `listLearners(properties = "multiclass")` you get a list with all available learners suited for multiclass classification). Use `plotLearnerPrediction()` to visualize the decision boundaries for the features `Sepal.Length` and `Sepal.Width`. You can use the build in iris task `iris.task` of `mlr`. Store the plot for each model and plot them underneath each other with `grid.arrange()` from the `gridExtra` package:
 
 
 ```{r generative-approaches, exercise=TRUE, exercise.lines=8, fig.height=8}
