@@ -1,11 +1,37 @@
 ## ROC and confusion matrix
 
+
+```{r, include=FALSE}
+confusionChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("learner") %>% check_equal()
+    ex() %>% check_object("task") %>% check_equal()
+    ex() %>% check_object("mod") %>% check_equal()
+    ex() %>% check_object("pred") %>% check_equal() 
+    ex() %>% check_object("conf_matrix") %>% check_equal() 
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+
+```
+
 ### Study Goals
 
 *Theoretical (T)*
 
 - Get familiar with confusion matrix and ROC
 - Know how to evaluate the performance of a (multiclass) classifier
+
+*Practical (P)*
+
+- Learn how to define and calculate a confusion matrix with `mlr`
+
 
 ### Preparation
 
@@ -14,6 +40,13 @@
 ![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
     </center>
 1. *(P)* Read the `mlr` tutorial about [Predicting Outcomes for New Data](https://mlr.mlr-org.com/articles/tutorial/predict.html#classification-confusion-matrix)
+
+
+
+### Exercises
+
+#### *(T)* Quiz
+
 
 ```{r ROC-quiz, echo=FALSE}
   question("Which statements are false?",
@@ -26,18 +59,19 @@
     answer("AUC = 0 means that all negatives are ranked higher than all positives.")
   )
 ```
+
 #### *(P)* Define a confusion matrix
 
 For this exercise we want to predicte the class labels on the iris task (iris.task) with the LDA learner ("classif.lda") and calculate the confusion matrix of these predictions.
 
 
 
-```{r confusion, exercise=TRUE, exercise.lines=10, exercise.checker=confusionChecker}
+```{r confusion, exercise=TRUE, exercise.lines=10, exercise.checker=createChecker("conf_matrix")}
 learner = "classif.lda"
 task = iris.task
 mod = train(learner , task)
 pred = 
-con_matrix =
+conf_matrix =
 ```
 ```{r confusion-hint-1}
 # Function predict() can be useful to get predictions.
@@ -53,12 +87,12 @@ learner = "classif.lda"
 task = iris.task
 mod = train(learner , task)
 pred = predict(mod, task)
-con_matrix = calculateConfusionMatrix(pred)
+conf_matrix = calculateConfusionMatrix(pred)
 ```
 ```{r confusion-check}
 learner = "classif.lda"
 task = iris.task
 mod = train(learner , task)
 pred = predict(mod, task)
-con_matrix = calculateConfusionMatrix(pred)
+conf_matrix = calculateConfusionMatrix(pred)
 ```
