@@ -62,7 +62,7 @@ confusionChecker = function (label, user_code, check_code, envir_result, evaluat
 
 #### *(P)* Define a confusion matrix
 
-For this exercise we want to predicte the class labels on the iris task (iris.task) with the LDA learner ("classif.lda") and calculate the confusion matrix of these predictions.
+For this exercise we want to predict the class labels on the iris task with the LDA learner and calculate the confusion matrix with relative frequencies of these predictions. Finally, we want to add the absolute number of observations for each predicted and true class label to the matrix (both absolute and relative).
 
 
 
@@ -74,25 +74,32 @@ pred =
 conf_matrix =
 ```
 ```{r confusion-hint-1}
-# Function predict() can be useful to get predictions.
+# Function predict() can be used.
 ```
 
 ```{r confusion-hint-2}
 # A confusion matrix can be obtained by calling calculateConfusionMatrix().
 ```
 
+```{r confusion-hint-3}
+relative = TRUE
+```
+
+```{r confusion-hint-4}
+sums = TRUE
+```
 
 ```{r confusion-solution}
 learner = "classif.lda"
 task = iris.task
 mod = train(learner , task)
 pred = predict(mod, task)
-conf_matrix = calculateConfusionMatrix(pred)
+conf_matrix = calculateConfusionMatrix(pred, relative = TRUE, sums = TRUE)
 ```
 ```{r confusion-check}
 learner = "classif.lda"
 task = iris.task
 mod = train(learner , task)
 pred = predict(mod, task)
-conf_matrix = calculateConfusionMatrix(pred)
+conf_matrix = calculateConfusionMatrix(pred, relative = TRUE, sums = TRUE)
 ```
