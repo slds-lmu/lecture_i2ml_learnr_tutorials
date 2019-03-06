@@ -35,7 +35,7 @@
     answer("Every unsupervised task is internally treated as supervised task."),
     answer("Unsupervised learning is learning without a target variable.",
            correct = TRUE),
-    answer("Classification is a supervised leaning task.",
+    answer("Classification is a supervised learning task.",
            correct = TRUE),
     answer("Regression is a supervised learning task.",
            correct = TRUE),
