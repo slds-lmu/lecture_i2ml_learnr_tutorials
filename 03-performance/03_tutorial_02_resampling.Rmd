@@ -49,13 +49,13 @@ benchmarkChecker = function (label, user_code, check_code, envir_result, evaluat
 *Theoretical (T)*
 
 - Know the goals and the idea of resampling
-- Get familiar with Cross-Validation, Bootstrap, and Subsampling
+- Get familiar with cross-validation, bootstrapping, and subsampling
 
 *Practical (P)*
 
 - Learn how to define and conduct a resampling strategy with `mlr`
-- Get to know how to apply `benchmark` experiments
-- Interpretation and visualization of the benchmark result
+- Find out how to apply `benchmark` experiments
+- Interprete and visualize the benchmark result
 
 ### Preparation
 
@@ -84,7 +84,7 @@ benchmarkChecker = function (label, user_code, check_code, envir_result, evaluat
 
 #### *(P)* Define a resampling strategy
 
-For this exercise we want to evaluate the learner with a 10-fold cross validation. Define the resampling using the function `makeResampleDesc()`:
+For this exercise we want to evaluate the learner with 10-fold cross-validation. Define the resampling using the function `makeResampleDesc()`:
 
 ```{r resample-desc, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("res_desc")}
 res_desc = makeResampleDesc(...)
@@ -110,7 +110,7 @@ res_desc = makeResampleDesc(method = "CV", iters = 10)
 
 #### *(P)* Conduct resampling
 
-Now it is time to evaluate the LDA learner (`"classif.lda`") with the 10-fold cross validation on the iris task (`iris.task`). Therefore, use the `resample()` function and specify the learner, task, and the resampling (the seed is required for checking your result, please let it as `123`, otherwise your results cannot be checked):
+Now it is time to evaluate the LDA learner (`"classif.lda`") with 10-fold cross-validation on the iris task (`iris.task`). Therefore, use the `resample()` function and specify the learner, task, and the resampling (the seed is required for checking your result, please let it as `123`, otherwise your results cannot be checked):
 
 ```{r resample, exercise=TRUE, exercise.lines=10, exercise.checker=resampleChecker}
 learner = 
@@ -162,7 +162,7 @@ set.seed(123)
 res = resample(learner = learner, task = task, resampling = res_desc)
 ```
 
-**Note:** The performance measure can also be specified. But in this example we are using the default measures which is, for multiclass classification, the mean misclassification error.
+**Note:** The performance measure can also be specified. But in this example we are using the default measure which is, for multiclass classification, the mean misclassification error.
 
 ```{r make-resample-desc-quiz, echo=FALSE}
 question("What might be the difference of using build in resample objects like 'cv10' or defining them with 'makeResampleDesc()'?",
@@ -175,7 +175,7 @@ question("What might be the difference of using build in resample objects like '
 
 #### *(P)* Conduct a benchmark
 
-It might be interesting to compare LDA, QDA, and naive Bayes on the iris task. Instead of calling three times the `resample()` function we now use `benchmark()` to compare multiple learner. Therefore, collect the learner to compare within a list and conduct the benchmark. Now, use just a 3-fold cross validation to evaluate the performance:
+It might be interesting to compare LDA, QDA, and naive Bayes on the iris task. Instead of calling three times the `resample()` function we now use `benchmark()` to compare multiple learner. Therefore, collect the learner to compare within a list and conduct the benchmark. Now, use just a 3-fold cross-validation to evaluate the performance:
 
 ```{r benchmark, exercise=TRUE, exercise.lines=10, exercise.checker=benchmarkChecker}
 learners = list(...)
