@@ -2,10 +2,10 @@
 
 ### Study Goals
 
-- Get familiar with deal with big data
-- Be able know when and which model for a given data is suitable
+- Get familiar with dealing with big data
+- Be able to know which model is suitable for given data
 - Get to know which algorithms work best
-- How to select a best model
+- Learn how to select the best model
 
 *Theoretical (T)*
 
@@ -24,8 +24,8 @@
 ```{r randomforest-quiz2, echo=FALSE}
   question("Which statements are true?",
     answer("The choice of model depends on the problem structure.", correct = TRUE),
-    answer("In real data sets, missing values are not common."),
-    answer("For good prediction on tabular data, tree ensembles like \textbf{Random Forest} and \textbf{xgboost} (boosted tree stumps) work generally well.",correct = TRUE),
+    answer("In real life data sets, missing values are not common."),
+    answer("For good prediction on tabular data, tree ensembles like **Random Forest** and **xgboost** (boosted tree stumps) work generally well.",correct = TRUE),
     answer("If only a small portion of the data contains missing values and the values are MCAR, these observations can be omitted.",correct = TRUE)
 )
 ```
