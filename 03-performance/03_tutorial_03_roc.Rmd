@@ -13,6 +13,7 @@
 - Plotting of the ROC
 - Calculating the AUC
 
+
 ### Preparation
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
@@ -27,6 +28,7 @@
 #### *(T)* Quiz
 
 ```{r ROC-quiz, echo=FALSE}
+<<<<<<< HEAD
 question("Which statements are false?",
   answer("If the proportion of positive to negative instances changes, the ROC curve will not change."),
   answer("The evaluation of binary classifiers is only the misclassification error.", correct = TRUE),

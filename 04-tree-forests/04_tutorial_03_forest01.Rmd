@@ -6,7 +6,7 @@
 *Theoretical (T)*
 
 - Learn why and how bagging and random forests works
-- Bagging algorithm vs random forest algorithm
+- Get to know the differences between bagging and random forests
 
 *Practical (P)*
 
