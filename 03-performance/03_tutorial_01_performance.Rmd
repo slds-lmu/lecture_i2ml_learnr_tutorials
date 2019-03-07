@@ -1,18 +1,23 @@
-## Performance Estimation
+## Performance Intro and Simple Metrics
 
 ### Study Goals
 
 *Theoretical (T)*
 
 - Learn what performance estimation is and why it is important
-- Get familiar with the training error and the test error
+- Get familiar with simple performance measures for regression and classification
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following videos (sorry, rather low volume...):
     <center>
-![](https://www.youtube.com/watch?v=xZRyi2xuCd0&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=2&t=0s){width="75%"}
+    ![](https://youtu.be/e4twP-lMPVI){width="75%"}
     </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-intro_performance.pdf" target="_blank">Slideset Introduction</a>
+    <center>
+    ![](https://youtu.be/YPkNPGrdGoY){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-measures.pdf" target="_blank">Slideset Simple Metrics</a>
 
 ### Exercises
 
@@ -21,10 +26,15 @@
 ```{r performance-quiz, echo=FALSE}
 # quiz(caption = "Basic Terminology",
   question("Which statements are true?",
-    answer("We can reduce the model's variance at the cost of its bias and vice versa by controlling the model complexity.", correct = TRUE),
+    answer("We want to know, how the model performs on new unseen data.", correct = TRUE),
     answer("In logistic regression we minimize the binomial loss and in kNN there is no explicit loss minimization.",correct = TRUE),
-     answer("Goodness-of-fit measures like $R^2$, likelihood, AIC, BIC, deviance are all based on the test error"),
-    answer("The training error is usually a very unreliable and overly optimistic estimator of future performance.", correct = TRUE)
+    answer("Goodness-of-fit measures like $R^2$, likelihood, AIC, BIC, deviance are all based on the test error"),
+    answer("All outer losses can also be used as inner loss."),
+    answer("The MSE is also used in the linear model to find the best parameter estimator.", correct = TRUE),
+    answer("Assuming a linear model without intercept, then it is possible that the $R^2$ is smaller than 0 or greater than 1.", correct = TRUE),
+    answer("The brier score covers how well the predicted probabilities are calibrated.", correct = TRUE),
+    answer("The log-loss can be calculated by assuming that the target variable is normally distributed."),
+    answer("The accuracy and mean classification error are calculated using the predicted probabilities.")
 )
 ```
 

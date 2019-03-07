@@ -16,19 +16,24 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following videos  (sorry, rather low volume...):
     <center>
-![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
+    ![](https://youtu.be/lPHTqGWRciQ){width="75%"}
     </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-1.pdf" target="_blank">Slideset Part 1</a>
+    <center>
+    ![](https://youtu.be/1bitCgn_D6o){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-2.pdf" target="_blank">Slideset Part 2</a>
 
 1. *(P)* Read the `mlr` tutorial about [roc curves](https://mlr.mlr-org.com/articles/tutorial/roc_analysis.html)
+1. *(P)* You should have done the tutorial on resampling
 
 ### Exercises
 
 #### *(T)* Quiz
 
 ```{r ROC-quiz, echo=FALSE}
-<<<<<<< HEAD
 question("Which statements are false?",
   answer("If the proportion of positive to negative instances changes, the ROC curve will not change."),
   answer("The evaluation of binary classifiers is only the misclassification error.", correct = TRUE),
@@ -342,7 +347,7 @@ set.seed(123)
 res = resample(learner = learner, task = spam.task, resampling = cv3)
 ```
 
-```{r}
+```{r test-pred-res-hint-2}
 # To access the test predictions of each fold select the 'data' element of res
 test_prediction = res$pred
 ```

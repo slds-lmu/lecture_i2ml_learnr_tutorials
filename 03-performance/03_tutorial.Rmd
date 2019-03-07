@@ -15,6 +15,7 @@ library(learnr)
 library(testwhat)
 library(checkmate)
 library(mlr)
+library(kknn)
 
 errorToMessage = function (expr)
 {
@@ -192,8 +193,11 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```{r, child="03_tutorial_01_performance.Rmd"}
 ```
 
-```{r, child="03_tutorial_02_resampling.Rmd"}
+```{r, child="03_tutorial_02_overfitting.Rmd"}
 ```
 
-```{r, child="03_tutorial_03_roc.Rmd"}
+```{r, child="03_tutorial_03_resampling.Rmd"}
+```
+
+```{r, child="03_tutorial_04_roc.Rmd"}
 ```
