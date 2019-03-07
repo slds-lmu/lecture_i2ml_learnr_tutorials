@@ -21,7 +21,7 @@
 ```{r tree-quiz2, echo=FALSE}
   question("Which statements about CART are true?",
     answer("Monotone transformations of several features will change the structure of the tree."),
-    answer("The CART algorithm can not go on training if every node contains exaclty one observation",correct = TRUE),
+    answer("The CART algorithm cannot go on training if every node contains exaclty one observation",correct = TRUE),
     answer("The prediction function isn't smooth because a step function is fitted.",correct = TRUE),
     answer("Really not the best predictor.",correct = TRUE),
     answer("Getting into trouble with outliers in features."),
