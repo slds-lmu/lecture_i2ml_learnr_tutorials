@@ -3,14 +3,17 @@
 ```{r, include=FALSE}
 resampleChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
 {
+  msg = taskChecker("task")(label, user_code, check_code, envir_result, evaluate_result)
+  if (! is.null(msg))
+    return(msg)
+
   setup_state(sol_code = check_code, stu_code = user_code)
 
   msg = errorToMessage(expr = {
     ex() %>% check_object("learner") %>% check_equal()
-    ex() %>% check_object("task") %>% check_equal()
     ex() %>% check_object("res_desc") %>% check_equal()
-    ex() %>% check_object("res") %>% check_element("measures.train") %>% check_equal() 
-    ex() %>% check_object("res") %>% check_element("measures.test") %>% check_equal() 
+    ex() %>% check_object("res") %>% check_element("measures.train") %>% check_equal()
+    ex() %>% check_object("res") %>% check_element("measures.test") %>% check_equal()
   })
   if (! is.null(msg))
     return(msg)
@@ -101,7 +104,7 @@ iters = 10
 ```
 
 ```{r resample-desc-solution}
-makeResampleDesc(method = "CV", iters = 10)
+res_desc = makeResampleDesc(method = "CV", iters = 10)
 ```
 
 ```{r resample-desc-check}
@@ -113,8 +116,8 @@ res_desc = makeResampleDesc(method = "CV", iters = 10)
 Now it is time to evaluate the LDA learner (`"classif.lda`") with the 10-fold cross validation on the iris task (`iris.task`). Therefore, use the `resample()` function and specify the learner, task, and the resampling (the seed is required for checking your result, please let it as `123`, otherwise your results cannot be checked):
 
 ```{r resample, exercise=TRUE, exercise.lines=10, exercise.checker=resampleChecker}
-learner = 
-task = 
+learner =
+task =
 res_desc =
 
 set.seed(123)
@@ -128,9 +131,9 @@ learner = makeLearner(classif.lda)
 ```
 
 ```{r resample-hint-2}
-# For the task use the build in `iris.task` or define it by yourself. Note, if you define the task by yourself use `id = "iris.example"`
+# For the task use the build in `iris.task` or define it by yourself
 task = iris.task
-task = makeClassifTask(id = "iris-example", data = iris, target = "Species")
+task = makeClassifTask(data = iris, target = "Species")
 ```
 
 ```{r resample-hint-3}
@@ -162,7 +165,7 @@ set.seed(123)
 res = resample(learner = learner, task = task, resampling = res_desc)
 ```
 
-**Note:** The performance measure can also be specified. But in this example we are using the default measures which is, for multiclass classification, the mean misclassification error.
+**Note:** The performance measure can also be specified, but in this example we are using the default measures which is, for multiclass classification, the mean misclassification error.
 
 ```{r make-resample-desc-quiz, echo=FALSE}
 question("What might be the difference of using build in resample objects like 'cv10' or defining them with 'makeResampleDesc()'?",
@@ -180,11 +183,11 @@ It might be interesting to compare LDA, QDA, and naive Bayes on the iris task. I
 ```{r benchmark, exercise=TRUE, exercise.lines=10, exercise.checker=benchmarkChecker}
 learners = list(...)
 task =
-res_desc = 
+res_desc =
 
 set.seed(123)
-bmr = benchmark(...) 
-``` 
+bmr = benchmark(...)
+```
 
 ```{r benchmark-hint-1}
 # To compare multiple learner collect hem within a list
@@ -204,7 +207,7 @@ res_desc = makeResampleDesc(method = "CV", iters = 3)
 
 ```{r benchmark-hint-4}
 # Finally call benchmark
-bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc) 
+bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc)
 ```
 
 ```{r benchmark-solution}
@@ -213,7 +216,7 @@ task = iris.task
 res_desc = cv3
 
 set.seed(123)
-bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc) 
+bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc)
 ```
 
 ```{r benchmark-check}
@@ -222,7 +225,7 @@ task = iris.task
 res_desc = cv3
 
 set.seed(123)
-bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc) 
+bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc)
 ```
 
 #### *(P)* Visualize the benchmark
@@ -231,6 +234,13 @@ Finally, visualize the benchmark result with `plotBMRBoxplots()`
 
 ```{r bmr-viz, exercise=TRUE, exercise.lines=8}
 set.seed(123)
+bmr =
+
+plotBMRBoxplots(bmr)
+```
+
+```{r bmr-viz-solution}
+set.seed(123)
 bmr = benchmark(learner = list("classif.lda", "classif.qda", "classif.naiveBayes"), tasks = iris.task, resamplings = cv10)
 
 plotBMRBoxplots(bmr)
@@ -238,6 +248,7 @@ plotBMRBoxplots(bmr)
 
 ```{r bmr-viz-quiz, echo=FALSE}
 question("What can you observe?",
+  answer("The boxplots are drawn by taking the estimated performance of each fold.", correct = TRUE),
   answer("The median of LDA and QDA is zero.", correct = TRUE),
   answer("LDA seems to work best on the iris task.", correct = TRUE),
   answer("QDA and naive Bayes works equally good."),
