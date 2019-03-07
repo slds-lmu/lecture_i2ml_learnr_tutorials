@@ -4,7 +4,7 @@
 
 *Theoretical (T)*
 
-- Why tuning is important
+- Learn why tuning is important
 - Get familiar with tuning
 
 
@@ -22,7 +22,7 @@
 ```{r random forest-quiz1, echo=FALSE}
   question("Which statements are true?",
     answer("Tuning means optimizing hyperparameters.", correct = TRUE),
-    answer("Doing tuning well is hard, nested resampling can help.", correct = TRUE),
+    answer("Doing tuning well is hard; nested resampling can help.", correct = TRUE),
     answer("Good tuning is crucial to achieve good performance for all ML algorithms."),
     answer("Parallelization is trivial for tuning.", correct = TRUE)
     

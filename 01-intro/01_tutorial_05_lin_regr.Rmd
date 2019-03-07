@@ -20,7 +20,7 @@
     </center>
     <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-limo.pdf" target="_blank">Slideset</a>
 
-1.  *(P)* Make sure that you have understand how to define tasks and learner as well as how to train a learner.
+1.  *(P)* Make sure that you have understood how to define tasks and learners as well as how to train a learner.
 
 ### Exercises
 
@@ -31,7 +31,7 @@ question("What statements are true?",
   answer("The target in linear regression has to be numeric", correct = TRUE),
   answer("The features in the linear model can also just be numerical"),
   answer("The linear model is linear regression with L2-loss", correct = TRUE),
-  answer("It's just possible to model linear effects of a feature"),
+  answer("Using linear regression it is only possible to model linear effects of a feature"),
   answer("Overfitting is a present danger in polynomial regression", correct = TRUE)
 )
 ```
@@ -184,7 +184,7 @@ lm_model = train(lm_learner, mtcars_task)
 
 #### *(P)* Visualize the polynomial regression
 
-To draw the curve you can use the code below, try different number of degrees. How does the curve change? What can you observe?
+To draw the curve you can use the code below, try different values for `degree`. How does the curve change? What can you observe?
 
 ```{r lm-poly-viz-setup}
 polynomialTrafo = function (data, feature, degree) {
