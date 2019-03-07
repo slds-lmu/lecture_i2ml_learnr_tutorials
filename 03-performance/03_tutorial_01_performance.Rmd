@@ -13,7 +13,7 @@
     <center>
     ![](https://youtu.be/e4twP-lMPVI){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-intro_performance.pdf" target="_blank">Slideset Introduction</a>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-intro-performance.pdf" target="_blank">Slideset Introduction</a>
     <center>
     ![](https://youtu.be/YPkNPGrdGoY){width="75%"}
     </center>
