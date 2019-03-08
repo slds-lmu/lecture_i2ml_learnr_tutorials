@@ -1,0 +1,29 @@
+## Nested Resampling
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn why and how nested resampling works
+
+### Preparation
+
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
+    ![](https://www.youtube.com/watch?v=pFWVIGPpupk&t=0s&index=3&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-cart2.pdf" target="_blank">Slideset</a>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r tree-quiz2, echo=FALSE}
+question("Which statements about nested resampling are true?",
+  answer("The result of nested resampling is just one value, the estimated generalization error.", correct = TRUE)
+  answer("Evaluating a linear model requires nested resampling."),
+  answer("Nested resampling is super expensive.",correct = TRUE),
+  answer("Choosing the correct resampling strategy is not as important as choosing the correct model.")
+)
+```
