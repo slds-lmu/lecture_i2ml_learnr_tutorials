@@ -7,12 +7,12 @@
 
 - Learn why and how bagging works
 - Get to know the differences between bagging and random forests
-- See how feature importance can be calculated with the random forest
+- See how feature importance can be calculated with a random forest
 
 *Practical (P)*
 
 - Know how to train a random forest model using `mlr`
-- Effect of the number of trees on the performance
+- Understand how the number of trees affect the performance
 
 
 
@@ -38,13 +38,13 @@
 question("Which statements are true?",
   answer("Bagging works best for unstable learners.", correct = TRUE),
   answer("For stable estimation methods, bagging mostly degrades performance."),
-  answer("Random forests is a kind of bagging model for trees.", correct = TRUE),
-  answer("The OOB error is similar to cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
+  answer("A random forest is a bagging model for trees.", correct = TRUE),
+  answer("The OOB error shares similarities with cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
   answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$", correct = TRUE),
   answer("Often works well enough.", correct = TRUE),
   answer("It can work also on high-dimensional data.", correct = TRUE),
-  answer("Proximities are used in replacing missing data, but not locating outliers."),
-  answer("For each variable, the improvement is accumulated over all trees for the importance measure.", correct = TRUE),
+  answer("Proximities are used in replacing missing data, but not in locating outliers."),
+  answer("For each variable, the improvement is accumulated over all trees for the variable importance measure.", correct = TRUE),
   answer("The random forest is a bad out of the box model and requires tuning of hyperparameters."),
   answer("The random forest is often used as base-line model due to its good out of the box performance.", correct = TRUE)
 )
@@ -118,14 +118,14 @@ plotLearnerPrediction(rf_learner, spirals_task)
 
 #### *(P)* Benchmarking the random forest
 
-Now its time to try different values for the number of trees and see if this has any influence on the performance. We also want to compare the random forests with a single CART. Therefore, define four different learners:
+Now it's time to try different values for the number of trees and see if this has any influence on the performance. Additionally, we want to compare the random forests to a single CART. For this, we define four different learners:
 
 1. A `classif.rpart` without any custom hyperparameters
 1. A `classif.ranger` with 500 trees
 1. A `classif.ranger` with 1000 trees
 1. A `classif.ranger` with 1500 trees
 
-After defining the learner conduct the benchmark using the `benchmark()` function. The interesting measures are the `auc` and `mmce`. Use a 10-fold cross-validation as resampling technique. Finally, visualize the benchmark with `plotBMRBoxplots()`.
+After defining the learners conduct the benchmark using the `benchmark()` function. The interesting measures are `auc` and `mmce`. Use a 10-fold cross-validation as resampling technique. Finally, visualize the benchmark with `plotBMRBoxplots()`.
 
 **Note:** Defining the same learner multiple times for a benchmark requires different ids for each learner (see `id` argument of the learners below).
 
@@ -246,7 +246,7 @@ plotBMRBoxplots(bmr, pretty.names = FALSE)
 ```{r rf-quiz, echo=FALSE}
 question("Which statements are true?",
   answer("CART outperforms the random forest."),
-  answer("Trying different values for the number of trees does not have an effect on the performance.", correct = TRUE),
+  answer("Trying different values for the number of trees does not affect the performance.", correct = TRUE),
   answer("Tuning the number of trees can give a nice performance boost.")
 )
 ```

@@ -36,17 +36,17 @@
 question("Which statements about CART are true?",
   answer("The prediction function defined by a CART divides the target variable into colored rectangles"),
   answer("The prediction function defined by a CART can be described in terms of a nested series of if-else statements about feature values.", correct = TRUE),
-  answer("The prediction function defined by a CART divides the feature space into disjoint rectangles.", correct = TRUE),
+  answer("The prediction function defined by a CART divides the feature space into disjoint hyperrectangles.", correct = TRUE),
   answer("To find optimal splits, one iterates over all features, and for each feature over all possible split points.", correct = TRUE),
   answer("To find optimal splits, we use the one that splits the data approximately in half in each step."),
   answer("To find optimal splits, we evaluate the possible splits only on the data that ended up in the parent node we are trying to split.", correct = TRUE),
-  answer("The optimal split results in the lowest child's empirical Risk of all possible splits.", correct = TRUE),
+  answer("The optimal split results in the lowest child's empirical risk of all possible splits.", correct = TRUE),
   answer("For metric variables, the optimal split point is often not unique in the sense that all values in a certain interval yield the same split of observations in the child nodes.", correct = TRUE),
   answer("Monotone transformations of several features will change the structure of the tree."),
   answer("The CART algorithm cannot go on training if every node contains exactly one observation", correct = TRUE),
   answer("The prediction function isn't smooth because a step function is fitted.", correct = TRUE),
-  answer("CART is a stable algorithm, if the data changes the tree structure remains quite similar."),
-  answer("CART is very sensible in terms of outliers."),
+  answer("CART is a stable algorithm, if the data changes slightly the tree structure remains quite similar."),
+  answer("CART is robust to outliers.", correct = TRUE),
   answer("With trees it is easy to handle missing values.", correct = TRUE),
   answer("A simple tree is everything you need to fit a linear function $y \\approx a + b*x$ with numeric target."),
   answer("A common way to include missing values is to introduce a new category (classification) or as out of range values (regression).", correct = TRUE)
@@ -111,7 +111,7 @@ ggplot(data = spirals, aes(x.1, x.2, color = classes)) + geom_point()
 
 #### *(P)* Create and train the `mlr` CART learner
 
-Use the `classif.rpart` learner to train the tree. Use `minsplit = 20`, `minbucket = 10`, and `cp = 0.01` as hyperparameter:
+Use the `classif.rpart` learner to train the tree. Use `minsplit = 20`, `minbucket = 10`, and `cp = 0.01` as hyperparameters:
 
 ```{r cart-model, exercise=TRUE, exercise.checker=modelChecker("model_cart")}
 library(mlbench)
@@ -169,7 +169,7 @@ model_cart = train(learner_cart, spirals_task)
 
 #### *(P)* Visualize the fitted tree
 
-You can use the function `rpart.plot()` from the equally named package `rpart.plot` to visualize the tree structure. Therefore, you have to access the internal fitted model which is stored as `learner.model` element of the fitted model. Additionally, call `plotLearnerPrediction()` to visualize the decision boundaries:
+You can use the function `rpart.plot()` from the package of the same name `rpart.plot` to visualize the tree structure. For this, you have to access the internal fitted model which is stored as `learner.model` element of the fitted model. Additionally, call `plotLearnerPrediction()` to visualize the decision boundaries:
 
 ```{r cart-viz, exercise=TRUE}
 library(mlbench)
@@ -263,8 +263,8 @@ train_idx = sample(1:500, size = 500, replace = TRUE)
 ```{r cart-viz-data-quiz, echo=FALSE}
 question("Which statements are true?",
   answer("The data situation is still the same, we are just using less unique data points.", correct = TRUE),
-  answer("The tree structure for different data situations remains equally."),
-  answer("The decision boundaries for different data situations remains equally.")
+  answer("The tree structure for different data situations remains the same."),
+  answer("The decision boundaries for different data situations remain the same.")
 )
 ```
 
@@ -301,7 +301,7 @@ question("Which statements are true?",
   answer("Reducing just the complexity `cp` leads to bigger trees."),
   answer("Reducing complexity `cp`, minsplit, and minbucket at the same time leads to bigger trees.", correct = TRUE),
   answer("It doesn't make sense to choose minsplit bigger than minbucket.", correct = TRUE),
-  answer("Choosing minbucket very small leads to smaller trees."),
+  answer("A very small minbucket leads to smaller trees."),
   answer("The bigger the tree the more unstable its structure becomes.", correct = TRUE)
 )
 ```
