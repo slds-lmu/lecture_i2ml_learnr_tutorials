@@ -38,7 +38,7 @@
 question("Which statements are true?",
   answer("Bagging works best for unstable learners.", correct = TRUE),
   answer("For stable estimation methods, bagging mostly degrades performance."),
-  answer("A random forest is a bagging model for trees.", correct = TRUE),
+  answer("A random forest is a bagging model for trees (with small adjustments).", correct = TRUE),
   answer("The OOB error shares similarities with cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
   answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$", correct = TRUE),
   answer("Often works well enough.", correct = TRUE),
