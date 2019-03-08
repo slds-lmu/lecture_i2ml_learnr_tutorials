@@ -5,8 +5,10 @@
 
 *Theoretical (T)*
 
-- Learn why and how bagging and random forests works
+- Learn why and how bagging works
+-
 - Get to know the differences between bagging and random forests
+-
 
 *Practical (P)*
 
@@ -16,24 +18,33 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following videos (sorry, rather low volume...):
     <center>
-![](https://www.youtube.com/watch?v=g3w98HnbtEw&list=PLMyWaJl2LoXyhFvMjtbBGs0Pi8khHbKm3&index=5&t=0s){width="75%"}
+    ![](https://youtu.be/e4twP-lMPVI){width="75%"}
     </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-intro-performance.pdf" target="_blank">Slideset Random Forest 1</a>
+    <center>
+    ![](https://youtu.be/YPkNPGrdGoY){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-measures.pdf" target="_blank">Slideset Random Forest 2</a>
 
 ### Exercises
 
 #### *(T)* Quiz
 
 ```{r random forest-quiz1, echo=FALSE}
-  question("Which statements are true?",
-    answer("Bagging works best for unstable learners.", correct = TRUE),
-    answer("For stable estimation methods, bagging mostly degrades performance."),
-    answer("Random forests is a kind of bagging model for trees.", correct = TRUE),
-    answer("The OOB error is similar to cross-validation estimation. It can also be used for a quicker model selection.", 
-           correct = TRUE),
-    answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$",
-           correct = TRUE)
+question("Which statements are true?",
+  answer("Bagging works best for unstable learners.", correct = TRUE),
+  answer("For stable estimation methods, bagging mostly degrades performance."),
+  answer("Random forests is a kind of bagging model for trees.", correct = TRUE),
+  answer("The OOB error is similar to cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
+  answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$", correct = TRUE),
+  answer("Often works well enough.", correct = TRUE),
+  answer("It can work also on high-dimensional data.", correct = TRUE),
+  answer("Proximities are used in replacing missing data, but not locating outliers."),
+  answer("For each variable, the improvement is accumulated over all trees for the importance measure.", correct = TRUE),
+  answer("The random forest is a bad out of the box model and requires tuning of hyperparameters."),
+  answer("The random forest is often used as base-line model due to its good out of the box performance.", correct = TRUE)
 )
 ```
 
@@ -46,7 +57,7 @@ Create a random forest task with the `spirals` data using the `randomForest` fun
 set.seed(1337)
 spirals = mlbench.spirals(500, sd = 0.1)
 spirals = as.data.frame(spirals)
-spirals_task = 
+spirals_task =
 ```
 
 ```{r randomForest-definition-hint-1, eval=FALSE}

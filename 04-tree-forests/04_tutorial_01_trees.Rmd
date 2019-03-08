@@ -1,0 +1,307 @@
+## Trees
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Get to know the idea of CART
+- Know how CART is trained
+- Properties of a tree
+
+*Practical (P)*
+
+- Train a model for classification or regression with CART using `mlr`
+- Visualize the tree structure and decision boundaries for different data situations
+
+
+### Preparation
+
+1.  *(T)* Watch the following videos (sorry, rather low volume...):
+    <center>
+    ![](https://youtu.be/ZdJ7W-gEkJg){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-cart1.pdf" target="_blank">Slideset CART 1</a>
+    <center>
+    ![](https://youtu.be/k-OFfj2Y0OY){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-cart2.pdf" target="_blank">Slideset CART 2</a>
+
+1.  *(P)* Be sure to know how to define tasks and learners. If not, take a look at the tutorial about [tasks](https://compstat-lmu.shinyapps.io/01_tutorial/#section-tasks) and [knn](https://compstat-lmu.shinyapps.io/01_tutorial/#section-k-nearest-neighbors).
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r tree-quiz1, echo=FALSE}
+question("Which statements about CART are true?",
+  answer("The prediction function defined by a CART divides the target variable into colored rectangles"),
+  answer("The prediction function defined by a CART can be described in terms of a nested series of if-else statements about feature values.", correct = TRUE),
+  answer("The prediction function defined by a CART divides the feature space into disjoint rectangles.", correct = TRUE),
+  answer("To find optimal splits, one iterates over all features, and for each feature over all possible split points.", correct = TRUE),
+  answer("To find optimal splits, we use the one that splits the data approximately in half in each step."),
+  answer("To find optimal splits, we evaluate the possible splits only on the data that ended up in the parent node we are trying to split.", correct = TRUE),
+  answer("The optimal split results in the lowest child's empirical Risk of all possible splits.", correct = TRUE),
+  answer("For metric variables, the optimal split point is often not unique in the sense that all values in a certain interval yield the same split of observations in the child nodes.", correct = TRUE),
+  answer("Monotone transformations of several features will change the structure of the tree."),
+  answer("The CART algorithm cannot go on training if every node contains exactly one observation", correct = TRUE),
+  answer("The prediction function isn't smooth because a step function is fitted.", correct = TRUE),
+  answer("CART is a stable algorithm, if the data changes the tree structure remains quite similar."),
+  answer("CART is very sensible in terms of outliers."),
+  answer("With trees it is easy to handle missing values.", correct = TRUE),
+  answer("A simple tree is everything you need to fit a linear function $y \\approx a + b*x$ with numeric target."),
+  answer("A common way to include missing values is to introduce a new category (classification) or as out of range values (regression).", correct = TRUE)
+)
+```
+
+#### *(P)* Create the spiral task
+
+For this exercise we are, again, using simulated data. Here we use the package `mlbench` to simulate spiral data. Therefore, use the function `mlbench.spirals()` to generate 500 data points with `sd = 0.1` and store it into a object called `spirals`. Transform this object to a `data.frame` and define the task with `target = "class"`:
+
+```{r spiral-task, exercise=TRUE, exercise.checker=taskChecker("spirals_task")}
+library(mlbench)
+library(ggplot2)
+
+set.seed(314)
+spirals =
+spirals =
+spirals_task =
+
+# Visualization of the data
+ggplot(data = spirals, aes(x.1, x.2, color = classes)) + geom_point()
+```
+
+```{r spiral-task-hint-1}
+# Generate data points and transfrom them to a data.frame
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+```
+
+```{r spiral-task-hint-2}
+# Define the task
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+```
+
+```{r spiral-task-solution}
+library(mlbench)
+library(ggplot2)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+
+# Visualization of the data
+ggplot(data = spirals, aes(x.1, x.2, color = classes)) + geom_point()
+```
+
+```{r spiral-task-check}
+library(mlbench)
+library(ggplot2)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+
+# Visualization of the data
+ggplot(data = spirals, aes(x.1, x.2, color = classes)) + geom_point()
+```
+
+
+#### *(P)* Create and train the `mlr` CART learner
+
+Use the `classif.rpart` learner to train the tree. Use `minsplit = 20`, `minbucket = 10`, and `cp = 0.01` as hyperparameter:
+
+```{r cart-model, exercise=TRUE, exercise.checker=modelChecker("model_cart")}
+library(mlbench)
+
+set.seed(314)
+spirals =
+spirals =
+spirals_task =
+
+learner_cart =
+model_cart =
+```
+
+```{r cart-model-hint-1}
+# Use the objects defined previously
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+```
+
+```{r cart-model-hint-2}
+# To define the learner use 'makeLearner()'. Hyperparameter are passed as comma separated argument
+learner_cart = makeLearner("classif.rpart", minsplit = 20, minbucket = 10, cp = 0.01)
+```
+
+```{r cart-model-hint-3}
+# Finally, use 'train()' to calculate the model
+model_cart = train(learner_cart, spirals_task)
+```
+
+```{r cart-model-solution}
+library(mlbench)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+
+learner_cart = makeLearner("classif.rpart", minsplit = 20, minbucket = 10, cp = 0.01)
+model_cart = train(learner_cart, spirals_task)
+```
+
+```{r, cart-model-check}
+library(mlbench)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+
+learner_cart = makeLearner("classif.rpart", minsplit = 20, minbucket = 10, cp = 0.01)
+model_cart = train(learner_cart, spirals_task)
+```
+
+#### *(P)* Visualize the fitted tree
+
+You can use the function `rpart.plot()` from the equally named package `rpart.plot` to visualize the tree structure. Therefore, you have to access the internal fitted model which is stored as `learner.model` element of the fitted model. Additionally, call `plotLearnerPrediction()` to visualize the decision boundaries:
+
+```{r cart-viz, exercise=TRUE}
+library(mlbench)
+library(rpart.plot)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+
+learner_cart = makeLearner("classif.rpart", minsplit = 20, minbucket = 10, cp = 0.01)
+model_cart = train(learner_cart, spirals_task)
+
+rpart.plot(model_cart$learner.model)
+plotLearnerPrediction(learner = learner_cart, task = spirals_task)
+```
+
+```{r cart-viz-hint-1}
+# Use the objects defined previously and library 'rpart.plot'
+library(mlbench)
+library(rpart.plot)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+
+learner_cart = makeLearner("classif.rpart", minsplit = 20, minbucket = 10, cp = 0.01)
+model_cart = train(learner_cart, spirals_task)
+```
+
+```{r cart-viz-hint-2}
+# Call 'rpart.plot' of the fitted rpart model. You can access the model via the 'learner.model' element of the model
+rpart.plot(model_cart$learner.model)
+```
+
+```{r cart-viz-hint-3}
+# Call 'plotLearnerPrediction()' on the learner and task to get decision boundaries
+plotLearnerPrediction(learner = learner_cart, task = spirals_task)
+```
+
+```{r cart-viz-solution}
+library(mlbench)
+library(rpart.plot)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+
+learner_cart = makeLearner("classif.rpart", minsplit = 20, minbucket = 10, cp = 0.01)
+model_cart = train(learner_cart, spirals_task)
+
+rpart.plot(model_cart$learner.model)
+plotLearnerPrediction(learner = learner_cart, task = spirals_task)
+```
+
+#### *(P)* Visualize the tree for different data constellations
+
+To see how trees behave on the same data situation but different data constellation draw 500 rows randomly (using the `sample()` function) with replacement and recreate the figures:
+
+```{r cart-viz-data-setup}
+library(mlbench)
+library(rpart.plot)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+
+set.seed(Sys.time())
+```
+
+```{r cart-viz-data, exercise=TRUE}
+# Choose different observations for training the model
+train_idx = sample(...)
+
+spirals_task = makeClassifTask(data = spirals[train_idx,], target = "classes")
+
+learner_cart = makeLearner("classif.rpart", minsplit = 20, minbucket = 10, cp = 0.01)
+model_cart = train(learner_cart, spirals_task)
+
+rpart.plot(model_cart$learner.model)
+plotLearnerPrediction(learner = learner_cart, task = spirals_task)
+```
+
+```{r cart-viz-data-hint-1}
+# Use different data situation, e.g. via sampling:
+train_idx = sample(1:500, size = 500, replace = TRUE)
+```
+
+```{r cart-viz-data-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("The data situation is still the same, we are just using less unique data points.", correct = TRUE),
+  answer("The tree structure for different data situations remains equally."),
+  answer("The decision boundaries for different data situations remains equally.")
+)
+```
+
+
+#### *(P)* Visualize the tree for different hyperparameters
+
+Finally, visualize the tree structure and decision boundaries for varying hyperparameters. Also try to understand how changes in the parameters affect the figures.
+
+```{r cart-viz-hyperpars-setup}
+library(mlbench)
+library(rpart.plot)
+
+set.seed(314)
+spirals = mlbench.spirals(500, sd = 0.1)
+spirals = as.data.frame(spirals)
+spirals_task = makeClassifTask(data = spirals, target = "classes")
+```
+
+```{r cart-viz-hyperpars, exercise=TRUE}
+# Choose different hyperparameter configurations
+minsplit = 20
+minbucket = 10
+cp = 0.01
+
+learner_cart = makeLearner("classif.rpart", minsplit = minsplit, minbucket = minbucket, cp = cp)
+model_cart = train(learner_cart, spirals_task)
+
+rpart.plot(model_cart$learner.model)
+plotLearnerPrediction(learner = learner_cart, task = spirals_task)
+```
+
+```{r cart-viz-hyperpars-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("Reducing just the complexity `cp` leads to bigger trees."),
+  answer("Reducing complexity `cp`, minsplit, and minbucket at the same time leads to bigger trees.", correct = TRUE),
+  answer("It doesn't make sense to choose minsplit bigger than minbucket.", correct = TRUE),
+  answer("Choosing minbucket very small leads to smaller trees."),
+  answer("The bigger the tree the more unstable its structure becomes.", correct = TRUE)
+)
+```
