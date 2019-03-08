@@ -183,8 +183,8 @@ spirals_task = makeClassifTask(data = spirals, target = "classes")
 learner_cart = makeLearner("classif.rpart", minsplit = 20, minbucket = 10, cp = 0.01)
 model_cart = train(learner_cart, spirals_task)
 
-rpart.plot(model_cart$learner.model)
-plotLearnerPrediction(learner = learner_cart, task = spirals_task)
+rpart.plot(...)
+plotLearnerPrediction(learner = ..., task = ...)
 ```
 
 ```{r cart-viz-hint-1}

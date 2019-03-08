@@ -15,7 +15,7 @@ library(learnr)
 library(testwhat)
 library(checkmate)
 library(mlr)
-library(BBmisc)
+library(ranger)
 library(mlbench)
 
 errorToMessage = function (expr)
@@ -195,6 +195,5 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```{r, child="04_tutorial_01_trees.Rmd"}
 ```
 
-<!-- ```{r, child="04_tutorial_02_forest01´s.Rmd"}
+```{r, child="04_tutorial_02_forests.Rmd"}
 ```
- -->
