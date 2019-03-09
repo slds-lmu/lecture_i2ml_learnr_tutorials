@@ -76,9 +76,9 @@ library(ranger)
 set.seed(314)
 spirals = mlbench.spirals(500, sd = 0.1)
 spirals = as.data.frame(spirals)
-spirals_task = makeClassifTask(data = spirals, target = "classes")
+spirals_task = 
 
-rf_learner = makeLearner("classif.ranger", num.trees = 1000, predict.type = "prob")
+rf_learner = 
 plotLearnerPrediction(rf_learner, spirals_task)
 ```
 
