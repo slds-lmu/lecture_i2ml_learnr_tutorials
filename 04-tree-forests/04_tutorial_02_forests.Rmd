@@ -79,7 +79,7 @@ spirals = as.data.frame(spirals)
 spirals_task = 
 
 rf_learner = 
-plotLearnerPrediction(rf_learner, spirals_task)
+plotLearnerPrediction(...)
 ```
 
 ```{r rf-learner-hint-1}
