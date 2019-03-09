@@ -26,8 +26,8 @@ question("Which statements are true?",
   answer("Tuning means optimizing hyperparameters.", correct = TRUE),
   answer("Doing tuning well is hard; nested resampling can help.", correct = TRUE),
   answer("Good tuning is crucial to achieve good performance for all ML algorithms."),
-  answer("Parallelization is trivial for tuning.", correct = TRUE)
-  answer("Tuning optimizes the inner loss.", correct = TRUE)
+  answer("Parallelization is trivial for tuning.", correct = TRUE),
+  answer("Tuning optimizes the inner loss.", correct = TRUE),
   answer("How well tuning works depends on the learner and the impact of the hyperparameters on that learner.", correct = TRUE)
 )
 ```
