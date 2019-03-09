@@ -57,9 +57,3 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 
 ```{r, child="05_tutorial_02_nested-resampling.Rmd"}
 ```
-
-```{r, child="05_tutorial_01_overview.Rmd"}
-```
-
-```{r, child="05_tutorial_04_practical.Rmd"}
-```
