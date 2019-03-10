@@ -29,6 +29,8 @@
 # quiz(caption = "Basic Terminology",
   question("Which statements are true?",
     answer("Overfitting is more likely with higher complexity of the model.", correct = TRUE),
+    answer("Overfitting means that the model performs very well on the training data."),
+    answer("Overfitting means that the model performs much better on the training data than on the test data.", correct = TRUE),
     answer("A good test performance is an indicator of overfitting."),
     answer("The linear model is well known to overfit very fast."),
     answer("Constraining the hypothesis space helps the learner to find a good hypothesis.")
