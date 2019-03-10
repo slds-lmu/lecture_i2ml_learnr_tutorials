@@ -55,6 +55,7 @@ Make yourself familiar with the spam task (`?kernlab::spam`):
 The task is predefined in `mlr` as `spam.task`:
 
 ```{r spam-task, exercise=TRUE}
+library(kernlab)
 spam.task
 head(spam.task$env$data)
 ?kernlab::spam
