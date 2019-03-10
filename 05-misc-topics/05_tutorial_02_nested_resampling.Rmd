@@ -1,0 +1,333 @@
+## Nested Resampling
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn how nested resampling works and what problem it solves
+
+*Practical (P)*
+
+- Know how to apply nested resampling in tuning
+- Understand the `makeTuneWrapper()` function
+
+### Preparation
+
+1.  *(T)* Watch the following video  (sorry, rather low volume...):
+    <center>
+    ![](https://youtu.be/aV__yAFzNtc){width="75%"}
+    </center>
+    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-nested-resampling.pdf" target="_blank">Slideset</a>
+
+1. *(P)* Read the `mlr` tutorial about [nested resampling](https://mlr.mlr-org.com/articles/tutorial/nested_resampling.html)
+1. *(P)* You should have done the [tutorial about tuning](https://compstat-lmu.shinyapps.io/05_tutorial/#section-tuning)
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r nested-resampling-quiz, echo=FALSE}
+question("Which statements about nested resampling are true?",
+  answer("The result of nested resampling is just one value, the estimated generalization error of a learner.", correct = TRUE),
+  answer("Evaluating a linear model requires nested resampling."),
+  answer("Nested resampling is super expensive.",correct = TRUE),
+  answer("Choosing the correct resampling strategy is not as important as choosing the correct model."),
+  answer("Using nested resampling in tuning can be seen as adding the tuning step to the learner to get a learner without hyperparameters.", correct = TRUE)
+)
+```
+
+#### *(P)* What does `makeTuneWrapper()`
+
+The following code takes the same object as defined in the [tuning tutorial](https://compstat-lmu.shinyapps.io/05_tutorial/#section-tuning) but instead of calling `tuneParams()` the learner, task, etc. are added to `makeTuneWrapper()`. Creating a `TuneWrapper` learner adds the tuning part to the learner. That means that we taking away the hyperparameters of the `ranger` learner since they are found and set automatically training the new wrapped learner:
+
+```{r make-tune-wrapper-demo-setup}
+learner = makeLearner("classif.ranger", predict.type = "prob")
+
+param_set = makeParamSet(
+  makeIntegerParam("mtry", lower = 1, upper = 30),
+  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+)
+tune_ctrl = makeTuneControlRandom(maxit = 10L)
+res_desc = makeResampleDesc("CV", iters = 3L)
+```
+
+As for the tuning tutorial we use the sonar task (`sonar.task`):
+
+```{r make-tune-wrapper-demo, exercise=TRUE}
+wrapped_learner = makeTuneWrapper(learner, resampling = res_desc, par.set = param_set, 
+  control = tune_ctrl, measures = auc, show.info = FALSE)
+
+model = train(learner = wrapped_learner, task = sonar.task)
+# Access best learner
+model$learner.model
+```
+
+```{r make-tune-wrapper-demo-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("The `model` contains the trained `ranger` model with the best parameter configuration found by the tuning.", correct = TRUE),
+  answer("Training `wrapped_learner` requires training of the original learner just once."),
+  answer("Training a learner created by `makeTuneWrapper()` basically does the same as `tuneParams()` but returns the model trained on the best parameter configuration.", correct = TRUE),
+  answer("The model is already trained using nested resampling.")
+)
+```
+
+#### *(P)* Using nested resampling to evaluate one learner
+
+To conduct tuning with nested resampling as evaluation technique call `resample()` of the `wrapped_learner` defined above to measure the AUC. In the `reasmple()` call, use a 3-fold cross-validation. To avoid large execution time do just use a random search with 10 iterations. **Note** that even with 10 iterations the execution time of the random search may take some time.
+
+```{r, include=FALSE}
+nestedResamplingChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  add_code = "
+  nested_res_msr_test = nested_res$measures.test
+  "
+
+  setup_state(sol_code = paste0(check_code, add_code), stu_code = paste0(user_code, add_code))
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("learner")
+    ex() %>% check_object("param_set") %>% check_equal()
+    ex() %>% check_object("tune_ctrl") %>% check_equal()
+    ex() %>% check_object("inner_res_desc") %>% check_equal()
+    ex() %>% check_object("outer_res_desc") %>% check_equal()
+    ex() %>% check_object("nested_res")
+    ex() %>% check_object("nested_res_msr_test") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+```
+
+
+```{r, nested-resampling, exercise.timelimit=300L, exercise.lines=20, exercise=TRUE, exercise.checker=nestedResamplingChecker}
+learner =
+param_set = 
+tune_ctrl = 
+inner_res_desc = 
+
+wrapped_learner = 
+
+outer_res_desc = 
+
+set.seed(314)
+nested_res = resample(learner = ..., task = ..., resampling = ..., measures = ...)
+nested_res
+```
+
+```{r nested-resampling-hint-1}
+# To define the wrapped learner do the same as for tuning
+learner = makeLearner("classif.ranger", predict.type = "prob")
+
+param_set = makeParamSet(
+  makeIntegerParam("mtry", lower = 1, upper = 30),
+  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+)
+tune_ctrl = makeTuneControlRandom(maxit = 10L)
+inner_res_desc = makeResampleDesc("CV", iters = 3L)
+
+wrapped_learner = makeTuneWrapper(learner, resampling = inner_res_desc, par.set = param_set, 
+  control = tune_ctrl, measures = auc, show.info = FALSE)
+```
+
+```{r nested-resampling-hint-2}
+# Define the outer resampling strategy 
+outer_res_desc = makeResampleDesc("CV", iters = 3L)
+outer_res_desc = cv3
+```
+
+```{r nested-resampling-hint-3}
+# Finally, call 'resample()' on the wrapped learner, the task, the resampling strategy, and the measure
+set.seed(314)
+nested_res = resample(learner = wrapped_learner, task = sonar.task, resampling = outer_res_desc, measures = auc)
+```
+
+```{r, nested-resampling-solution}
+learner = makeLearner("classif.ranger", predict.type = "prob")
+
+param_set = makeParamSet(
+  makeIntegerParam("mtry", lower = 1, upper = 30),
+  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+)
+tune_ctrl = makeTuneControlRandom(maxit = 10L)
+inner_res_desc = makeResampleDesc("CV", iters = 3L)
+
+wrapped_learner = makeTuneWrapper(learner, resampling = inner_res_desc, par.set = param_set, 
+  control = tune_ctrl, measures = auc, show.info = FALSE)
+
+outer_res_desc = cv3
+
+set.seed(314)
+nested_res = resample(learner = wrapped_learner, task = sonar.task, resampling = outer_res_desc, measures = auc)
+nested_res
+```
+
+```{r, nested-resampling-check}
+learner = makeLearner("classif.ranger", predict.type = "prob")
+
+param_set = makeParamSet(
+  makeIntegerParam("mtry", lower = 1, upper = 30),
+  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+)
+tune_ctrl = makeTuneControlRandom(maxit = 10L)
+inner_res_desc = makeResampleDesc("CV", iters = 3L)
+
+wrapped_learner = makeTuneWrapper(learner, resampling = inner_res_desc, par.set = param_set, 
+  control = tune_ctrl, measures = auc, show.info = FALSE)
+
+outer_res_desc = cv3
+
+set.seed(314)
+nested_res = resample(learner = wrapped_learner, task = sonar.task, resampling = outer_res_desc, measures = auc)
+nested_res
+```
+
+```{r nested-resampling-results-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("The interesting value here is just the AUC test mean of about 91 %.", correct = TRUE),
+  answer("The AUC test mean tells us what AUC we can expect if we use the best model trained during nested resampling."),
+  answer("The AUC test mean tells us what AUC we can expect after tuning and training the `ranger` again on the whole dataset.", correct = TRUE)
+)
+```
+
+#### *(P)* Using nested resampling to evaluate multiple learner
+
+Finally, we want to compare different learners on the sonar task:
+
+- Random forest: As above, we want to tune a random forest, therefore use the same procedure as above
+- Logistic regression: This learner can be included without tuning (no hyperparameters)
+- Linear discriminant analysis: This learner can be included without tuning (no hyperparameters)
+- Quadratic discriminant analysis: This learner can be included without tuning (no hyperparameters)
+
+Note that comparing different learners is just valid if they get the exactly same resampling strategy. You should create a resampling instance (with `makeResampleInstance()`) to use exactly the same splits for each learner in the benchmark experiment:
+
+```{r, include=FALSE}
+benchmarkChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  add_code = "
+  df_bmr = as.data.frame(nested_res)
+  df_bmr$learner.id = as.character(df_bmr$learner.id)
+  df_bmr = df_bmr[with(df_bmr, order(learner.id, auc)), -which(names(df_bmr) %in% c(\"task.id\", \"iter\"))]
+  "
+
+  setup_state(sol_code = paste0(check_code, add_code), stu_code = paste0(user_code, add_code))
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("outer_res_instance") %>% check_equal()
+    ex() %>% check_object("nested_res")
+    ex() %>% check_object("df_bmr") %>% check_column("learner.id") %>% check_equal()
+    ex() %>% check_object("df_bmr") %>% check_column("auc") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+```
+
+```{r nested-resampling-bmr, exercise.lines=25, exercise.timelimit=300L, exercise=TRUE, exercise.checker=benchmarkChecker}
+ranger_learner = 
+param_set = 
+tune_ctrl = 
+res_desc = 
+
+wrapped_ranger_learner = 
+logreg_learner = 
+lda_learner = 
+qda_learner = 
+
+outer_res_desc = cv3
+set.seed(314)
+outer_res_instance = makeResampleInstance(desc = ..., task = ...)
+
+nested_res = benchmark(learners = ..., tasks = ..., resamplings = ..., measures = ...)
+plotBMRBoxplots(nested_res)
+```
+
+```{r nested-resampling-bmr-hint-1}
+# Use the objects previously defined for the wrapped ranger learner
+ranger_learner = makeLearner("classif.ranger", predict.type = "prob")
+
+param_set = makeParamSet(
+  makeIntegerParam("mtry", lower = 1, upper = 30),
+  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+)
+tune_ctrl = makeTuneControlRandom(maxit = 10L)
+res_desc = makeResampleDesc("Subsample", iters = 2L)
+
+wrapped_ranger_learner = makeTuneWrapper(ranger_learner, resampling = res_desc, par.set = param_set, 
+  control = tune_ctrl, measures = auc, show.info = FALSE)
+```
+
+```{r nested-resampling-bmr-hint-2}
+# Define learner for the logistic regression, lda, and qda
+logreg_learner = makeLearner("classif.logreg", predict.type = "prob")
+lda_learner = makeLearner("classif.lda", predict.type = "prob")
+qda_learner = makeLearner("classif.qda", predict.type = "prob")
+```
+
+```{r nested-resampling-bmr-hint-3}
+# Define the resample instance by passing the resampling description and the task
+outer_res_desc = cv3
+outer_res_instance = makeResampleInstance(desc = outer_res_desc, task = sonar.task)
+```
+
+```{r nested-resampling-bmr-hint-4}
+# Finally conduct the benchmark by wrapping the learner and defining the task, resampling, and the measure
+nested_res = benchmark(learners = list(wrapped_ranger_learner, logreg_learner, lda_learner, qda_learner), 
+  tasks = sonar.task, resamplings = outer_res_instance, measures = auc)
+```
+
+```{r nested-resampling-bmr-solution}
+ranger_learner = makeLearner("classif.ranger", predict.type = "prob")
+
+param_set = makeParamSet(
+  makeIntegerParam("mtry", lower = 1, upper = 30),
+  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+)
+tune_ctrl = makeTuneControlRandom(maxit = 10L)
+res_desc = makeResampleDesc("Subsample", iters = 2L)
+
+wrapped_ranger_learner = makeTuneWrapper(ranger_learner, resampling = res_desc, par.set = param_set, 
+  control = tune_ctrl, measures = auc, show.info = FALSE)
+
+logreg_learner = makeLearner("classif.logreg", predict.type = "prob")
+lda_learner = makeLearner("classif.lda", predict.type = "prob")
+qda_learner = makeLearner("classif.qda", predict.type = "prob")
+
+outer_res_desc = cv3
+set.seed(314)
+outer_res_instance = makeResampleInstance(desc = outer_res_desc, task = sonar.task)
+
+nested_res = benchmark(learners = list(wrapped_ranger_learner, logreg_learner, lda_learner, qda_learner), 
+  tasks = sonar.task, resamplings = outer_res_instance, measures = auc)
+plotBMRBoxplots(nested_res)
+```
+
+```{r nested-resampling-bmr-check}
+ranger_learner = makeLearner("classif.ranger", predict.type = "prob")
+
+param_set = makeParamSet(
+  makeIntegerParam("mtry", lower = 1, upper = 30),
+  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+)
+tune_ctrl = makeTuneControlRandom(maxit = 10L)
+res_desc = makeResampleDesc("Subsample", iters = 2L)
+
+wrapped_ranger_learner = makeTuneWrapper(ranger_learner, resampling = res_desc, par.set = param_set, 
+  control = tune_ctrl, measures = auc, show.info = FALSE)
+
+logreg_learner = makeLearner("classif.logreg", predict.type = "prob")
+lda_learner = makeLearner("classif.lda", predict.type = "prob")
+qda_learner = makeLearner("classif.qda", predict.type = "prob")
+
+outer_res_desc = cv3
+set.seed(314)
+outer_res_instance = makeResampleInstance(desc = outer_res_desc, task = sonar.task)
+
+nested_res = benchmark(learners = list(wrapped_ranger_learner, logreg_learner, lda_learner, qda_learner), 
+  tasks = sonar.task, resamplings = outer_res_instance, measures = auc)
+plotBMRBoxplots(nested_res)
+```
