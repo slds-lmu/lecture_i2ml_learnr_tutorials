@@ -16,6 +16,7 @@ library(testwhat)
 library(checkmate)
 library(mlr)
 library(kknn)
+library(e1071)
 
 errorToMessage = function (expr)
 {
