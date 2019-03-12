@@ -47,8 +47,8 @@ To visually see how the number of nearest neighbors affects the overfitting beha
     ```
 
 1. Simulate data with two normally distributed features `x` and `y` and a target variable `class`:
-    * Class `1` should have a mean of $2$ and standard deviation of $1$. Class `2` should
-    * Class `2` should have a mean of $4$ and standard deviation of $2$. Class `2` should
+    * Class `1` should have a mean of $2$ and standard deviation of $1$
+    * Class `2` should have a mean of $4$ and standard deviation of $2$
     * `class` should contain the classes as factor or character variable
     ```{r, eval=FALSE}
     df_sim = data.frame(x = rnorm(100, mean = 2*class, sd = class), y = rnorm(100, mean = 2*class, sd = class), class = as.character(class))
