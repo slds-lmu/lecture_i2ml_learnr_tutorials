@@ -33,7 +33,7 @@ question("Which statements are true?",
   answer("Doing tuning well is hard; nested resampling can help.", correct = TRUE),
   answer("Good tuning is crucial to achieve good performance for all ML algorithms."),
   answer("Parallelization is trivial for tuning.", correct = TRUE),
-  answer("Tuning optimizes the inner loss.", correct = TRUE),
+  answer("Tuning optimizes the inner loss."),
   answer("How well tuning works depends on the learner and the impact of the hyperparameters on that learner.", correct = TRUE),
   answer("Grid search often works better than random search."),
   answer("Grid search scales exponentially with the dimension of the parameter space.", correct = TRUE),
@@ -49,7 +49,7 @@ question("Which statements are true?",
 In this hands-on we want to tune a random forest using the `classif.ranger` learner. The goal is to find hyperparameter values for `mtry` and `min.node.size` to achieve a high AUC. The task we are using is the `sonar.task`. Taking a look at the help page of the task (`??mlbench::Sonar`) gives a nice description:
 
 > This is the data set used by Gorman and Sejnowski in their study of the classification of sonar signals using a neural network [1]. The task is to train a network to discriminate between sonar signals bounced off a metal cylinder and those bounced off a roughly cylindrical rock.
-> 
+>
 > Each pattern is a set of 60 numbers in the range 0.0 to 1.0. Each number represents the energy within a particular frequency band, integrated over a certain period of time. The integration aperture for higher frequencies occur later in time, since these frequencies are transmitted later during the chirp.
 >
 > The label associated with each record contains the letter "R" if the object is a rock and "M" if it is a mine (metal cylinder). The numbers in the labels are in increasing order of aspect angle, but they do not encode the angle directly.
@@ -145,7 +145,7 @@ res_desc = makeResampleDesc("CV", iters = 3L)
 
 #### *(P)* Run and visualize the tuning
 
-Finally, tune the learner with `tuneParams()`. To do so, you have to collect all previously defined objects and specify the measure we are trying to optimize. **Note** that the tuning could take some time to finish. 
+Finally, tune the learner with `tuneParams()`. To do so, you have to collect all previously defined objects and specify the measure we are trying to optimize. **Note** that the tuning could take some time to finish.
 
 ```{r, include=FALSE}
 tuningChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
@@ -175,9 +175,9 @@ tuningChecker = function (label, user_code, check_code, envir_result, evaluate_r
 library(ggplot2)
 
 learner =
-param_set = 
-tune_ctrl = 
-res_desc = 
+param_set =
+tune_ctrl =
+res_desc =
 
 set.seed(314)
 tune_res = tuneParams(...)
@@ -207,8 +207,8 @@ res_desc = makeResampleDesc("CV", iters = 3L)
 ```
 
 ```{r tuning-exec-hint-3}
-# Set the learner ('learner'), task ('task'), resampling strategy ('resampling'), 
-# parameter set ('par.set'), tuning strategy ('control'), and the measure ('measrues') 
+# Set the learner ('learner'), task ('task'), resampling strategy ('resampling'),
+# parameter set ('par.set'), tuning strategy ('control'), and the measure ('measrues')
 # to optimize in 'tuneParams()'
 tune_res = tuneParams(learner, task = sonar.task, resampling = res_desc,
   par.set = param_set, control = tune_ctrl, measures = auc, show.info = FALSE)
