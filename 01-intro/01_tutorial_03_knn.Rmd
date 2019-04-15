@@ -37,7 +37,7 @@ question("Which statements are true?",
          observations $N_k(x)$ that belong together."),
   answer("$N_k(x)$ contains the subset of the feature space $\\mathcal X$ that
          is at least as close to $x$ as the $k$-th closest neighbor of $x$ in
-         the training data set."),
+         the training data set.", correct = TRUE),
   answer("1-NN always 'predicts' perfectly on observations of the training data set.",
          correct = TRUE),
   answer("k-NN with $k = n$ always predicts the same target variable value for
