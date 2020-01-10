@@ -16,11 +16,10 @@ iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Widt
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video:
     <center>
-    ![](https://youtu.be/GOsXMlzsSiQ){width="75%"}
+    ![k-NN](https://youtu.be/g8H6-MkN_q0){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-knn.pdf" target="_blank">Slideset</a>
 
 2.  Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them.
 

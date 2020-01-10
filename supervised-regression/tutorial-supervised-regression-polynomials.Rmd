@@ -1,4 +1,4 @@
-## Linear Regression
+## Polynomial Regression
 
 ### Study Goals
 
@@ -16,9 +16,8 @@
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
-    ![](https://youtu.be/saf0rLmoEjE){width="75%"}
+    ![Polynomial Regression Models](https://youtu.be/q1ETfSxEfSg){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-limo.pdf" target="_blank">Slideset</a>
 
 1.  *(P)* Make sure that you have understood how to define tasks and learners as well as how to train a learner.
 
@@ -26,7 +25,7 @@
 
 #### *(T)* Quiz
 
-```{r lm-quiz, echo=FALSE}
+```{r pm-quiz, echo=FALSE}
 question("What statements are true?",
   answer("The target in linear regression has to be numeric", correct = TRUE),
   answer("The features in the linear model can also just be numerical"),

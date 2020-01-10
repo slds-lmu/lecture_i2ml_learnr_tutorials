@@ -1,0 +1,32 @@
+## Linear Regression
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn how linear regression models work
+- Learn how to transform linear regression into a nonlinear method
+
+
+### Preparation
+
+1.  *(T)* Watch the following video:
+    <center>
+    ![Linear Regression Models](https://youtu.be/XITIVU37wGY){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r lm-quiz, echo=FALSE}
+question("What statements are true?",
+  answer("The target in linear regression has to be numeric", correct = TRUE),
+  answer("The features in the linear model can also just be numerical"),
+  answer("The linear model is linear regression with L2-loss", correct = TRUE)
+  # answer("Using linear regression it is only possible to model linear effects of a feature"),
+  # answer("Overfitting is a present danger in polynomial regression", correct = TRUE)
+)
+```
+

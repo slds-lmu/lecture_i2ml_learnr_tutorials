@@ -9,11 +9,10 @@
 
 ### Preparation
 
-1. *(T)* Watch the following video  (sorry, rather low volume...):
+1. *(T)* Watch the following video:
     <center>
-    ![](https://youtu.be/PIj0HR4lUOg){width="75%"}
+    ![Loss Fuctions for Regression](https://youtu.be/Syrzezpj2FY){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-loss.pdf" target="_blank">Slideset</a>
 
 ### Exercises
 

@@ -177,18 +177,16 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```
 
 
-```{r, child="01_tutorial_01_intro.Rmd"}
+```{r, child="tutorial-supervised-regression-linearmodel.Rmd"}
 ```
 
-```{r, child="01_tutorial_02_tasks.Rmd"}
+```{r, child="tutorial-supervised-regression-losses.Rmd"}
 ```
 
-```{r, child="01_tutorial_03_knn.Rmd"}
+```{r, child="tutorial-supervised-regression-polynomials.Rmd"}
 ```
 
-```{r, child="01_tutorial_04_loss.Rmd"}
+```{r, child="tutorial-supervised-regression-knn.Rmd"}
 ```
 
-```{r, child="01_tutorial_05_lin_regr.Rmd"}
-```
 
