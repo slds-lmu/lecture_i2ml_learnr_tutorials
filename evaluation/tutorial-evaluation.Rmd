@@ -194,6 +194,9 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```{r, child="03_tutorial_01_performance.Rmd"}
 ```
 
+```{r, child="evaluation-measures-regression.Rmd"}
+```
+
 ```{r, child="03_tutorial_02_overfitting.Rmd"}
 ```
 

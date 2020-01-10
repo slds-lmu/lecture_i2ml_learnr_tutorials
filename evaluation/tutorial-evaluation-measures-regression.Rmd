@@ -1,23 +1,19 @@
-## Performance Intro and Simple Metrics
+## Evaluation Measures for Regression
 
 ### Study Goals
 
 *Theoretical (T)*
 
-- Learn what performance estimation is and why it is important
-- Get familiar with simple performance measures for regression and classification
+- Get familiar with simple performance measures for regression
 
 ### Preparation
 
-1.  *(T)* Watch the following videos (sorry, rather low volume...):
+1.  *(T)* Watch the following video:
     <center>
-    ![](https://youtu.be/e4twP-lMPVI){width="75%"}
+    ![](https://youtu.be/_OHCatRSc08){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-intro-performance.pdf" target="_blank">Slideset Introduction</a>
-    <center>
-    ![](https://youtu.be/YPkNPGrdGoY){width="75%"}
-    </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-measures.pdf" target="_blank">Slideset Simple Metrics</a>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-measures.pdf" target="_blank">Slideset Simple Metrics</a> -->
+
 
 ### Exercises
 

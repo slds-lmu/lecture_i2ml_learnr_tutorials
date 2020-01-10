@@ -1,9 +1,10 @@
-## Confusion Matrix and ROC
+## Evaluation Measures for Classification
 
 ### Study Goals
 
 *Theoretical (T)*
 
+- Get familiar with simple performance measures for classification
 - Get familiar with confusion matrix and ROC
 - Know how to evaluate unbalanced binary classification problems
 
@@ -16,15 +17,19 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following videos  (sorry, rather low volume...):
+1.  *(T)* Watch the following videos:
     <center>
-    ![](https://youtu.be/lPHTqGWRciQ){width="75%"}
+    ![](https://youtu.be/bHwUwrbCHEU){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-1.pdf" target="_blank">Slideset Part 1</a>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-1.pdf" target="_blank">Slideset Part 1</a> -->
     <center>
-    ![](https://youtu.be/1bitCgn_D6o){width="75%"}
+    ![](https://youtu.be/BH4oCliBzZI){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-2.pdf" target="_blank">Slideset Part 2</a>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-1.pdf" target="_blank">Slideset Part 1</a> -->
+    <center>
+    ![](https://youtu.be/m5We8ITYEVk){width="75%"}
+    </center>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-2.pdf" target="_blank">Slideset Part 2</a> -->
 
 1. *(P)* Read the `mlr` tutorial about [roc curves](https://mlr.mlr-org.com/articles/tutorial/roc_analysis.html)
 1. *(P)* You should have done the tutorial on resampling

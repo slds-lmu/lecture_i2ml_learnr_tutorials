@@ -1,4 +1,4 @@
-## Overfitting
+## Training Error, Test Error, and Overfitting
 
 ### Study Goals
 
@@ -13,7 +13,7 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following videos (sorry, rather low volume...):
+1.  *(T)* Watch the following videos:
     <center>
     ![](https://youtu.be/-S5h9ayrXh4){width="75%"}
     </center>
