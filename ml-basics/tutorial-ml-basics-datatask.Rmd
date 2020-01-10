@@ -1,4 +1,4 @@
-## Tasks
+## Data and Tasks
 
 ### Study Goals
 
@@ -12,11 +12,11 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following videos:
     <center>
-    ![](https://youtu.be/ST-VsUdbufo){width="75%"}
+    ![Tasks and Data](https://youtu.be/d9YbO6P4AdU){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-tasks.pdf" target="_blank">Slideset</a>
+
 
 1.  *(P)* Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html).
 

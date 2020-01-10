@@ -9,11 +9,13 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following videos:
     <center>
-    ![](https://youtu.be/2BWKlAOayQI){width="75%"}
+    ![What is ML?](https://youtu.be/CCzx4UDkzpA){width="75%"}
+    ![Supervised Learning](https://youtu.be/R_HZBY9RMmo){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-intro.pdf" target="_blank">Slideset</a>
+    
+
 
 ### Exercises
 
