@@ -15,9 +15,17 @@
 
 1.  *(T)* Watch the following videos:
     <center>
-    ![](https://youtu.be/-S5h9ayrXh4){width="75%"}
+    ![](https://youtu.be/zSlrfST8bEg){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-overfitting.pdf" target="_blank">Slideset</a>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-overfitting.pdf" target="_blank">Slideset</a> -->
+    <center>
+    ![](https://youtu.be/dpZLGIf97m0){width="75%"}
+    </center>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-overfitting.pdf" target="_blank">Slideset</a> -->
+    <center>
+    ![](https://youtu.be/GOTPjCXhiS8){width="75%"}
+    </center>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-overfitting.pdf" target="_blank">Slideset</a> -->
 
 1. *(P)* You should have done the [tutorial about k-NN](https://compstat-lmu.shinyapps.io/01_tutorial/#section-k-nearest-neighbors)
 

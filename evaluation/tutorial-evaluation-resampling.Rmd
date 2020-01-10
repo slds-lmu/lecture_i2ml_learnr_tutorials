@@ -64,9 +64,9 @@ benchmarkChecker = function (label, user_code, check_code, envir_result, evaluat
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
-    ![](https://youtu.be/eeCtAVkAvSI){width="75%"}
+    ![](https://youtu.be/NvDUk8Bxuho){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-resampling.pdf" target="_blank">Slideset</a>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-resampling.pdf" target="_blank">Slideset</a> -->
 
 1. *(P)* Read the `mlr` tutorial about [resampling](https://mlr.mlr-org.com/articles/tutorial/resample.html)
 
