@@ -62,11 +62,11 @@ benchmarkChecker = function (label, user_code, check_code, envir_result, evaluat
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video:
     <center>
     ![](https://youtu.be/NvDUk8Bxuho){width="75%"}
     </center>
-    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-resampling.pdf" target="_blank">Slideset</a> -->
+    
 
 1. *(P)* Read the `mlr` tutorial about [resampling](https://mlr.mlr-org.com/articles/tutorial/resample.html)
 
@@ -75,15 +75,13 @@ benchmarkChecker = function (label, user_code, check_code, envir_result, evaluat
 #### *(T)* Quiz
 
 ```{r resampling-quiz, echo=FALSE}
-  question("Which statements are true?",
-    answer("The method of resampling is a nonparametric method of statistical inference.", correct = TRUE),
-    answer("Subsampling is basically a repeated holdout and is also very similar to
-           bootstrapping, so subsampling is done with replacement."),
+question("Which statements are true?",
+    answer("cross-validation, bootstrap, and subsampling are resampling techniques.", correct = TRUE),
     answer("Estimating the expected generalization error is a goal of resampling.", correct = TRUE),
-    answer("In Resampling, the data set is split repeatedly into training and tests
-          sets.", correct = TRUE)
-
-  )
+    answer("In resampling, the data set is split repeatedly into training and tests
+          sets.", correct = TRUE),
+    answer("Resampling strategies are completely unbiased.")
+)
 ```
 
 #### *(P)* Define a resampling strategy

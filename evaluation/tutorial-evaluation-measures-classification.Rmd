@@ -36,18 +36,30 @@
 
 ### Exercises
 
+
+#### *(T)* Quiz
+
+```{r measures-classification-quiz, echo=FALSE}
+question("Which statements are true?",
+    answer("Logistic regression minimizes the binomial loss.", correct = TRUE),
+    answer("The Brier score is like the MSE just with probabilities.", correct = TRUE),
+    answer("The log-loss punishes being very wrong less than the Brier score."),
+    answer("Accuracy and mean classification error are calculated using the predicted probabilities."),
+    answer("The confusion matrix tabulates the true against predicted classes.", correct = TRUE),
+    answer("A misclassification error rate of 0.5% is always great.")
+)
+```
+
+
 #### *(T)* Quiz
 
 ```{r ROC-quiz, echo=FALSE}
-question("Which statements are false?",
-  answer("If the proportion of positive to negative instances changes, the ROC curve will not change."),
-  answer("The evaluation of binary classifiers is only the misclassification error.", correct = TRUE),
-  answer("Several evaluation metrics can be derived from a confusion matrix."),
-  answer("ROC curves are sensitive to class distribution.", correct = TRUE),
-  answer("The area under the ROC curve is AUC and AUC $\\in (0, 1]$.", correct = TRUE),
-  answer("In a ROC curve, the best classifier lies on the top-right corner.", correct = TRUE),
-  answer("AUC = 0 means that all negatives are ranked higher than all positives."),
-  answer("AUC = 0 corresponds to the worst classifier we can obtain.", correct = FALSE)
+question("Which statements are true?",
+  answer("If the proportion of positive to negative instances in the training data changes, the ROC curve will not change."),
+  answer("If the proportion of positive to negative instances in the test data changes, the ROC curve will not change.", correct = TRUE),
+  answer("Several evaluation metrics can be derived from a confusion matrix.", correct = TRUE),
+  answer("The area under the ROC curve is called AUC.", correct = TRUE),
+  answer("AUC = 0 means that the model is optimal.")
 )
 ```
 
