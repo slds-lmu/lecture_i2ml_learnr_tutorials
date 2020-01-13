@@ -4,11 +4,8 @@
 
 *Theoretical (T)*
 
-- Be able do differentiate between regression and classification tasks
+- Understand what learners and models are.
 
-*Practical (P)*
-
-- Get to know how to create tasks in `mlr`
 
 ### Preparation
 
@@ -18,35 +15,20 @@
     </center>
 
 
-1.  *(P)* Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html).
-
 ### Exercises
 
 #### *(T)* Quiz
 
 ```{r learners-quiz, echo=FALSE}
-# quiz(caption = "Tasks",
-  question("Which statements are true?",
-    answer("Supervised learning tasks are prediction problems.",
-           correct = TRUE),
-    answer("Unsupervised learning tries to discover structure and patterns in
-           the training data.",
-           correct = TRUE),
-    answer("Every unsupervised task is internally treated as supervised task."),
-    answer("Unsupervised learning is learning without a target variable.",
-           correct = TRUE),
-    answer("Classification is a supervised learning task.",
-           correct = TRUE),
-    answer("Regression is a supervised learning task.",
-           correct = TRUE),
-    answer("Clustering is a supervised learning task.")
-  )
+question("Which statements are true?",
+    answer("We use the terms 'model' and 'hypothesis' synonymously.",
+        correct = TRUE),
+    answer("We use the terms 'learner' and 'inducer' synonymously.",
+        correct = TRUE),
+    answer("We use the terms 'model' and 'learner' synonymously."),
+    answer("A learner takes the data set, does some computations on it and returns the model.",
+        correct = TRUE)
+)
 ```
 
-#### *(P)* Creating learner with `mlr`
 
-For this exercise, take a look at the [`iris` dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set):
-
-```{r}
-summary(iris)
-```

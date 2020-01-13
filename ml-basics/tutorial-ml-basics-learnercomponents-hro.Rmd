@@ -6,40 +6,26 @@
 
 - Be able do differentiate between regression and classification tasks
 
-*Practical (P)*
-
-- Get to know how to create tasks in `mlr`
 
 ### Preparation
 
-1.  *(T)* Watch the following videos:
+1.  *(T)* Watch the following video:
     <center>
     ![Components of a Learner](https://youtu.be/zaB7WioK1Kw){width="75%"}
     </center>
 
 
-1.  *(P)* Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html).
 
 ### Exercises
 
 #### *(T)* Quiz
 
 ```{r components-quiz, echo=FALSE}
-# quiz(caption = "Tasks",
-  question("Which statements are true?",
-    answer("Supervised learning tasks are prediction problems.",
-           correct = TRUE),
-    answer("Unsupervised learning tries to discover structure and patterns in
-           the training data.",
-           correct = TRUE),
-    answer("Every unsupervised task is internally treated as supervised task."),
-    answer("Unsupervised learning is learning without a target variable.",
-           correct = TRUE),
-    answer("Classification is a supervised learning task.",
-           correct = TRUE),
-    answer("Regression is a supervised learning task.",
-           correct = TRUE),
-    answer("Clustering is a supervised learning task.")
-  )
+question("Which statements are true?",
+    answer("For a given hypothesis class $H$, different optimization procedures can be used to find the best model $f \\in H$.", correct = TRUE),
+    answer("Providing two different training data sets to a learner will result in the same optimal model $f$."),
+    answer("The *representation* of a learner defines its hypothesis class $H$.", correct = TRUE),
+    answer("Supervised learning consists of three components: Hypothesis Space, Risk, and Optimization", correct = TRUE)
+)
 ```
 

@@ -4,11 +4,8 @@
 
 *Theoretical (T)*
 
-- Be able do differentiate between regression and classification tasks
-
-*Practical (P)*
-
-- Get to know how to create tasks in `mlr`
+- Understand the role of risk minimization for machine learning
+- Understand what a loss function is
 
 ### Preparation
 
@@ -18,28 +15,22 @@
     </center>
 
 
-1.  *(P)* Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html).
-
 ### Exercises
 
 #### *(T)* Quiz
 
 ```{r riskminimization-quiz, echo=FALSE}
-# quiz(caption = "Tasks",
-  question("Which statements are true?",
-    answer("Supervised learning tasks are prediction problems.",
-           correct = TRUE),
-    answer("Unsupervised learning tries to discover structure and patterns in
-           the training data.",
-           correct = TRUE),
-    answer("Every unsupervised task is internally treated as supervised task."),
-    answer("Unsupervised learning is learning without a target variable.",
-           correct = TRUE),
-    answer("Classification is a supervised learning task.",
-           correct = TRUE),
-    answer("Regression is a supervised learning task.",
-           correct = TRUE),
-    answer("Clustering is a supervised learning task.")
-  )
+
+question("Which statements are true?",
+    answer("Measures for model performance can be used as loss functions.",
+        correct = TRUE),
+    answer("The choice of loss function has no influence on the model."),
+    answer("The empirical risk is the mean loss.", correct = TRUE), 
+    answer("To estimate model paramters, we usually minimize the empirical risk.",
+        correct = TRUE),
+    answer("By minimizing the empirical risk, we minimize the error (defined by the loss).",
+        correct = TRUE),
+    answer("With machine learning we can get a good prediction, regardless of our domain knowledge on the field of research.")
+)
 ```
 
