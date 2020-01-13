@@ -69,11 +69,11 @@ Make yourself familiar with the spam task (`?kernlab::spam`):
 
 > A data set collected at Hewlett-Packard Labs, that classifies 4601 e-mails as spam or non-spam. In addition to this class label there are 57 variables indicating the frequency of certain words and characters in the e-mail.
 
-The task is predefined in `mlr` as `spam.task`:
+The task is predefined in `mlr3` and can be accessed with the query `spam`:
 
 ```{r spam-task, exercise=TRUE}
-spam.task
-head(spam.task$env$data)
+spam_task <- tsk("spam")
+spam_task$head()
 ?kernlab::spam
 ```
 
@@ -81,32 +81,32 @@ head(spam.task$env$data)
 
 1. As a first approach, we want to train a logistic regression on the whole task. Therefore, define the model and train it. Set the `predict.type` of the learner to `"prob"`:
 
-```{r spam-logreg-train, exercise=TRUE, exercise.lines=5, exercise.checker=modelChecker("model_logreg", TRUE)}
-learner =
-model_logreg = train(learner = ..., task = ...)
+```{r spam-logreg-train, exercise=TRUE, exercise.lines=5, exercise.checker=modelChecker("learner", TRUE)}
+learner <-
+learner$train(task = )
 ```
 
 ```{r spam-logreg-train-hint-1}
-# Use 'classif.logreg' as learner with 'predict.type = prob'
-learner = makeLearner("classif.logreg", predict.type = "prob")
+# Use 'classif.log_reg' as learner with 'predict.type = prob'
+learner <- lrn("classif.log_reg", predict_type = "prob")
 ```
 
 ```{r spam-logreg-train-hint-2}
-# Use 'spam.task' as task
-task = spam.task
+# Access the task with the query 'spam'
+task = tsk("spam")
 ```
 
 ```{r spam-logreg-train-solution}
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = tsk("spam"))
 ```
 
 ```{r spam-logreg-train-check}
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task <- tsk("spam"))
 ```
 
-2. Calculate the prediction on the whole task with `predict()`:
+2. Calculate the prediction on the whole task with the class method `predict()` of the learner object:
 
 ```{r, include=FALSE}
 predCheck = function (label, user_code, check_code, envir_result, evaluate_result, ...)
@@ -124,136 +124,101 @@ predCheck = function (label, user_code, check_code, envir_result, evaluate_resul
 ```
 
 ```{r spam-logreg-pred, exercise=TRUE, exercise.lines=5, exercise.checker=predCheck}
-learner =
-moel_logreg =
-model_prediction = predict(...)
+learner <-
+learner$train(task = )
+model_prediction <-
 ```
 
 ```{r spam-logreg-pred-hint-1}
 # Define the model as previously
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = tsk("spam"))
 ```
 
 ```{r spam-logreg-pred-hint-2}
-# Pass the model and task to predict()
-model_prediction = predict(model_logreg, spam.task)
+# Predict using the learner object
+model_prediction <- learner$predict(task = tsk("spam"))
 ```
 
 ```{r spam-logreg-pred-solution}
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
-model_prediction = predict(model_logreg, spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = tsk("spam"))
+model_prediction <- learner$predict(task = tsk("spam"))
 ```
 
 ```{r spam-logreg-pred-check}
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
-model_prediction = predict(model_logreg, spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = tsk("spam"))
+model_prediction <- learner$predict(task = tsk("spam"))
 ```
 
-3. Calculate the confusion matrix for the `model_prediction` (extra: use `setThreshold()` to vary the threshold within the `calculateConfusionMatrix()` function):
+3. Print the confusion matrix for the `model_prediction` by accessing its class property `confusion` (extra: use the class method `set_threshold()` to vary the decision threshold used):
 
 ```{r conf-mat, exercise=TRUE}
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
-model_prediction = predict(model_logreg, spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = tsk("spam"))
+model_prediction <- learner$predict(task = tsk("spam"))
 
-calculateConfusionMatrix(...)
-calculateConfusionMatrix(setThreshold(..., 0.2))
+model_prediction$
+model_prediction$set_threshold(...)
+model_prediction$
 ```
 
 ```{r conf-mat-solution}
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
-model_prediction = predict(model_logreg, spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = tsk("spam"))
+model_prediction <- learner$predict(task = tsk("spam"))
 
-calculateConfusionMatrix(model_prediction)
-calculateConfusionMatrix(setThreshold(model_prediction, 0.2))
+model_prediction$confusion
+model_prediction$set_threshold(0.2)
+model_prediction$confusion
 ```
 
-4. Finally, generate the threshold vs. performance data (with `gneerateThreshVsPerfData()`) that are needed to plot the ROC (with `plotROCCurves()`). Do also calculate the AUC and mmce with `performance()` (extra: use `setThreshold()` to vary the threshold within the `performance()` function):
+4. Finally, plot the ROC (with `autoplot()` using the keyword `"roc"`). Do also calculate the AUC and mmce with the class method `score()` (extra: use the class method `set_threshold()` to vary the decision threshold used):
 
-```{r, include=FALSE}
-threshCheck = function (label, user_code, check_code, envir_result, evaluate_result, ...)
-{
-  code_ext = "
-  thresh_data_names = sort(names(thresh_vs_perf_data$data)[c(1,2)])
-  "
+```{r roc-auc, exercise=TRUE}
+learner <-
+learner$train(task = )
+model_prediction <-
 
-  setup_state(sol_code = paste0(check_code, code_ext), stu_code = paste0(user_code, code_ext))
-
-  msg = errorToMessage(expr = {
-    ex() %>% check_object("thresh_vs_perf_data") %>% check_element("data") %>% check_column("fpr") %>% check_equal()
-    ex() %>% check_object("thresh_vs_perf_data") %>% check_element("data") %>% check_column("tpr") %>% check_equal()
-    ex() %>% check_object("thresh_data_names") %>% check_equal("Make sure that the first two measures are fpr and tpr!")
-  })
-  if (! is.null(msg))
-    return(msg)
-
-  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
-}
-```
-
-```{r roc-auc, exercise=TRUE, exercise.checker=threshCheck}
-learner =
-moel_logreg =
-model_prediction = predict(...)
-
-thresh_vs_perf_data = generateThreshVsPerfData(..., measures = ...)
-plotROCCurves(thresh_vs_perf_data)
-performance(pred = ..., measures = ...)
+autoplot(...)
+model_prediction$score(list(...))
 ```
 
 ```{r roc-auc-hint-1}
 # Use the previously defined objects
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
-model_prediction = predict(model_logreg, spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = tsk("spam"))
+model_prediction <- learner$predict(task = tsk("spam"))
 ```
 
 ```{r roc-auc-hint-2}
-# The ROC is calculated by plotting the false positive rate vs. true positive rate.
-# To extract them from the prediction object use
-thresh_vs_perf_data = generateThreshVsPerfData(model_prediction, measures = list(fpr, tpr))
+# The ROC can be easily plotted with
+autoplot(model_prediction, "roc")
 ```
 
 ```{r roc-auc-hint-3}
-# The ROC can be easily plotted with
-plotROCCurves(thresh_vs_perf_data)
+# To calculate the performance on a prediction object use its class method 'score()' 
+model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
 ```
 
 ```{r roc-auc-hint-4}
-# To calculate the performance on a prediction object use the 'performance()' function
-performance(pred = model_prediction, measures = list(auc, mmce))
-```
-
-```{r roc-auc-hint-5}
-# To calculate prediction based on another threshold use `setThreshold()` on the prediction object:
-setThreshold(model_prediction, 0.2)
+# To set the threshold of a prediction object use its class method `set_threshold()`
+model_prediction$set_threshold(0.2)
 ```
 
 ```{r roc-auc-solution}
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
-model_prediction = predict(model_logreg, spam.task)
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = tsk("spam"))
+model_prediction <- learner$predict(task = tsk("spam"))
 
-thresh_vs_perf_data = generateThreshVsPerfData(model_prediction, measures = list(fpr, tpr))
-plotROCCurves(thresh_vs_perf_data)
-performance(pred = model_prediction, measures = list(auc, mmce))
-performance(pred = setThreshold(model_prediction, 0.2), measures = list(auc, mmce))
+autoplot(model_prediction, "roc")
+
+model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
+model_prediction$set_threshold(0.2)
+model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
 ```
 
-```{r roc-auc-check}
-learner = makeLearner("classif.logreg", predict.type = "prob")
-model_logreg = train(learner = learner, task = spam.task)
-model_prediction = predict(model_logreg, spam.task)
-
-thresh_vs_perf_data = generateThreshVsPerfData(model_prediction, measures = list(fpr, tpr))
-plotROCCurves(thresh_vs_perf_data)
-performance(pred = model_prediction, measures = list(auc, mmce))
-performance(pred = setThreshold(model_prediction, 0.2), measures = list(auc, mmce))
-```
 
 ```{r roc-auc-quiz, echo=FALSE}
 question("Which statements are true?",
@@ -282,8 +247,7 @@ resampleChecker = function (label, user_code, check_code, envir_result, evaluate
 
   msg = errorToMessage(expr = {
     ex() %>% check_object("res_desc") %>% check_equal()
-    ex() %>% check_object("res") %>% check_element("measures.train") %>% check_equal()
-    ex() %>% check_object("res") %>% check_element("measures.test") %>% check_equal()
+    ex() %>% check_object("res") %>%  check_equal()
   })
   if (! is.null(msg))
     return(msg)
@@ -294,43 +258,48 @@ resampleChecker = function (label, user_code, check_code, envir_result, evaluate
 ```
 
 ```{r logreg-res, exercise=TRUE, exercise.checker=resampleChecker}
-learner =
+learner <- 
+task <- 
+res_desc <-
 
 set.seed(123)
-res = resample(learner = ..., task = ..., resampling = ...)
+res <- resample(task = ..., learner = ..., resampling = ...)
 ```
 
 ```{r logreg-res-hint-1}
-# Use 'classif.logreg' as learner with 'predict.type = prob'
-learner = makeLearner("classif.logreg", predict.type = "prob")
+# Use 'classif.log_reg' as learner with 'predict.type = prob'
+learner <- lrn("classif.log_reg", predict_type = "prob")
 ```
 
 ```{r logreg-res-hint-2}
-# Use 'spam.task' as task
-task = spam.task
+# Access the task with the query 'spam'
+task = tsk("spam")
 ```
 
 ```{r logreg-res-hint-3}
 # Use a 3-fold cross validation for resampling
-resampling = cv3
-resampling = makeResampleDesc(method = "CV", iters = 3)
+res_desc <- rsmp("cv", folds = 3L)
 ```
 
 ```{r logreg-res-solution}
-learner = makeLearner("classif.logreg", predict.type = "prob")
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
-res = resample(learner = learner, task = spam.task, resampling = cv3)
+res <- resample(task, learner, res_desc)
 ```
 
 ```{r logreg-res-check}
-learner = makeLearner("classif.logreg", predict.type = "prob")
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
-res = resample(learner = learner, task = spam.task, resampling = cv3)
+res <- resample(task, learner, res_desc)
 ```
 
-2. The resample object has an element `pred`. This prediction object contains the test predictions of each fold, therefore we have test based predictions of each observation. Extract the object from the `res` object and store it:
+2. The Resampling object has a class method `prediction()`. This method returns a Prediction object which contains the test predictions of each fold, therefore we have test based predictions of each observation. Extract the object from the `res` object and store it:
 
 ```{r, include=FALSE}
 predCheck = function (label, user_code, check_code, envir_result, evaluate_result, ...)
@@ -348,110 +317,126 @@ predCheck = function (label, user_code, check_code, envir_result, evaluate_resul
 ```
 
 ```{r test-pred-res, exercise=TRUE, exercise.checker=predCheck}
-learner =
+learner <- 
+task <- 
+res_desc <- 
 
 set.seed(123)
-res = resample(learner = ..., task = ..., resampling = ...)
-
-test_prediction =
+res <- resample(task = ..., learner = ..., resampling = ...)
+test_prediction <- 
 ```
 
 ```{r test-pred-res-hint-1}
 # Use the objects defined previously
-learner = makeLearner("classif.logreg", predict.type = "prob")
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
-res = resample(learner = learner, task = spam.task, resampling = cv3)
+res <- resample(task, learner, res_desc)
 ```
 
 ```{r test-pred-res-hint-2}
-# To access the test predictions of each fold select the 'data' element of res
-test_prediction = res$pred
+# To access the test predictions of each call the 'prediction()' class method
+test_prediction <- res$prediction()
 ```
 
 ```{r test-pred-res-solution}
-learner = makeLearner("classif.logreg", predict.type = "prob")
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
-res = resample(learner = learner, task = spam.task, resampling = cv3)
-
-test_prediction = res$pred
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
 ```
 
 ```{r test-pred-res-check}
-learner = makeLearner("classif.logreg", predict.type = "prob")
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
-res = resample(learner = learner, task = spam.task, resampling = cv3)
-
-test_prediction = res$pred
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
 ```
 
 3. Finally, calculate the ROC and AUC based on the `test_prediction` object:
 
-```{r roc-auc-res, exercise=TRUE, exercise.checker=threshCheck}
-learner =
+```{r roc-auc-res, exercise=TRUE}
+learner <- 
+task <- 
+res_desc <- 
 
 set.seed(123)
-res = resample(learner = ..., task = ..., resampling = ...)
-
-test_prediction =
-thresh_vs_perf_data = generateThreshVsPerfData(..., measures = ...)
-plotROCCurves(thresh_vs_perf_data)
-performance(pred = test_prediction, measures = auc)
+res <- resample(task = ..., learner = ..., resampling = ...)
+test_prediction <- 
+autoplot(..., "roc")
+model_prediction$score(...)
 ```
 
 ```{r roc-auc-res-hint-1}
 # Use the objects defined previously
-learner = makeLearner("classif.logreg", predict.type = "prob")
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
-res = resample(learner = learner, task = spam.task, resampling = cv3)
-
-test_prediction = res$pred
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
 ```
 
 ```{r roc-auc-res-hint-2}
-# The ROC is calculated by plotting the false positive rate vs. true positive rate.
-# To extract them from the prediction object use
-thresh_vs_perf_data = generateThreshVsPerfData(test_prediction, measures = list(fpr, tpr))
+# The ROC can be easily plotted with
+autoplot(test_prediction, "roc")
 ```
 
 ```{r roc-auc-res-hint-3}
-# The ROC can be easily plotted with
-plotROCCurves(thresh_vs_perf_data)
+# To calculate the performance on a prediction object use its class method 'score()' 
+test_prediction$score(msr("classif.auc"))
 ```
 
 ```{r roc-auc-res-hint-4}
-# To calculate the performance on a prediction object use the 'performance()' function
-performance(pred = test_prediction, measures = list(auc, mmce))
-```
-
-```{r roc-auc-res-hint-5}
-# To calculate prediction based on another threshold use `setThreshold()` on the prediction object:
-setThreshold(test_prediction, 0.2)
+# To set the threshold of a prediction object use its class method `set_threshold()`
+test_prediction$set_threshold(0.2)
 ```
 
 ```{r roc-auc-res-solution}
-learner = makeLearner("classif.logreg", predict.type = "prob")
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
-res = resample(learner = learner, task = spam.task, resampling = cv3)
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
 
-test_prediction = res$pred
-thresh_vs_perf_data = generateThreshVsPerfData(test_prediction, measures = list(fpr, tpr))
-plotROCCurves(thresh_vs_perf_data)
-performance(pred = test_prediction, measures = auc)
+autoplot(test_prediction, "roc")
+test_prediction$score(msr("classif.auc"))
 ```
 
 ```{r roc-auc-res-check}
-learner = makeLearner("classif.logreg", predict.type = "prob")
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
-res = resample(learner = learner, task = spam.task, resampling = cv3)
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
 
-test_prediction = res$pred
-thresh_vs_perf_data = generateThreshVsPerfData(test_prediction, measures = list(fpr, tpr))
-plotROCCurves(thresh_vs_perf_data)
-performance(pred = test_prediction, measures = auc)
+autoplot(test_prediction, "roc")
+test_prediction$score(msr("classif.auc"))
+```
+
+Note that the ROC and performance measures for each fold can also be directly computed from a Resampling object:
+
+```{r resampl-roc-auc, exercise=TRUE}
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <- tsk("spam")
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+
+autoplot(res, "roc")
+res$score(msr("classif.auc"))
 ```
