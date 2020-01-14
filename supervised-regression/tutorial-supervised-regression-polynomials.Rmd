@@ -9,7 +9,7 @@
 
 *Practical (P)*
 
-- Get to know how to fit a linear model and a polynomial regression model in `mlr`
+- Get to know how to fit a linear model and a polynomial regression model in `mlr3`
 
 ### Preparation
 
@@ -18,7 +18,7 @@
     ![Polynomial Regression Models](https://youtu.be/q1ETfSxEfSg){width="75%"}
     </center>
 
-1.  *(P)* Make sure that you have understood how to define tasks and learners as well as how to train a learner.
+1.  *(P)* Make sure that you have understood how to define tasks and learners as well as how to train a learner. Read the mlr3 tutorial about [learners](https://mlr3book.mlr-org.com/learners.html).
 
 ### Exercises
 
@@ -36,145 +36,141 @@ question("What statements are true?",
 Create a regression task using the `mtcars` dataset with target variable `mpg` and polynomial feature `hp` of degree 3 (use the helper function below to generate a dataset for polynomial regression):
 
 ```{r mtcars-task, exercise=TRUE, exercise.lines=12, exercise.checker=taskChecker("mtcars_task")}
-polynomialTrafo = function (data, feature, degree) {
+polynomialTrafo <- function (data, feature, degree) {
   ...
 }
 
-task_data =
-mtcars_task =
+task_data <-
+mtcars_task <-
 ```
 
 ```{r mtcars-task-hint-1}
 # Define the polynomialTrafo function
-polynomialTrafo = function (data, feature, degree) {
-  feature_idx = which(feature == names(data))
+polynomialTrafo <- function (data, feature, degree) {
+  feature_idx <- which(feature == names(data))
   # function 'poly' creates numerically well-behaved polynomials: orthogonal, etc.
-  df_poly = as.data.frame(poly(data[[feature]], degree))
-  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  df_poly <- as.data.frame(poly(data[[feature]], degree))
+  names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
 ```
 
 ```{r mtcars-task-hint-2}
 # Use 'polynomialTrafo' to get the desired data.frame
-task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+task_data <- polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
 ```
 
 ```{r mtcars-task-hint-3}
-# Use the 'task_data' in 'makeRegrTask'
-makeRegrTask(data = task_data, ...)
+# Use the 'task_data' in 'TaskRegr$new()'
+TaskRegr$new(id = ..., backend = ..., target = ...)
 ```
 
 ```{r mtcars-task-solution}
-polynomialTrafo = function (data, feature, degree) {
-  feature_idx = which(feature == names(data))
+polynomialTrafo <- function (data, feature, degree) {
+  feature_idx <- which(feature == names(data))
   # function 'poly' creates numerically well-behaved polynomials: orthogonal, etc.
-  df_poly = as.data.frame(poly(data[[feature]], degree))
-  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  df_poly <- as.data.frame(poly(data[[feature]], degree))
+  names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
 
-task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
-mtcars_task = makeRegrTask(data = task_data, target = "mpg")
+task_data <- polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+mtcars_task <- TaskRegr$new(id = "mtcars_task", backend = task_data, target = "mpg")
 ```
 
 ```{r mtcars-task-check}
-polynomialTrafo = function (data, feature, degree) {
-  feature_idx = which(feature == names(data))
+polynomialTrafo <- function (data, feature, degree) {
+  feature_idx <- which(feature == names(data))
   # function 'poly' creates numerically well-behaved polynomials: orthogonal, etc.
-  df_poly = as.data.frame(poly(data[[feature]], degree))
-  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  df_poly <- as.data.frame(poly(data[[feature]], degree))
+  names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
 
-task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
-mtcars_task = makeRegrTask(data = task_data, target = "mpg")
+task_data <- polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+mtcars_task <- TaskRegr$new(id = "mtcars_task", backend = task_data, target = "mpg")
 ```
 
 ```{r poly-trafo, exercise=TRUE}
 # helper function to extract polynomial features:
-polynomialTrafo = function (data, feature, degree) {
-  feature_idx = which(feature == names(data))
+polynomialTrafo <- function (data, feature, degree) {
+  feature_idx <- which(feature == names(data))
   # function 'poly' creates numerically well-behaved polynomials: orthogonal, etc.
-  df_poly = as.data.frame(poly(data[[feature]], degree))
-  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  df_poly <- as.data.frame(poly(data[[feature]], degree))
+  names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
 # Example: Create polynomial feature map with degree 2 of wt
-data_trafo = polynomialTrafo(mtcars[, c("mpg", "wt")], "wt", 2)
+data_trafo <- polynomialTrafo(mtcars[, c("mpg", "wt")], "wt", 2)
 head(data_trafo)
 ```
 
 #### *(P)* Define the linear model
 
-Now, as for k-NN, define a learner. Use a regression learner of the `lm` function.
+Now define a learner. Use a regression learner of the `lm` function.
 
 ```{r lm-learner, exercise=TRUE, exercise.lines=5, exercise.checker=learnerChecker("lm_learner")}
-lm_learner =
+lm_learner <-
 ```
 
 ```{r lm-learner-hint-1}
 # To see all available learners you can simply call
-listLearners()
+mlr_learners
 ```
 
-```{r lm-learner-hint-2}
-# You can pass the task to get suitable learner
-listLearners(mtcars_task)
-```
 
 ```{r lm-learner-solution}
-lm_learner = makeLearner("regr.lm")
+lm_learner <- lrn("regr.lm")
 ```
 
 ```{r lm-learner-check}
-lm_learner = makeLearner("regr.lm")
+lm_learner <- lrn("regr.lm")
 ```
 
 #### *(P)* Train the linear model
 
-```{r lm-train, exercise=TRUE, exericse.lines=12, exercise.checker=modelChecker("lm_model")}
-polynomialTrafo = function (data, feature, degree) {
+```{r lm-train, exercise=TRUE, exericse.lines=12, exercise.checker=modelChecker("lm_learner")}
+polynomialTrafo <- function (data, feature, degree) {
   ...
 }
 
-task_data =
-mtcars_task =
-lm_learner =
+task_data <-
+mtcars_task <-
+lm_learner <-
 
-lm_model =
+lm_model <-
 ```
 
 ```{r lm-train-solution}
-polynomialTrafo = function (data, feature, degree) {
-  feature_idx = which(feature == names(data))
+polynomialTrafo <- function (data, feature, degree) {
+  feature_idx <- which(feature == names(data))
   # function 'poly' creates numerically well-behaved polynomials: orthogonal, etc.
-  df_poly = as.data.frame(poly(data[[feature]], degree))
-  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  df_poly <- as.data.frame(poly(data[[feature]], degree))
+  names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
 
-task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
-mtcars_task = makeRegrTask(data = task_data, target = "mpg")
-lm_learner = makeLearner("regr.lm")
+task_data <- polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+mtcars_task <- TaskRegr$new(id = "mtcars_task", backend = task_data, target = "mpg")
+lm_learner <- lrn("regr.lm")
 
-lm_model = train(lm_learner, mtcars_task)
+lm_learner$train(mtcars_task)
 ```
 
 ```{r lm-train-check}
-polynomialTrafo = function (data, feature, degree) {
-  feature_idx = which(feature == names(data))
+polynomialTrafo <- function (data, feature, degree) {
+  feature_idx <- which(feature == names(data))
   # function 'poly' creates numerically well-behaved polynomials: orthogonal, etc.
-  df_poly = as.data.frame(poly(data[[feature]], degree))
-  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  df_poly <- as.data.frame(poly(data[[feature]], degree))
+  names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
 
-task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
-mtcars_task = makeRegrTask(data = task_data, target = "mpg")
-lm_learner = makeLearner("regr.lm")
+task_data <- polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = 3)
+mtcars_task <- TaskRegr$new(id = "mtcars_task", backend = task_data, target = "mpg")
+lm_learner <- lrn("regr.lm")
 
-lm_model = train(lm_learner, mtcars_task)
+lm_learner$train(mtcars_task)
 ```
 
 #### *(P)* Visualize the polynomial regression
@@ -182,11 +178,11 @@ lm_model = train(lm_learner, mtcars_task)
 To draw the curve you can use the code below, try different values for `degree`. How does the curve change? What can you observe?
 
 ```{r lm-poly-viz-setup}
-polynomialTrafo = function (data, feature, degree) {
-  feature_idx = which(feature == names(data))
+polynomialTrafo <- function (data, feature, degree) {
+  feature_idx <- which(feature == names(data))
   # function 'poly' creates numerically well-behaved polynomials: orthogonal, etc.
-  df_poly = as.data.frame(poly(data[[feature]], degree))
-  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  df_poly <- as.data.frame(poly(data[[feature]], degree))
+  names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
 ```
@@ -195,25 +191,28 @@ polynomialTrafo = function (data, feature, degree) {
 library(ggplot2)
 
 # Change degree here
-degree = 3
+degree <- 3
 
 # You can leave this code as it is, just use the objects from above and
 # degree as variable in the task data generation:
-task_data =
-mtcars_task =
-lm_learner =
-lm_model =
+task_data <-
+mtcars_task <-
+lm_learner <-
 
-hp_pred = seq(min(mtcars$hp), max(mtcars$hp), length.out = 100)
-pred_data = polynomialTrafo(data.frame(hp = hp_pred), "hp", degree)
 
-plot_data = data.frame(mpg_pred = predict(lm_model, newdata = pred_data)$data$response, hp = hp_pred)
+hp_pred <- seq(min(mtcars$hp), max(mtcars$hp), length.out = 100)
+pred_data <- polynomialTrafo(data.frame(hp = hp_pred), "hp", degree)
+
+plot_data <- data.frame(mpg_pred = predict(lm_learner$state$model, pred_data), hp = hp_pred)
 ggplot() + geom_point(data = mtcars, aes(x = hp, y = mpg)) + geom_line(data = plot_data, aes(x = hp, y = mpg_pred))
 ```
 
 ```{r lm-poly-viz-hint}
-task_data = polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = degree)
-mtcars_task = makeRegrTask(data = task_data, target = "mpg")
-lm_learner = makeLearner("regr.lm")
-lm_model = train(lm_learner, mtcars_task)
+task_data <- polynomialTrafo(data = mtcars[, c("mpg", "hp")], feature = "hp", degree = degree)
+mtcars_task <- TaskRegr$new(id = "mtcars_task", backend = task_data, target = "mpg")
+lm_learner <- lrn("regr.lm")
+
+lm_learner$train(mtcars_task)
+
+lm_learner$state$model
 ```

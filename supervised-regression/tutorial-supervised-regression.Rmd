@@ -14,7 +14,9 @@ library(learnr)
 # devtools::install_github("datacamp/testwhat")
 library(testwhat)
 library(checkmate)
-library(mlr)
+library(mlr3)
+library(mlr3viz)
+library(mlr3learners)
 library(kknn)
 
 errorToMessage = function (expr)
@@ -43,16 +45,16 @@ taskChecker = function (task_name)
     task_processor = "
     task = ', task_name, '
     task_hash = digest::digest(c(
-      digest::digest(sort(sapply(task$env$data, digest::digest))),
+      digest::digest(sort(sapply(task$backend, digest::digest))),
       class(task),
-      digest::digest(task$task.desc$target)
+      digest::digest(task$target_names)
     ))
     "
     setup_state(sol_code = paste0(check_code, task_processor), stu_code = paste0(user_code, task_processor))
 
     msg = errorToMessage(expr = {
-      ex() %>% check_object("task") %>% check_element("task.desc")
-      ex() %>% check_object("task") %>% check_element("env")
+      ex() %>% check_object("task") %>% check_element("task_type")
+      ex() %>% check_object("task") %>% check_element("backend")
       ex() %>% check_object("task_hash") %>% check_equal()
     })
     if (! is.null(msg))
@@ -82,8 +84,8 @@ learnerChecker = function (learner_name)
     # Hashing of the learner.
     learner_processor = "
     learner = ', learner_name, '
-    ll_short_name = learner$short_name
-    ll_par_vals = learner$par.vals
+    ll_short_name = learner$id
+    ll_par_vals = learner$param_set
     ll_class = class(learner)
     "
     setup_state(sol_code = paste0(check_code, learner_processor), stu_code = paste0(user_code, learner_processor))
@@ -120,10 +122,9 @@ modelChecker = function (model_name)
     model_processor = "
     model = ', model_name, '
     model_hash = digest::digest(c(
-      sort(model$features),
-      model$task.desc$target,
-      model$task.desc$size,
-      model$task.desc$type
+      sort(lm_learner$state$train_task$feature_names),
+      model$state$train_task$target_names,
+      model$state$train_task$task_type
     ))
     "
     setup_state(sol_code = paste0(check_code, model_processor), stu_code = paste0(user_code, model_processor))
@@ -136,7 +137,7 @@ modelChecker = function (model_name)
 
     model_processor = "
     model = ', model_name, '
-    learner = model$learner
+    learner = model
     "
     msg = learnerChecker("learner")(label, paste0(user_code, model_processor), paste0(check_code, model_processor), envir_result, evaluate_result, ...)
     if (! msg$correct)
@@ -185,7 +186,7 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```{r, child="tutorial-supervised-regression-polynomials.Rmd"}
 ```
 
-```{r, child="tutorial-supervised-regression-knn.Rmd"}
-```
+# ```{r, child="tutorial-supervised-regression-knn.Rmd"}
+# ```
 
 
