@@ -1,0 +1,37 @@
+## Splitting data and growing trees
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Understand splitting rules in CART
+- Understand how to grow a tree
+- Grasp the computational aspects of splitting
+
+
+
+### Preparation
+
+1.  *(T)* Watch the following videos:
+    <center>
+    ![Splitting Criteria](https://youtu.be/IgHTJsAJTok){width="75%"}
+    ![Growing a tree](https://youtu.be/UjuJCgeZ6HA){width="75%"}
+    ![Computational Aspects of Finding Splits](https://youtu.be/RujQ_xP-NFA){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r tree-quiz-sg, echo=FALSE}
+question("Which statements about CART are true?",
+  answer("To find optimal splits, one iterates over all features, and for each feature over all possible split points.", correct = TRUE),
+  answer("To find optimal splits, we use the one that splits the data approximately in half in each step."),
+  answer("To find optimal splits, we evaluate the possible splits only on the data that ended up in the parent node we are trying to split.", correct = TRUE),
+  answer("The optimal split results in the lowest sum of empirical risks in the child nodes.", correct = TRUE),
+  answer("Monotone transformations of several features will change the structure of the tree."),
+  answer("The CART algorithm cannot go on training if every node contains exactly one observation", correct = TRUE)
+)
+```
+

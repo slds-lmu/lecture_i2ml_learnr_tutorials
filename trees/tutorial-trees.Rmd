@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Machine Learning - Day 4"
+title: "Introduction to Machine Learning - Classification and Regression Trees"
 output:
   learnr::tutorial:
     theme: cosmo
@@ -192,8 +192,16 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```
 
 
-```{r, child="04_tutorial_01_trees.Rmd"}
+```{r, child="tutorial-trees-intro.Rmd"}
 ```
 
-```{r, child="04_tutorial_02_forests.Rmd"}
+```{r, child="tutorial-trees-split-grow.Rmd"}
 ```
+
+```{r, child="tutorial-trees-stoppingpruning.Rmd"}
+```
+
+```{r, child="tutorial-trees-discussion.Rmd"}
+```
+
+

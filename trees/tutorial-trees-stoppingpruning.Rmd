@@ -1,0 +1,29 @@
+## Stopping and Pruning
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Understand what pruning is and why it is needed.
+
+
+### Preparation
+
+1.  *(T)* Watch the following video:
+    <center>
+    ![Stopping criteria & pruning](https://youtu.be/oQj3N2T-T90){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r tree-quiz-sp, echo=FALSE}
+question("Which statements about CART are true?",
+  answer("Pruning means, cutting back the tree.", correct = TRUE),
+  answer("Pruning means that the tree becomes less complex.", correct = TRUE),
+  answer("A tree with one observation per leaf node will result in a good performance on new data.")
+)
+```
+
