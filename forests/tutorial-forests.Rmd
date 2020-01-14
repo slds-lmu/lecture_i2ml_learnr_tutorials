@@ -192,8 +192,6 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```
 
 
-```{r, child="04_tutorial_01_trees.Rmd"}
+```{r, child="tutorial-forests-intro.Rmd"}
 ```
 
-```{r, child="04_tutorial_02_forests.Rmd"}
-```

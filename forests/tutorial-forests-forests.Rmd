@@ -5,48 +5,37 @@
 
 *Theoretical (T)*
 
-- Learn why and how bagging works
-- Get to know the differences between bagging and random forests
-- See how feature importance can be calculated with a random forest
+- Understand the concept of random forests 
+- See the differences between trees, forests and bagging
+- Learn about the proximity measure that can be extracted from a forest
 
 *Practical (P)*
 
 - Know how to train a random forest model using `mlr`
-- Understand how the number of trees affect the performance
+- Understand how the number of trees affects the performance
 
 
 
 ### Preparation
 
-1.  *(T)* Watch the following videos (sorry, rather low volume...):
+1.  *(T)* Watch the following videos:
     <center>
-    ![](https://youtu.be/P34_SbEwEh8){width="75%"}
+    ![Introduction](https://youtu.be/chberfdaTwc){width="75%"}
+    ![Benchmarking Trees, Forests, and Bagging K-NN](https://youtu.be/uOamholBaZ0){width="75%"}
+    ![Proximities](https://youtu.be/RGa0Uc6ZbX4){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-forests1.pdf" target="_blank">Slideset Random Forest 1</a>
-    <center>
-    ![](https://youtu.be/Zpj6znkzO2M){width="75%"}
-    </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-forests2.pdf" target="_blank">Slideset Random Forest 2</a>
 
-1.  *(P)* Make sure you've done the [tutorial on trees](https://compstat-lmu.shinyapps.io/04_tutorial/#section-trees) and the [tutorial on resampling](https://compstat-lmu.shinyapps.io/03_tutorial/#section-resampling).
+1.  *(P)* Make sure you've done the tutorial on trees and the tutorial on resampling.
 
 ### Exercises
 
 #### *(T)* Quiz
 
-```{r random forest-quiz1, echo=FALSE}
+```{r forest-quiz-intro, echo=FALSE}
 question("Which statements are true?",
-  answer("Bagging works best for unstable learners.", correct = TRUE),
-  answer("For stable estimation methods, bagging mostly degrades performance."),
-  answer("A random forest is a bagging model for trees (with small adjustments).", correct = TRUE),
   answer("The OOB error shares similarities with cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
   answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$", correct = TRUE),
-  answer("Often works well enough.", correct = TRUE),
-  answer("It can work also on high-dimensional data.", correct = TRUE),
-  answer("Proximities are used in replacing missing data, but not in locating outliers."),
-  answer("For each variable, the improvement is accumulated over all trees for the variable importance measure.", correct = TRUE),
-  answer("The random forest is a bad out of the box model and requires tuning of hyperparameters."),
-  answer("The random forest is often used as base-line model due to its good out of the box performance.", correct = TRUE)
+  answer("Proximities are used in replacing missing data, but not in locating outliers.")
 )
 ```
 
