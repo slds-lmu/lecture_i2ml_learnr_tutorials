@@ -8,7 +8,7 @@
 
 *Practical (P)*
 
-- Learn how to train a k-NN model using `mlr`
+- Learn how to train a k-NN model using `mlr3`
 
 ### Preparation
 
@@ -17,8 +17,7 @@
     ![k-NN](https://youtu.be/g8H6-MkN_q0){width="75%"}
     </center>
 
-<!-- TODO: adapt ot mlr3 -->
-2.  Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them.
+2.  Read the `mlr3` tutorial about [learners](https://mlr3book.mlr-org.com/learners.html) and how to [train](https://mlr3book.mlr-org.com/train-predict.html) them.
 
 
 ### Exercises
@@ -72,12 +71,12 @@ question("Which statements are true?",
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
 ```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=learnerChecker("kknn_learner")}
-kknn_learner =
+kknn_learner <-
 ```
 
 ```{r kknn-definition-hint-1, eval=FALSE}
-# Use the 'makeLearner' function of mlr
-makeLearner(...)
+# Use the 'lrn()' function of mlr
+lrn(...)
 ```
 
 ```{r kknn-definition-hint-2}
@@ -90,71 +89,78 @@ makeLearner(...)
 ```
 
 ```{r kknn-definition-solution}
-kknn_learner = makeLearner("classif.kknn", k = 3)
+kknn_learner <- lrn("classif.kknn", k = 3)
 ```
 
 ```{r kknn-definition-check}
-kknn_learner = makeLearner("classif.kknn", k = 3)
+kknn_learner <- lrn("classif.kknn", k = 3)
 ```
 
 
 #### *(P)* Train the `mlr3` learner
 
-Now train the learner `kknn_learner` defined above on the task `iris_task` defined in session 2 and
-save the learnt model as `kknn_model`:
+Now train the learner `kknn_learner` defined above on the task `iris_task` defined in session 2:
 
-```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=modelChecker("kknn_model")}
-iris_task =
-kknn_learner =
+```{r kknn-training, exercise=TRUE, exercise.liens=5, exercise.checker=modelChecker("kknn_learner")}
+iris_task <-
+kknn_learner <-
 
-kknn_model =
+kknn_learner$
 ```
 
 ```{r kknn-training-hint-1}
 # Use iris_task and kknn_learner from above
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-kknn_learner = makeLearner("classif.kknn", k = 3)
+iris_task <- TaskClassif$new(id = "iris_task", 
+                             backend = iris[,c("Species", "Sepal.Width", "Petal.Width")], 
+                             target = "Species")
+kknn_learner <- lrn("classif.kknn", k = 3)
 ```
 
 ```{r kknn-training-hint-2}
-# Use the train function of mlr
-train(...)
+# Use the class method 'train()' of the learner object
+kknn_learner$train(...)
 ```
 
 ```{r kknn-training-hint-3}
-# Just pass the 'kknn_learner' and the 'iris_task' to train
+# Just pass the 'iris_task' to train the 'kknn_learner'
 ```
 
 
 ```{r kknn-training-solution}
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-kknn_learner = makeLearner("classif.kknn", k = 3)
+iris_task <- TaskClassif$new(id = "iris_task", 
+                             backend = iris[,c("Species", "Sepal.Width", "Petal.Width")], 
+                             target = "Species")
+kknn_learner <- lrn("classif.kknn", k = 3)
 
-kknn_model = train(kknn_learner, iris_task)
+kknn_learner$train(iris_task)
 ```
 
 ```{r kknn-training-check}
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-kknn_learner = makeLearner("classif.kknn", k = 3)
+iris_task <- TaskClassif$new(id = "iris_task", 
+                             backend = iris[,c("Species", "Sepal.Width", "Petal.Width")], 
+                             target = "Species")
+kknn_learner <- lrn("classif.kknn", k = 3)
 
-kknn_model = train(kknn_learner, iris_task)
+kknn_learner$train(iris_task)
 ```
 
 
 #### *(P)* Visualize decision boundaries
 
-Again, define the `kknn_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `k`. What can you observe by varying the hyperparameter?
+Again, define the `kknn_learner` and visualize the prediction of the learner with `plot_prediction()`. Rerun the code for different `k`. What can you observe by varying the hyperparameter?
 
 ```{r kknn-visualization, exercise=TRUE}
-kknn_learner =
-iris_task =
+iris_task <-
+kknn_learner <-
 
-plotLearnerPrediction(learner = kknn_learner, task = iris_task)
+plot_prediction(learner = kknn_learner, task = iris_task)
 ```
 
 ```{r kknn-visualization-solution}
-kknn_learner = makeLearner("classif.kknn", k = 3)
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+iris_task <- TaskClassif$new(id = "iris_task", 
+                             backend = iris[,c("Species", "Sepal.Width", "Petal.Width")], 
+                             target = "Species")
+kknn_learner <- lrn("classif.kknn", k = 3)
 
-plotLearnerPrediction(learner = kknn_learner, task = iris_task)
+plot_prediction(learner = kknn_learner, task = iris_task)
 ```

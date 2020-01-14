@@ -122,7 +122,7 @@ modelChecker = function (model_name)
     model_processor = "
     model = ', model_name, '
     model_hash = digest::digest(c(
-      sort(lm_learner$state$train_task$feature_names),
+      sort(model$state$train_task$feature_names),
       model$state$train_task$target_names,
       model$state$train_task$task_type
     ))
