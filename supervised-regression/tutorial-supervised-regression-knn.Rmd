@@ -21,7 +21,9 @@ iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Widt
     ![k-NN](https://youtu.be/g8H6-MkN_q0){width="75%"}
     </center>
 
+<!-- TODO: adapt ot mlr3 -->
 2.  Read the [`mlr` tutorial about learners](https://mlr.mlr-org.com/articles/tutorial/learner.html) and how to [train](https://mlr.mlr-org.com/articles/tutorial/train.html) them.
+
 
 ### Exercises
 
@@ -32,8 +34,6 @@ question("Which statements are true?",
   answer("The properties of k-NN are induced by the chosen distance metric.",
          correct = TRUE),
   answer("k-NN can only be used for classification tasks."),
-  answer("k-NN is an unsupervised learning method as it identifies groups of
-         observations $N_k(x)$ that belong together."),
   answer("$N_k(x)$ contains the subset of the feature space $\\mathcal X$ that
          is at least as close to $x$ as the $k$-th closest neighbor of $x$ in
          the training data set.", correct = TRUE),
@@ -52,25 +52,27 @@ question("Which statements are true?",
   answer("If you use the Gower distance, k-NN results do not change if you
          rescale the features.",
          correct = TRUE),
-  answer("k-NN still performs well if most of the features we have are completely
-         useless for predicting the target variable."),
-  answer("The model representation of k-NN is simply the training data set.",
-         correct = TRUE),
-  answer("The size of the training data does not really affect the computational
-         effort that is required to predict a new target variable value from a
-         k-NN model."),
-  answer("The size of $k$ does not really affect the computational effort that is
-         required to predict a new target variable value from a k-NN model."),
-  answer("The dimension $p$ of $x$ does not really affect the computational effort
-         that is required to predict a new target variable value from a k-NN model."),
+  # answer("k-NN still performs well if most of the features we have are completely
+  #        useless for predicting the target variable."),
+  # answer("The model representation of k-NN is simply the training data set.",
+  #        correct = TRUE),
+  # answer("The size of the training data does not really affect the computational
+  #        effort that is required to predict a new target variable value from a
+  #        k-NN model."),
+  # answer("The size of $k$ does not really affect the computational effort that is
+         # required to predict a new target variable value from a k-NN model."),
+  # answer("The dimension $p$ of $x$ does not really affect the computational effort
+  #        that is required to predict a new target variable value from a k-NN model."),
   answer("The presence of irrelevant features doesn't affect the accuracy of k-NN."),
   answer("k-NN makes no assumptions about the underlying data distribution.",
-         correct = TRUE),
-  answer("Choosing an odd k can avoid ties in binary classification", correct = TRUE)
+         correct = TRUE)
+  # answer("Choosing an odd k can avoid ties in binary classification", correct = TRUE)
 )
 ```
 
 #### *(P)* Create the `mlr` learner
+
+<!-- TODO: example should be regression, not classification -->
 
 Create a k-NN learner with `k = 3` using the `kknn` function from the same named package `kknn`:
 ```{r kknn-definition, exercise=TRUE, exercise.lines=5, exercise.checker=learnerChecker("kknn_learner")}

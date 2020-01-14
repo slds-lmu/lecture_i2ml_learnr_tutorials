@@ -30,7 +30,18 @@ question("Which statements are true?",
         correct = TRUE),
     answer("By minimizing the empirical risk, we minimize the error (defined by the loss).",
         correct = TRUE),
-    answer("With machine learning we can get a good prediction, regardless of our domain knowledge on the field of research.")
+    answer("Any model can use any arbitrary loss function."),
+    answer("Empirical risk minimization is a very general mathematical framework
+         that turns 'finding a good model' into a mathematically tractable
+         optimization problem.",
+        correct = TRUE),
+    answer("Since empirical risk minimization is a completely abstract and very
+         general mathematical procedure, the choice of loss function should not
+         depend on background knowledge about the data set at hand or what the
+         model is going to be used for."),
+    answer("How difficult the optimization of a learner is depends strongly on the
+         properties of its loss function.",
+        correct = TRUE)
 )
 ```
 

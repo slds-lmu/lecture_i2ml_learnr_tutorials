@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Machine Learning - Day 1"
+title: "Introduction to Machine Learning - Supervised Regression"
 output:
   learnr::tutorial:
     theme: cosmo
@@ -176,11 +176,10 @@ options(width = 100)
 tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```
 
-
-```{r, child="tutorial-supervised-regression-linearmodel.Rmd"}
+```{r, child="tutorial-supervised-regression-losses.Rmd"}
 ```
 
-```{r, child="tutorial-supervised-regression-losses.Rmd"}
+```{r, child="tutorial-supervised-regression-linearmodel.Rmd"}
 ```
 
 ```{r, child="tutorial-supervised-regression-polynomials.Rmd"}
