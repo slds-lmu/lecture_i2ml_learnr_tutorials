@@ -1,9 +1,5 @@
 ## K-Nearest-Neighbors
 
-```{r, include=FALSE}
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-```
-
 ### Study Goals
 
 *Theoretical (T)*
@@ -70,7 +66,7 @@ question("Which statements are true?",
 )
 ```
 
-#### *(P)* Create the `mlr` learner
+#### *(P)* Create the `mlr3` learner
 
 <!-- TODO: example should be regression, not classification -->
 
@@ -102,12 +98,7 @@ kknn_learner = makeLearner("classif.kknn", k = 3)
 ```
 
 
-#### *(P)* Train the `mlr` learner
-
-```{r, include=FALSE}
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-kknn_learner = makeLearner("classif.kknn", k = 3)
-```
+#### *(P)* Train the `mlr3` learner
 
 Now train the learner `kknn_learner` defined above on the task `iris_task` defined in session 2 and
 save the learnt model as `kknn_model`:
@@ -151,10 +142,6 @@ kknn_model = train(kknn_learner, iris_task)
 
 
 #### *(P)* Visualize decision boundaries
-
-```{r, include=FALSE}
-iris_task = makeClassifTask(data = iris[,c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
-```
 
 Again, define the `kknn_learner` and visualize the prediction of the learner with `plotLearnerPrediction`. Rerun the code for different `k`. What can you observe by varying the hyperparameter?
 

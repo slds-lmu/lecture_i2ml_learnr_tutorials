@@ -186,7 +186,7 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```{r, child="tutorial-supervised-regression-polynomials.Rmd"}
 ```
 
-# ```{r, child="tutorial-supervised-regression-knn.Rmd"}
-# ```
+```{r, child="tutorial-supervised-regression-knn.Rmd"}
+```
 
 
