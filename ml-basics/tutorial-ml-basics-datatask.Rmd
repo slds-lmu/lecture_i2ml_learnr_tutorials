@@ -9,7 +9,7 @@
 
 *Practical (P)*
 
-- Get to know how to create tasks in `mlr`
+- Get to know how to create tasks in `mlr3`
 
 ### Preparation
 
@@ -20,7 +20,7 @@
 
 
 <!-- TODO: adapt to mlr3 -->
-1.  *(P)* Read the [`mlr` tutorial about tasks](https://mlr.mlr-org.com/articles/tutorial/task.html). 
+1.  *(P)* Read the [`mlr3` tutorial about tasks](https://mlr3book.mlr-org.com/tasks.html). 
 
 
 ### Exercises
@@ -40,7 +40,7 @@ question("Which statements are true?",
 )
 ```
 
-#### *(P)* Creating tasks with `mlr`
+#### *(P)* Creating tasks with `mlr3`
 
 For this exercise, take a look at the [`iris` dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set):
 
@@ -50,13 +50,18 @@ summary(iris)
 
 1.  Define a new classification task called `iris_task` based on the `iris` dataset with target variable `Species` and just two features `Sepal.Width` and `Petal.Width`:
 
+
 ```{r iristask, exercise=TRUE, exercise.lines=5, exercise.checker=taskChecker("iris_task")}
-iris_task =
+iris_task <- 
 ```
 
 ```{r iristask-hint-1}
-# Use the 'makeClassifTask' function of mlr
-makeClassifTask(...)
+# Use the 'TaskClassif$new()' function of mlr3.
+# The identifier for the task 'id' can be arbitrarily chosen, but must be set.
+
+iris_task <- TaskClassif$new(id = ..., 
+                backend = ..., 
+                target = ...)
 ```
 
 ```{r iristask-hint-2}
@@ -70,10 +75,14 @@ iris[, c("Species", "Sepal.Width", "Petal.Width")]
 ```
 
 ```{r iristask-solution}
-iris_task = makeClassifTask(data = iris[, c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+iris_task <- TaskClassif$new(id = "iris_task", 
+                backend = iris[, c("Species", "Sepal.Width", "Petal.Width")], 
+                target = "Species")
 ```
 
 ```{r iristask-check}
-iris_task = makeClassifTask(data = iris[, c("Species", "Sepal.Width", "Petal.Width")], target = "Species")
+iris_task <- TaskClassif$new(id = "iris_task", 
+                backend = iris[, c("Species", "Sepal.Width", "Petal.Width")], 
+                target = "Species")
 ```
 

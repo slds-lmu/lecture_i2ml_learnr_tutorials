@@ -14,7 +14,7 @@ library(learnr)
 # devtools::install_github("datacamp/testwhat")
 library(testwhat)
 library(checkmate)
-library(mlr)
+library(mlr3)
 library(kknn)
 
 errorToMessage = function (expr)
@@ -43,16 +43,16 @@ taskChecker = function (task_name)
     task_processor = "
     task = ', task_name, '
     task_hash = digest::digest(c(
-      digest::digest(sort(sapply(task$env$data, digest::digest))),
+      digest::digest(sort(sapply(task$backend, digest::digest))),
       class(task),
-      digest::digest(task$task.desc$target)
+      digest::digest(task$target_names)
     ))
     "
     setup_state(sol_code = paste0(check_code, task_processor), stu_code = paste0(user_code, task_processor))
 
     msg = errorToMessage(expr = {
-      ex() %>% check_object("task") %>% check_element("task.desc")
-      ex() %>% check_object("task") %>% check_element("env")
+      ex() %>% check_object("task") %>% check_element("task_type")
+      ex() %>% check_object("task") %>% check_element("backend")
       ex() %>% check_object("task_hash") %>% check_equal()
     })
     if (! is.null(msg))
