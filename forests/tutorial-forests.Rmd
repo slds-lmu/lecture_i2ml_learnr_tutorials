@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Machine Learning - Day 4"
+title: "Introduction to Machine Learning - Bagging and Random Forests"
 output:
   learnr::tutorial:
     theme: cosmo
@@ -192,6 +192,12 @@ tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```
 
 
-```{r, child="tutorial-forests-intro.Rmd"}
+```{r, child="tutorial-forests-bagging.Rmd"}
+```
+
+```{r, child="tutorial-forests-forests.Rmd"}
+```
+
+```{r, child="tutorial-forests-importance-discussion.Rmd"}
 ```
 

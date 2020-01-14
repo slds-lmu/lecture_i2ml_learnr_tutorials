@@ -1,4 +1,4 @@
-## Bagging and Random Forests
+## Random Forests
 
 
 ### Study Goals
@@ -31,7 +31,7 @@
 
 #### *(T)* Quiz
 
-```{r forest-quiz-intro, echo=FALSE}
+```{r forest-quiz-forests, echo=FALSE}
 question("Which statements are true?",
   answer("The OOB error shares similarities with cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
   answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$", correct = TRUE),

@@ -1,4 +1,4 @@
-## Bagging and Random Forests
+## Bagging 
 
 
 ### Study Goals
@@ -22,7 +22,7 @@
 
 #### *(T)* Quiz
 
-```{r forest-quiz-intro, echo=FALSE}
+```{r forest-quiz-bagging, echo=FALSE}
 question("Which statements are true?",
   answer("Bagging works best for unstable learners.", correct = TRUE),
   answer("For stable estimation methods, bagging mostly degrades performance.")
