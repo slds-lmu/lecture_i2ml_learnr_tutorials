@@ -4,17 +4,16 @@
 
 *Theoretical (T)*
 
-- Learn how linear regression models work
-- Learn how to transform linear regression into a nonlinear method
+- Learn how polynomial regression models work
+- Learn how to transform linear regression into a nonlinear regression
 
 *Practical (P)*
 
-- Get to know how to fit a linear regression model in `mlr`
-- Get to know how to fit a simple non-linear regression model in `mlr`
+- Get to know how to fit a linear model and a polynomial regression model in `mlr`
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video:
     <center>
     ![Polynomial Regression Models](https://youtu.be/q1ETfSxEfSg){width="75%"}
     </center>
@@ -27,9 +26,6 @@
 
 ```{r pm-quiz, echo=FALSE}
 question("What statements are true?",
-  answer("The target in linear regression has to be numeric", correct = TRUE),
-  answer("The features in the linear model can also just be numerical"),
-  answer("The linear model is linear regression with L2-loss", correct = TRUE),
   answer("Using linear regression it is only possible to model linear effects of a feature"),
   answer("Overfitting is a present danger in polynomial regression", correct = TRUE)
 )
