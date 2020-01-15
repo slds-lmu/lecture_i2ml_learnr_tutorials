@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Machine Learning - Day 2"
+title: "Introduction to Machine Learning - Supervised Classification"
 output:
   learnr::tutorial:
     theme: cosmo
@@ -151,42 +151,19 @@ modelChecker = function (model_name)
   return(fun)
 }
 
-# createChecker = function (object_names)
-# {
-#   assert_character(object_names)
-#   fun = paste('
-#   fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
-#   {
-#     setup_state(sol_code = check_code, stu_code = user_code)
-# 
-#     msg = errorToMessage(expr = {
-#     ',
-#     paste(paste0("ex() %>% check_object(\"", object_names, "\") %>% check_equal()"), collapse = "\n      "),
-#     '
-#     })
-#     if (! is.null(msg))
-#       return(msg)
-# 
-#     return(list(message = "Great job! :)", correct = TRUE, location = "append"))
-#   }
-#   ', collapse = "\n")
-#   eval(parse(text = fun))
-#   return(fun)
-# }
 
 options(width = 100)
 tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
 ```
 
 
-```{r, child="02_tutorial_01_classification.Rmd"}
+```{r, child="tutorial-supervised-classification-intro.Rmd"}
 ```
 
-```{r, child="02_tutorial_02_logistic.Rmd"}
+```{r, child="tutorial-supervised-classification-logistic.Rmd"}
 ```
 
-```{r, child="02_tutorial_03_classif_approaches.Rmd"}
+```{r, child="tutorial-supervised-classification-more-methods.Rmd"}
 ```
 
-```{r, child="02_tutorial_04_cultures.Rmd"}
-```
+

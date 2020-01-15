@@ -1,4 +1,4 @@
-## Introduction to Classification
+## Introduction
 
 ### Study Goals
 
@@ -9,11 +9,10 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video:
     <center>
     ![](https://youtu.be/ZuGbjJAETdA){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-classification.pdf" target="_blank">Slideset</a>
 
 
 ### Exercises
@@ -24,7 +23,7 @@
 ```{r classi-quiz1, echo=FALSE}
 quiz(caption = "",
   question("Which statements are true?",
-    answer("Classification is a supervised learning task.", correct = TRUE),
+    answer("Classification is part of supervised learning.", correct = TRUE),
     answer("The decision boundary is independent of the used model."),
     answer("Binary classification uses two discriminant functions."),
     answer("Linear classifiers can just learn linear decision boundaries."),
