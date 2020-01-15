@@ -1,4 +1,4 @@
-## Tuning
+## Introduction
 
 ### Study Goals
 
@@ -27,7 +27,7 @@
 
 #### *(T)* Quiz
 
-```{r random forest-quiz1, echo=FALSE}
+```{r tuning-quiz-intro, echo=FALSE}
 question("Which statements are true?",
   answer("Tuning means optimizing hyperparameters.", correct = TRUE),
   answer("Doing tuning well is hard; nested resampling can help.", correct = TRUE),
