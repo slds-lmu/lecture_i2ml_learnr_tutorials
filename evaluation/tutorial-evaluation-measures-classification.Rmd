@@ -211,7 +211,6 @@ model_prediction$set_threshold(0.2)
 learner <- lrn("classif.log_reg", predict_type = "prob")
 learner$train(task = tsk("spam"))
 model_prediction <- learner$predict(task = tsk("spam"))
-
 autoplot(model_prediction, "roc")
 
 model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
@@ -417,7 +416,7 @@ autoplot(test_prediction, "roc")
 test_prediction$score(msr("classif.auc"))
 ```
 
-Note that the ROC and performance measures for each fold can also be directly computed from a Resampling object:
+**Note** that the ROC and performance measures for each fold can also be directly computed from a Resampling object:
 
 ```{r resampl-roc-auc, exercise=TRUE}
 learner <- lrn("classif.log_reg", predict_type = "prob")
