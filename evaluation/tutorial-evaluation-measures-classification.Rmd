@@ -31,7 +31,7 @@
     </center>
     <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-2.pdf" target="_blank">Slideset Part 2</a> -->
 
-1. *(P)* Read the `mlr` tutorial about [roc curves](https://mlr.mlr-org.com/articles/tutorial/roc_analysis.html)
+1. *(P)* Read the `mlr3` tutorial about [roc curves](https://mlr3book.mlr-org.com/binary.html)
 1. *(P)* You should have done the tutorial on resampling
 
 ### Exercises
@@ -79,9 +79,9 @@ spam_task$head()
 
 #### *(P)* A first model
 
-1. As a first approach, we want to train a logistic regression on the whole task. Therefore, define the model and train it. Set the `predict.type` of the learner to `"prob"`:
+1. As a first approach, we want to train a logistic regression on the whole task. Therefore, define the model and train it. Set the `predict_type` of the learner to `"prob"`:
 
-```{r spam-logreg-train, exercise=TRUE, exercise.lines=5, exercise.checker=modelChecker("learner", TRUE)}
+```{r spam-logreg-train, exercise=TRUE, exercise.lines=5, exercise.checker=modelChecker("learner")}
 learner <-
 learner$train(task = )
 ```
@@ -239,15 +239,18 @@ Using just the train dataset for predictions leads to overoptimistic ROC and AUC
 ```{r, include=FALSE}
 resampleChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
 {
-  msg = learnerChecker("learner", TRUE)(label, user_code, check_code, envir_result, evaluate_result)
+  msg = learnerChecker("learner")(label, user_code, check_code, envir_result, evaluate_result)
   if (! is.null(msg))
-    return(msg)
+    if(is.null(msg[["correct"]]))
+      return(msg)
+    else if(! msg[["correct"]])
+      return(msg)
 
   setup_state(sol_code = check_code, stu_code = user_code)
 
   msg = errorToMessage(expr = {
-    ex() %>% check_object("res_desc") %>% check_equal()
-    ex() %>% check_object("res") %>%  check_equal()
+     ex() %>% check_object("res") %>% check_element("resampling") %>% check_element("id")  %>%  check_equal()
+     ex() %>% check_object("res") %>% check_element("resampling") %>% check_element("param_set")  %>%  check_equal()
   })
   if (! is.null(msg))
     return(msg)
@@ -273,7 +276,7 @@ learner <- lrn("classif.log_reg", predict_type = "prob")
 
 ```{r logreg-res-hint-2}
 # Access the task with the query 'spam'
-task = tsk("spam")
+task <- tsk("spam")
 ```
 
 ```{r logreg-res-hint-3}
@@ -372,7 +375,7 @@ set.seed(123)
 res <- resample(task = ..., learner = ..., resampling = ...)
 test_prediction <- 
 autoplot(..., "roc")
-model_prediction$score(...)
+test_prediction$score(...)
 ```
 
 ```{r roc-auc-res-hint-1}
@@ -402,19 +405,6 @@ test_prediction$set_threshold(0.2)
 ```
 
 ```{r roc-auc-res-solution}
-learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
-res_desc <- rsmp("cv", folds = 3L)
-
-set.seed(123)
-res <- resample(task, learner, res_desc)
-test_prediction <- res$prediction()
-
-autoplot(test_prediction, "roc")
-test_prediction$score(msr("classif.auc"))
-```
-
-```{r roc-auc-res-check}
 learner <- lrn("classif.log_reg", predict_type = "prob")
 task <- tsk("spam")
 res_desc <- rsmp("cv", folds = 3L)
