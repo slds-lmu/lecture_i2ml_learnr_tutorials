@@ -5,13 +5,16 @@
 *Theoretical (T)*
 
 - Understand the structure of classification problems
-- Understand the differences between linear and non-linear classifiers
+- Understand the difference between binary and multiclass classification
+- Understand the difference between classifiers producing labels, probabilities and scores
 
 ### Preparation
 
 1.  *(T)* Watch the following video:
     <center>
-    ![](https://youtu.be/ZuGbjJAETdA){width="75%"}
+    <!-- ![](https://youtu.be/ZuGbjJAETdA){width="75%"} -->
+    ![Introduction]()
+    ![Formalization]()
     </center>
 
 
