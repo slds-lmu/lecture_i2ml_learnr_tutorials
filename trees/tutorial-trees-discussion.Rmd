@@ -152,7 +152,7 @@ learner_cart$train(spirals_task)
 
 #### *(P)* Visualize the fitted tree
 
-You can use the function `rpart.plot()` from the package of the same name `rpart.plot` to visualize the tree structure. For this, you have to access the internal fitted model which is stored as `state$model` element of the fitted model. Additionally, call `plot_prediction()` to visualize the decision boundaries:
+You can use the function `rpart.plot()` from the package of the same name `rpart.plot` to visualize the tree structure. For this, you have to access the internal fitted model which is stored as `state$model` element of the fitted model. Additionally, call `plot_learner_prediction()` to visualize the decision boundaries:
 
 ```{r cart-viz, exercise=TRUE}
 library(mlbench)
@@ -167,7 +167,7 @@ learner_cart <-
 learner_cart$
 
 rpart.plot(...)
-plot_prediction(learner = ..., task = ...)
+plot_learner_prediction(learner = ..., task = ...)
 ```
 
 ```{r cart-viz-hint-1}
@@ -191,7 +191,7 @@ rpart.plot(learner_cart$state$model)
 
 ```{r cart-viz-hint-3}
 # Call 'plotLearnerPrediction()' on the learner and task to get decision boundaries
-plot_prediction(learner = learner_cart, task = spirals_task)
+plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
 ```{r cart-viz-solution}
@@ -207,7 +207,7 @@ learner_cart <- lrn("classif.rpart", minsplit = 20, cp = 0.01)
 learner_cart$train(spirals_task)
 
 rpart.plot(learner_cart$state$model)
-plot_prediction(learner = learner_cart, task = spirals_task)
+plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
 #### *(P)* Visualize the tree for different data constellations
@@ -235,7 +235,7 @@ learner_cart <- lrn("classif.rpart", minsplit = 20, cp = 0.01)
 learner_cart$train(spirals_task)
 
 rpart.plot(learner_cart$state$model)
-plot_prediction(learner = learner_cart, task = spirals_task)
+plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
 ```{r cart-viz-data-hint-1}
@@ -253,7 +253,7 @@ learner_cart <- lrn("classif.rpart", minsplit = 20, cp = 0.01)
 learner_cart$train(spirals_task)
 
 rpart.plot(learner_cart$state$model)
-plot_prediction(learner = learner_cart, task = spirals_task)
+plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
 ```{r cart-viz-data-quiz, echo=FALSE}
@@ -288,7 +288,7 @@ learner_cart <- lrn("classif.rpart", minsplit = minsplit, cp = cp)
 learner_cart$train(spirals_task)
 
 rpart.plot(learner_cart$state$model)
-plot_prediction(learner = learner_cart, task = spirals_task)
+plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
 ```{r cart-viz-hyperpars-quiz, echo=FALSE}
