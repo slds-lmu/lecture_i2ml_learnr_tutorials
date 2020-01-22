@@ -56,7 +56,7 @@ spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target =
 ggplot(data = spirals, aes(x.1, x.2, color = classes)) + geom_point()
 ```
 
-Define the learner with `predict_type = "prob"` and `num.trees = 1000`. We are using the `classif.ranger`. Visualize the learner with `plot_prediction()`:
+Define the learner with `predict_type = "prob"` and `num.trees = 1000`. We are using the `classif.ranger`. Visualize the learner with `plot_learner_prediction()`:
 
 ```{r rf-learner, exercise=TRUE, exercise.timelimit=120L, exercise.checker=learnerChecker("rf_learner")}
 library(mlbench)
@@ -67,7 +67,7 @@ spirals <- as.data.frame(spirals)
 spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target = "classes")
 
 rf_learner = lrn(...)
-plot_prediction(rf_learner, spirals_task)
+plot_learner_prediction(rf_learner, spirals_task)
 ```
 
 ```{r rf-learner-hint-1}
@@ -88,7 +88,7 @@ spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target =
 
 rf_learner <- lrn("classif.ranger", num.trees = 1000, predict_type = "prob")
 
-plot_prediction(rf_learner, spirals_task)
+plot_learner_prediction(rf_learner, spirals_task)
 ```
 
 ```{r rf-learner-check}
