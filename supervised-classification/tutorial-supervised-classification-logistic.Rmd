@@ -10,7 +10,7 @@
 
 *Practical (P)*
 
-- Be able to train a logistic regression with `R` and `mlr`
+- Be able to train a logistic regression with `R` and `mlr3`
 - Practice how to transform linear classifiers into (simple) non-linear classifiers
 
 ### Preparation
@@ -20,7 +20,7 @@
     ![Logistic regression](){width="75%"}
     </center>
 
-1.  *(P)* Make sure that you have understood how to define tasks and learners and how to train a learner in `mlr`.
+1.  *(P)* Make sure that you have understood how to define tasks and learners and how to train a learner in `mlr3`.
 
 ### Exercises
 
@@ -34,9 +34,10 @@ question("Which statements are true?",
 )
 ```
 
-#### *(P)* Training a logistic regression with `mlr`
+#### *(P)* Training a logistic regression with `mlr3`
 
-For this exercise, take a look at the `titanic_train` dataset from the `titanic` package. Just keep the features `Survived`, `Age`, and `Fare`. Remove all observations with missing values (`NA`s):
+For this exercise, take a look at the `titanic_train` dataset from the `titanic` package. Just keep the features `Survived`, `Age`, and `Fare`. Remove all observations with missing values (`NA`s)
+and transform `Survived` into a factor variable:
 
 ```{r, include=FALSE}
 titanicChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
@@ -59,7 +60,8 @@ titanicChecker = function (label, user_code, check_code, envir_result, evaluate_
 ```{r titanic-data, exercise=TRUE, exercise.lines=5, exercise.checker=titanicChecker}
 library(titanic)
 
-my_titanic =
+my_titanic <-
+my_titanic$Survived <-
 ```
 
 ```{r titanic-data-hint-1}
@@ -72,85 +74,105 @@ titanic::titanic_train
 na.omit(...)
 ```
 
+```{r titanic-data-hint-3}
+# Transform `Survived` into a factor variable
+my_titanic$Survived <- factor(my_titanic$Survived)
+```
+
 ```{r titanic-data-solution}
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+library(titanic)
+
+my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic$Survived <- factor(my_titanic$Survived)
 ```
 
 ```{r titanic-data-check}
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+library(titanic)
+
+my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic$Survived <- factor(my_titanic$Survived)
 ```
 
-Now define a classification task `task_titanic` on that dataset with target `Survived`, define a logistic regression learner, and train that learner:
+Now define a classification task `task_titanic` on that dataset with target `Survived`, define a logistic regression learner with `predict_type` set to `prob`, and train that learner:
 
 ```{r, include=FALSE}
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic$Survived <- factor(my_titanic$Survived)
 ```
 
-```{r titanic-train, exercise=TRUE, exercise.lines=8, exercise.checker=modelChecker("model_titanic")}
-my_titanic =
-task_titanic =
-learner_logreg =
-model_titanic =
+```{r titanic-train, exercise=TRUE, exercise.lines=8, exercise.checker=modelChecker("learner_logreg")}
+my_titanic <-
+my_titanic$Survived <-
+task_titanic <-
+learner_logreg <-
+model_titanic <-
 ```
 
 ```{r titanic-train-hint-1}
 # We have to define a classification task since we are classifying if a passenger survived or not we
-task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
+task_titanic <- TaskClassif$new(id = "titanic_task", backend = my_titanic, 
+                                target = "Survived")
 ```
 
 ```{r titanic-train-hint-2}
 # The learner we are looking for is 'classif.logreg'
-learner_logreg = makeLearner("classif.logreg")
+learner_logreg <- lrn("classif.log_reg", predict_type = "prob")
 ```
 
 ```{r titanic-train-hint-3}
 # Finally we have to train the learner
-model_titanic = train(learner_logreg, task_titanic)
+learner_logreg$train(task_titanic)
 ```
 
 ```{r titanic-train-solution}
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
-task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
-learner_logreg = makeLearner("classif.logreg")
-model_titanic = train(learner_logreg, task_titanic)
+my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic$Survived <- factor(my_titanic$Survived)
+task_titanic <- TaskClassif$new(id = "titanic_task", backend = my_titanic, 
+                                target = "Survived")
+learner_logreg <- lrn("classif.log_reg", predict_type = "prob")
+learner_logreg$train(task_titanic)
 ```
 
 
 ```{r titanic-train-check}
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
-task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
-learner_logreg = makeLearner("classif.logreg")
-model_titanic = train(learner_logreg, task_titanic)
+my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic$Survived <- factor(my_titanic$Survived)
+task_titanic <- TaskClassif$new(id = "titanic_task", backend = my_titanic, 
+                                target = "Survived")
+learner_logreg <- lrn("classif.log_reg", predict_type = "prob")
+learner_logreg$train(task_titanic)
 ```
 
-Finally, visualize the model with `plotLearnerPrediction()`:
+Finally, visualize the model with `plot_learner_prediction()`:
 
 ```{r titanic-viz, exercise=TRUE}
-my_titanic =
-task_titanic =
-learner_logreg =
+my_titanic <-
+task_titanic <-
+learner_logreg <-
 
-plotLearnerPrediction(learner = ..., task = ...)
+plot_learner_prediction(learner = ..., task = ...)
 ```
 
 ```{r titanic-viz-solution}
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
-task_titanic = makeClassifTask(data = my_titanic, target = "Survived")
-learner_logreg = makeLearner("classif.logreg")
+my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic$Survived <- factor(my_titanic$Survived)
+task_titanic <- TaskClassif$new(id = "titanic_task", backend = my_titanic, 
+                                target = "Survived")
+learner_logreg <- lrn("classif.log_reg", predict_type = "prob")
 
-plotLearnerPrediction(learner = learner_logreg, task = task_titanic)
+plot_learner_prediction(learner = learner_logreg, task = task_titanic)
 ```
 
 #### *(P)* Training a logistic regression with non-linear decision boundaries
 
 ```{r titanic-non-linear-setup}
-polynomialTrafo = function (data, feature, degree) {
-  feature_idx = which(feature == names(data))
-  # df_poly = as.data.frame(poly(data[[feature]], degree))
+polynomialTrafo <- function (data, feature, degree) {
+  feature_idx <- which(feature == names(data))
+  # df_poly <- as.data.frame(poly(data[[feature]], degree))
 
   # I think this is ok here, the boundaries looks so crappy with poly ...
-  df_poly = as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
-  names(df_poly) = paste0(feature, ".poly", seq_len(degree))
+  df_poly <- as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
+  names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
 ```
@@ -161,34 +183,42 @@ The next demonstration shows how to include the features `Age` and `Fare` as pol
 library(ggplot2)
 
 # Change degree and threshold here:
-degree = 3
-threshold = 0.5
+degree <- 3
+threshold <- 0.5
 
 # You can leave this code as it is, just vary degree and threshold above
 # and see how the prediction surface change:
-my_titanic = na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+my_titanic$Survived <- factor(my_titanic$Survived)
 
-task_data = polynomialTrafo(my_titanic, "Age", degree)
-task_data = polynomialTrafo(task_data, "Fare", degree)
+task_data <- polynomialTrafo(my_titanic, "Age", degree)
+task_data <- polynomialTrafo(task_data, "Fare", degree)
 
-titanic_task = makeClassifTask(data = task_data, target = "Survived")
-titanic_learner = makeLearner("classif.logreg", predict.type = "prob")
-logreg_model = train(titanic_learner, titanic_task)
+titanic_task <- TaskClassif$new(id = "titanic_task", backend = task_data, 
+                                target = "Survived")
+titanic_learner <- lrn("classif.log_reg", predict_type= "prob")
+titanic_learner$train(titanic_task)
 
-logreg_train_predictions = setThreshold(predict(logreg_model, titanic_task), threshold)$data$response
-my_titanic$correct_prediction = logreg_train_predictions == my_titanic$Survived
+titanic_pred <- titanic_learner$predict(titanic_task)
+titanic_pred$set_threshold(threshold = threshold)
+logreg_train_predictions <- titanic_pred$response
 
-age_fare_grid = expand.grid(
+my_titanic$correct_prediction <- logreg_train_predictions == my_titanic$Survived
+
+age_fare_grid <- expand.grid(
   Age = seq(min(my_titanic$Age), max(my_titanic$Age), length.out = 100),
   Fare = seq(min(my_titanic$Fare), max(my_titanic$Fare), length.out = 100)
 )
-age_fare_grid_polys = cbind(
+age_fare_grid_polys <- cbind(
   polynomialTrafo(age_fare_grid[,"Age",drop=FALSE], "Age", degree),
   polynomialTrafo(age_fare_grid[,"Fare",drop=FALSE], "Fare", degree)
 )
-age_fare_grid_polys_prediction = setThreshold(predict(logreg_model, newdata = age_fare_grid_polys), threshold)
-age_fare_grid$pred = age_fare_grid_polys_prediction$data$response
-age_fare_grid$probs = age_fare_grid_polys_prediction$data$prob.0
+age_fare_grid_polys_prediction <- 
+  titanic_learner$predict_newdata(age_fare_grid_polys)
+age_fare_grid_polys_prediction$set_threshold(threshold = threshold)
+
+age_fare_grid$pred <- age_fare_grid_polys_prediction$response
+age_fare_grid$probs <- age_fare_grid_polys_prediction$prob[,1]
 
 ggplot() +
   geom_point(data = age_fare_grid, aes(x = Age, y = Fare, color = as.factor(pred), alpha = ifelse(probs < 0.5, 1 - probs, probs)),
