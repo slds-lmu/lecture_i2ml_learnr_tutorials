@@ -162,5 +162,5 @@ iris_task <- TaskClassif$new(id = "iris_task",
                              target = "Species")
 kknn_learner <- lrn("classif.kknn", k = 3)
 
-plot_prediction(learner = kknn_learner, task = iris_task)
+plot_learner_prediction(learner = kknn_learner, task = iris_task)
 ```
