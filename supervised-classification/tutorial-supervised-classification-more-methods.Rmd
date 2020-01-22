@@ -4,31 +4,38 @@
 
 *Theoretical (T)*
 
-- Learn how generative models work
 - Become familiar with LDA, QDA and naive Bayes classifier
-- Distinguish between generative and discriminative approaches
+- 
 
 *Practical (P)*
 
-- Get to know how to fit a generative model in `mlr`
+- Get to know how to fit classifiers in `mlr`
 
 ### Preparation
 
 1.  Watch the following video  (sorry, rather low volume...):
     <center>
-    ![](https://youtu.be/yZ5SUWm2zbg){width="75%"}
+    ![Discriminant analysis](){width="75%"}
+    ![Naive bayes](){width="75%"}
+    ![k-NN](){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-classification-approaches.pdf" target="_blank">Slideset</a>
 
 ### Exercises
 
 #### *(T)* Quiz
 
 ```{r classif-approaches-quiz, echo=FALSE}
-question("Which statements are false?",
-  answer("In LDA, each class density is modeled as a multivariate Gaussian with unequal covariance.", correct = TRUE),
-  answer("In QDA, each class density is modeled as a multivariate Gaussian with equal covariance", correct = TRUE),
-  answer("In the naive Bayes classifier, covariance matrices can differ over the classes but are assumed to be diagonal.")
+question("Which statements are true?",
+    answer("In LDA, each class density is modeled as a multivariate Gaussian with unequal covariance."),
+    answer("LDA is a linear classifier", correct = TRUE),
+    answer("LDA follows a generative approach", correct = TRUE),
+    answer("In QDA, each class density is modeled as a multivariate Gaussian with equal covariance"),
+    answer("QDA follows a generative approach", correct = TRUE),
+    answer("QDA requires estimation of more parameters than LDA", correct = TRUE),
+    answer("Naive Bayes assumes that the features are independent within each outcome class y.", correct = TRUE),
+    answer("Naive Bayes follows a generative approach", correct = TRUE),
+    answer("k-NN can be used in regression and classification", correct = TRUE),
+    answer("k-NN is a probabilistic classifier", correct = TRUE)
 )
 ```
 

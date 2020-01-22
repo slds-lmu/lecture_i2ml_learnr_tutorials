@@ -18,9 +18,8 @@
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
     <center>
-    ![](https://youtu.be/VUa49fo82q4){width="75%"}
+    ![Logistic regression](){width="75%"}
     </center>
-    <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-logistic.pdf" target="_blank">Slideset</a>
 
 1.  *(P)* Make sure that you have understood how to define tasks and learners and how to train a learner in `mlr`.
 
@@ -30,10 +29,9 @@
 
 ```{r logi-quiz1, echo=FALSE}
 question("Which statements are true?",
-  answer("Logistic regression can be fitted by maximum likelihood with numerical optimization or solved analytically."),
-  answer("The softmax function is a generalization of the logistic function.", correct = TRUE),
-  answer("In logistic regression, the parameter vector $\\theta$ that maximizes the model's likelihood is identical to the one minimizing its empirical risk.", correct = TRUE),
-  answer("In softmax regression, we often set $\\theta_{g} = (0, \\dots, 0)^T$ and only optimize the other $\\theta_{k}$ ($k\\neq g$) to avoid overparameterization.", correct = TRUE)
+    answer("Logistic regression can be fitted by maximum likelihood with numerical optimization or solved analytically."),
+    answer("Logistic regression follows a generative approach"),
+    answer("In logistic regression, the parameter vector $\\theta$ that maximizes the model's likelihood is identical to the one minimizing its empirical risk.", correct = TRUE)
 )
 ```
 
