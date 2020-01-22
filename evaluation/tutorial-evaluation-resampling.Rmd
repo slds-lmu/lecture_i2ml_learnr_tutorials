@@ -1,19 +1,43 @@
 ## Resampling
 
 ```{r, include=FALSE}
+resampleDescChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("res_desc") %>% check_element("id")  %>%  check_equal()
+    ex() %>% check_object("res_desc") %>% check_element("param_set")  %>%  check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+
+
 resampleChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
 {
   msg = taskChecker("task")(label, user_code, check_code, envir_result, evaluate_result)
   if (! is.null(msg))
-    return(msg)
+    if(is.null(msg[["correct"]]))
+      return(msg)
+    else if(! msg[["correct"]])
+      return(msg)
+  
+  msg = learnerChecker("learner")(label, user_code, check_code, envir_result, evaluate_result)
+  if (! is.null(msg))
+    if(is.null(msg[["correct"]]))
+      return(msg)
+    else if(! msg[["correct"]])
+      return(msg)
+
 
   setup_state(sol_code = check_code, stu_code = user_code)
 
   msg = errorToMessage(expr = {
-    ex() %>% check_object("learner") %>% check_equal()
-    ex() %>% check_object("res_desc") %>% check_equal()
-    ex() %>% check_object("res") %>% check_element("measures.train") %>% check_equal()
-    ex() %>% check_object("res") %>% check_element("measures.test") %>% check_equal()
+     ex() %>% check_object("res") %>% check_element("resampling") %>% check_element("id")  %>%  check_equal()
+     ex() %>% check_object("res") %>% check_element("resampling") %>% check_element("param_set")  %>%  check_equal()
   })
   if (! is.null(msg))
     return(msg)
@@ -23,26 +47,27 @@ resampleChecker = function (label, user_code, check_code, envir_result, evaluate
 
 benchmarkChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
 {
-
   add_code = "
-  df_bmr = as.data.frame(bmr)
-  df_bmr$learner.id = as.character(df_bmr$learner.id)
-  df_bmr = df_bmr[with(df_bmr, order(learner.id, mmce)), -which(names(df_bmr) %in% c(\"task.id\", \"iter\"))]
-  attr(df_bmr, \"row.names\") = seq_len(nrow(df_bmr))
+    null_to_0 <- function(x) if (is.null(x)) 0 else x
+    bmr_results = as.data.frame(bmr$aggregate())[,
+      c('resampling_id', 'iters', 'classif.ce')]
+    bmr_results = bmr_results[order(bmr_results$classif.ce),]
+    learner_ids = sort(as.vector(sapply(bmr$learners$learner, function(x) unlist(x$id))))
+    learner_params = sort(as.vector(sapply(bmr$learners$learner, 
+      function(x) null_to_0(unlist(x$param_set$values)))))
   "
-
   setup_state(sol_code = paste0(check_code, add_code), stu_code = paste0(user_code, add_code))
-
   msg = errorToMessage(expr = {
-    ex() %>% check_object("learners")
+    # ex() %>% check_object("learners")
     ex() %>% check_object("task")
-    ex() %>% check_object("res_desc") %>% check_equal()
-    ex() %>% check_object("bmr")
-    ex() %>% check_object("df_bmr") %>% check_equal()
+    # ex() %>% check_object("res_desc") %>% check_equal()
+    ex() %>% check_object("bmr") 
+    ex() %>% check_object("bmr_results") %>% check_equal()
+    ex() %>% check_object("learner_ids") %>% check_equal()
+    ex() %>% check_object("learner_params") %>% check_equal()
   })
   if (! is.null(msg))
     return(msg)
-
   return(list(message = "Great job! :)", correct = TRUE, location = "append"))
 }
 ```
@@ -56,7 +81,7 @@ benchmarkChecker = function (label, user_code, check_code, envir_result, evaluat
 
 *Practical (P)*
 
-- Learn how to define and conduct a resampling strategy with `mlr`
+- Learn how to define and conduct a resampling strategy with `mlr3`
 - Find out how to apply `benchmark` experiments
 - Interprete and visualize the benchmark result
 
@@ -68,7 +93,8 @@ benchmarkChecker = function (label, user_code, check_code, envir_result, evaluat
     </center>
     
 
-1. *(P)* Read the `mlr` tutorial about [resampling](https://mlr.mlr-org.com/articles/tutorial/resample.html)
+1. *(P)* Read the `mlr3` tutorials about [resampling](https://mlr3book.mlr-org.com/resampling.html)
+and [benchmarking](https://mlr3book.mlr-org.com/benchmarking.html).
 
 ### Exercises
 
@@ -86,93 +112,79 @@ question("Which statements are true?",
 
 #### *(P)* Define a resampling strategy
 
-For this exercise we want to evaluate the learner with 10-fold cross-validation. Define the resampling using the function `makeResampleDesc()`:
+For this exercise we want to evaluate the learner with 10-fold cross-validation. Define the resampling using the function `rsmp()`:
 
-```{r resample-desc, exercise=TRUE, exercise.lines=5, exercise.checker=createChecker("res_desc")}
-res_desc = makeResampleDesc(...)
+```{r resample-desc, exercise=TRUE, exercise.lines=5, exercise.checker=resampleDescChecker}
+res_desc <- rsmp(...)
 ```
 
 ```{r resample-desc-hint-1}
-# You can specify the 'method' in 'makeResampleDesc()' for different strategies (see '?makeResampleDesc'). For cross validation for instance:
-method = "CV"
+# You can specify the '.key' in 'rsmp()' for different strategies (see 'mlr_resamplings'). For cross validation for instance:
+.key = "cv"
 ```
 
 ```{r resample-desc-hint-2}
-# The parameter are also listed in the help page. To define how many folds use the 'iters' argument:
-iters = 10
+# The parameter are also listed in the help page. To define how many folds use the 'folds' argument:
+folds = 10
 ```
 
 ```{r resample-desc-solution}
-res_desc = makeResampleDesc(method = "CV", iters = 10)
+res_desc <- rsmp("cv", folds = 10)
 ```
 
 ```{r resample-desc-check}
-res_desc = makeResampleDesc(method = "CV", iters = 10)
+res_desc <- rsmp("cv", folds = 10)
 ```
 
 #### *(P)* Conduct resampling
 
-Now it is time to evaluate the LDA learner (`"classif.lda`") with 10-fold cross-validation on the iris task (`iris.task`). Therefore, use the `resample()` function and specify the learner, task, and the resampling (the seed is required for checking your result, please let it as `123`, otherwise your results cannot be checked):
+Now it is time to evaluate the LDA learner (`"classif.lda`") with 10-fold cross-validation on the iris task (`"iris"`). Therefore, use the `resample()` function and specify the learner, task, and the resampling (the seed is required for checking your result, please let it as `123`, otherwise your results cannot be checked):
 
 ```{r resample, exercise=TRUE, exercise.lines=10, exercise.checker=resampleChecker}
-learner =
-task =
-res_desc =
+learner <-
+task <-
+res_desc <-
 
 set.seed(123)
-res = resample(...)
+res <- resample(...)
 ```
 
 ```{r resample-hint-1}
-# The learner can be specified as character or via `makeLearner`
-learner = "classif.lda"
-learner = makeLearner(classif.lda)
+# The learner can be specified as character or via `lrn()`
+learner <- lrn("classif.lda")
 ```
 
 ```{r resample-hint-2}
-# For the task use the build in `iris.task` or define it by yourself
-task = iris.task
-task = makeClassifTask(data = iris, target = "Species")
+# For the task use the build in `iris`-task 
+task <- tsk("iris")
 ```
 
 ```{r resample-hint-3}
 # As resampling description use the 10-fold cross validation:
-res_desc = cv10
-res_desc = makeResampleDesc(method = "CV", iters = 10)
+res_desc <- rsmp("cv", folds = 10)
 ```
 
 ```{r resample-hint-4}
 # Finally, use resample on all the components to evaluate the learner
-res = resample(learner = learner, task = task, resampling = res_desc)
+res  <- resample(learner = learner, task = task, resampling = res_desc)
 ```
 
 ```{r resample-solution}
-learner = "classif.lda"
-task = iris.task
-res_desc = cv10
+learner <- lrn("classif.lda")
+task <- tsk("iris")
+res_desc <- rsmp("cv", folds = 10)
 
 set.seed(123)
-res = resample(learner = learner, task = task, resampling = res_desc)
+res <- resample(learner = learner, task = task, resampling = res_desc)
 ```
 
 ```{r resample-check}
-learner = "classif.lda"
-task = iris.task
-res_desc = cv10
+learner <- lrn("classif.lda")
+task <- tsk("iris")
+res_desc <- rsmp("cv", folds = 10)
 
 set.seed(123)
-res = resample(learner = learner, task = task, resampling = res_desc)
-```
-
-**Note:** The performance measure can also be specified. But in this example we are using the default measure which is, for multiclass classification, the mean misclassification error.
-
-```{r make-resample-desc-quiz, echo=FALSE}
-question("What might be the difference of using build in resample objects like 'cv10' or defining them with 'makeResampleDesc()'?",
-  answer("There is no difference."),
-  answer("'makeResampleDesc' is much more flexible.", correct = TRUE),
-  answer("Build in resample objects like 'cv10' can detect automatically if blocking or stratification is required."),
-  answer("Blocking or stratification has to be defined within 'makeResampleDesc'.", correct = TRUE)
-)
+res <- resample(learner = learner, task = task, resampling = res_desc)
 ```
 
 #### *(P)* Conduct a benchmark
@@ -180,69 +192,106 @@ question("What might be the difference of using build in resample objects like '
 It might be interesting to compare LDA, QDA, and naive Bayes on the iris task. Instead of calling three times the `resample()` function we now use `benchmark()` to compare multiple learner. Therefore, collect the learner to compare within a list and conduct the benchmark. Now, use just a 3-fold cross-validation to evaluate the performance:
 
 ```{r benchmark, exercise=TRUE, exercise.lines=10, exercise.checker=benchmarkChecker}
-learners = list(...)
-task =
-res_desc =
+learners <- list(...)
+task <-
+res_desc <-
+design <- benchmark_grid(
+  tasks = ...,
+  learners = ...,
+  resamplings = ...
+)
 
 set.seed(123)
-bmr = benchmark(...)
+bmr <- benchmark(...)
 ```
 
 ```{r benchmark-hint-1}
 # To compare multiple learner collect hem within a list
-learners = list("classif.lda", "classif.qda", "classif.naiveBayes")
+learners <- list(lrn("classif.lda"), 
+                 lrn("classif.qda"), 
+                 lrn("classif.naive_bayes"))
 ```
 
 ```{r benchmark-hint-2}
-# Again, use the build in iris task or define your own
-task = iris.task
+# Again, use the build in iris task 
+task <- tsk("iris")
 ```
 
 ```{r benchmark-hint-3}
 # As resampling we know use the 3-fold cross validation
-res_desc = cv3
-res_desc = makeResampleDesc(method = "CV", iters = 3)
+res_desc <- rsmp("cv", folds = 3)
 ```
 
 ```{r benchmark-hint-4}
+# Define the benchmark design
+design <- benchmark_grid(
+  tasks = task,
+  learners = learners,
+  resamplings = res_desc
+)
+```
+
+```{r benchmark-hint-5}
 # Finally call benchmark
-bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc)
+bmr <- benchmark(design)
 ```
 
 ```{r benchmark-solution}
-learners = list("classif.lda", "classif.qda", "classif.naiveBayes")
-task = iris.task
-res_desc = cv3
+learners <- list(lrn("classif.lda"), 
+                 lrn("classif.qda"), 
+                 lrn("classif.naive_bayes"))
+task <- tsk("iris")
+res_desc <- rsmp("cv", folds = 3)
+design <- benchmark_grid(
+  tasks = task,
+  learners = learners,
+  resamplings = res_desc
+)
 
 set.seed(123)
-bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc)
+bmr <- benchmark(design)
 ```
 
 ```{r benchmark-check}
-learners = list("classif.lda", "classif.qda", "classif.naiveBayes")
-task = iris.task
-res_desc = cv3
+learners <- list(lrn("classif.lda"), 
+                 lrn("classif.qda"), 
+                 lrn("classif.naive_bayes"))
+task <- tsk("iris")
+res_desc <- rsmp("cv", folds = 3)
+design <- benchmark_grid(
+  tasks = task,
+  learners = learners,
+  resamplings = res_desc
+)
 
 set.seed(123)
-bmr = benchmark(learner = learners, tasks = task, resamplings = res_desc)
+bmr <- benchmark(design)
 ```
 
 #### *(P)* Visualize the benchmark
 
-Finally, visualize the benchmark result with `plotBMRBoxplots()`
+Finally, visualize the benchmark result with `autoplot()`
 
 ```{r bmr-viz, exercise=TRUE, exercise.lines=8}
 set.seed(123)
-bmr =
+design <-
+bmr <-
 
-plotBMRBoxplots(bmr)
+autoplot(bmr)
 ```
 
 ```{r bmr-viz-solution}
 set.seed(123)
-bmr = benchmark(learner = list("classif.lda", "classif.qda", "classif.naiveBayes"), tasks = iris.task, resamplings = cv10)
+design <- benchmark_grid(
+  tasks = tsk("iris"),
+  learners = list(lrn("classif.lda"), 
+                 lrn("classif.qda"), 
+                 lrn("classif.naive_bayes")),
+  resamplings = rsmp("cv", folds = 10)
+)
+bmr <- benchmark(design)
 
-plotBMRBoxplots(bmr)
+autoplot(bmr)
 ```
 
 ```{r bmr-viz-quiz, echo=FALSE}

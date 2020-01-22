@@ -52,7 +52,7 @@ To visually see how the number of nearest neighbors affects the overfitting beha
 
 1.  Draw 100 observations of a binary target variable with equal distributed classes `1` and `2`.
     ```{r, eval=FALSE}
-    class = sample(c(1, 2), size = 100, replace = TRUE)
+    class <- sample(c(1, 2), size = 100, replace = TRUE)
     ```
 
 1. Simulate data with two normally distributed features `x` and `y` and a target variable `class`:
@@ -60,40 +60,40 @@ To visually see how the number of nearest neighbors affects the overfitting beha
     * Class `2` should have a mean of $4$ and standard deviation of $2$
     * `class` should contain the classes as factor or character variable
     ```{r, eval=FALSE}
-    df_sim = data.frame(x = rnorm(100, mean = 2*class, sd = class), y = rnorm(100, mean = 2*class, sd = class), class = as.character(class))
+    df_sim <- data.frame(x = rnorm(100, mean = 2*class, sd = class), y = rnorm(100, mean = 2*class, sd = class), class = as.character(class))
     ```
 
 1.  Generate a task out of the simulated data with `target = "class"` and define the k-NN learner with `k = 1`:
     ```{r, eval=FALSE}
-    task_sim = makeClassifTask(data = df_sim, target = "class")
-    kknn_learner = makeLearner("classif.kknn", k = 1)
+    task_sim <- TaskClassif$new(id = "2_gaussians", backend = df_sim, target = "class")
+    kknn_learner <- lrn("classif.kknn", k = 1)
     ```
 
-1.  Finally, call `plotLearnerPrediction()` on the learner and task:
+1.  Finally, call `plot_learner_prediction()` on the learner and task:
     ```{r, eval=FALSE}
-    plotLearnerPrediction(learner = kknn_learner, task = task_sim)
+    plot_learner_prediction(learner = kknn_learner, task = task_sim)
     ```
 
 Now, put all together and vary `k` to see how the overfitting behavior of k-NN reacts on the choice of `k`:
 
 ```{r kknn-overfitting, exercise=TRUE}
 set.seed(123)
-class =
-df_sim =
+class <-
+df_sim <-
 
-task_sim =
-kknn_learner =
+task_sim <-
+kknn_learner <-
 
-plotLearnerPrediction(learner = ..., task = ...)
+plot_learner_prediction(learner = ..., task = ...)
 ```
 
 ```{r kknn-overfitting-solution}
 set.seed(123)
-class = sample(c(1, 2), size = 100, replace = TRUE)
-df_sim = data.frame(x = rnorm(100, mean = 2*class, sd = class), y = rnorm(100, mean = 2*class, sd = class), class = as.character(class))
+class <- sample(c(1, 2), size = 100, replace = TRUE)
+df_sim <- data.frame(x = rnorm(100, mean = 2*class, sd = class), y = rnorm(100, mean = 2*class, sd = class), class = as.character(class))
 
-task_sim = makeClassifTask(data = df_sim, target = "class")
-kknn_learner = makeLearner("classif.kknn", k = 1)
+task_sim <- TaskClassif$new(id = "2_gaussians", backend = df_sim, target = "class")
+kknn_learner <- lrn("classif.kknn", k = 1)
 
-plotLearnerPrediction(learner = kknn_learner, task = task_sim)
+plot_learner_prediction(learner = kknn_learner, task = task_sim)
 ```
