@@ -5,9 +5,8 @@
 *Theoretical (T)*
 
 - Understand the way logistic regression works
-- Learn how to transform model scores to model probabilities with the logistic function
-- Get to know binary classification losses
-- Understand the basic idea of multinomial regression
+- Learn about the logistic function
+- Get to know bernoulli loss
 
 *Practical (P)*
 

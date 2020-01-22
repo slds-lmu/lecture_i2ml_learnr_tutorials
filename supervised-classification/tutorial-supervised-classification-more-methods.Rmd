@@ -4,8 +4,8 @@
 
 *Theoretical (T)*
 
-- Become familiar with LDA, QDA and naive Bayes classifier
-- 
+- Become familiar with LDA, QDA, k-NN and the Naive Bayes classifier
+
 
 *Practical (P)*
 
