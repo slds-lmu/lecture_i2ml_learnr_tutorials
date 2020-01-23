@@ -46,7 +46,7 @@ taskChecker = function (task_name)
     task_processor = "
     task = ', task_name, '
     task_hash = digest::digest(c(
-      digest::digest(sort(sapply(task$backend, digest::digest))),
+      digest::digest(sort(sapply(task$data(), digest::digest))),
       class(task),
       digest::digest(task$target_names)
     ))
@@ -55,7 +55,7 @@ taskChecker = function (task_name)
 
     msg = errorToMessage(expr = {
       ex() %>% check_object("task") %>% check_element("task_type")
-      ex() %>% check_object("task") %>% check_element("backend")
+      ex() %>% check_object("task") %>% check_element("backend") 
       ex() %>% check_object("task_hash") %>% check_equal()
     })
     if (! is.null(msg))

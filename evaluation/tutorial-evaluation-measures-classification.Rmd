@@ -63,47 +63,78 @@ question("Which statements are true?",
 )
 ```
 
-#### *(P)* The spam dataset
+#### *(P)* The pima dataset
 
-Make yourself familiar with the spam task (`?kernlab::spam`):
+The pima dataset contains diagnostic measurements, with which one wants to 
+predict if an individuum has diabetes or not.
+The task is predefined in `mlr3` and can be accessed with the query `pima`:
 
-> A data set collected at Hewlett-Packard Labs, that classifies 4601 e-mails as spam or non-spam. In addition to this class label there are 57 variables indicating the frequency of certain words and characters in the e-mail.
+```{r pima-show_task, exercise=TRUE}
+tsk("pima")$head()
+?mlbench::PimaIndiansDiabetes
+```
 
-The task is predefined in `mlr3` and can be accessed with the query `spam`:
+We only want to consider the complete cases. Use the `filter` method combined with
+the `complete.cases` function therefor:
 
-```{r spam-task, exercise=TRUE}
-spam_task <- tsk("spam")
-spam_task$head()
-?kernlab::spam
+```{r pima-task, exercise=TRUE, exercise.lines=5, exercise.checker=taskChecker("pima_task")}
+pima_task <-  tsk("pima")
+pima_task$
+```
+
+```{r pima-task-hint}
+# With `which` we get the indices of the complete cases
+which(complete.cases(pima_task$data()))
+```
+
+```{r pima-task-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+```
+
+```{r pima-task-check}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 ```
 
 #### *(P)* A first model
 
 1. As a first approach, we want to train a logistic regression on the whole task. Therefore, define the model and train it. Set the `predict_type` of the learner to `"prob"`:
 
-```{r spam-logreg-train, exercise=TRUE, exercise.lines=5, exercise.checker=modelChecker("learner")}
+```{r pima-logreg-train, exercise=TRUE, exercise.lines=5, exercise.checker=modelChecker("learner")}
+pima_task <-  tsk("pima")
+pima_task$
 learner <-
 learner$train(task = )
 ```
 
-```{r spam-logreg-train-hint-1}
+```{r pima-logreg-train-hint-1}
+# Only complete cases
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+```
+
+```{r pima-logreg-train-hint-2}
 # Use 'classif.log_reg' as learner with 'predict.type = prob'
 learner <- lrn("classif.log_reg", predict_type = "prob")
 ```
 
-```{r spam-logreg-train-hint-2}
-# Access the task with the query 'spam'
-task = tsk("spam")
+```{r pima-logreg-train-hint-3}
+# Use the pima task defined before
+task = pima_task
 ```
 
-```{r spam-logreg-train-solution}
+```{r pima-logreg-train-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task = tsk("spam"))
+learner$train(task = pima_task)
 ```
 
-```{r spam-logreg-train-check}
+```{r pima-logreg-train-check}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task <- tsk("spam"))
+learner$train(task <- pima_task)
 ```
 
 2. Calculate the prediction on the whole task with the class method `predict()` of the learner object:
@@ -123,51 +154,72 @@ predCheck = function (label, user_code, check_code, envir_result, evaluate_resul
 }
 ```
 
-```{r spam-logreg-pred, exercise=TRUE, exercise.lines=5, exercise.checker=predCheck}
+```{r pima-logreg-pred, exercise=TRUE, exercise.lines=5, exercise.checker=predCheck}
+pima_task <-  tsk("pima")
+pima_task$
 learner <-
 learner$train(task = )
 model_prediction <-
 ```
 
-```{r spam-logreg-pred-hint-1}
+```{r pima-logreg-pred-hint-1}
 # Define the model as previously
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task = tsk("spam"))
+learner$train(task = pima_task)
 ```
 
-```{r spam-logreg-pred-hint-2}
+```{r pima-logreg-pred-hint-2}
 # Predict using the learner object
-model_prediction <- learner$predict(task = tsk("spam"))
+model_prediction <- learner$predict(task = pima_task)
 ```
 
-```{r spam-logreg-pred-solution}
+```{r pima-logreg-pred-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task = tsk("spam"))
-model_prediction <- learner$predict(task = tsk("spam"))
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
 ```
 
-```{r spam-logreg-pred-check}
+```{r pima-logreg-pred-check}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task = tsk("spam"))
-model_prediction <- learner$predict(task = tsk("spam"))
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
 ```
 
 3. Print the confusion matrix for the `model_prediction` by accessing its class property `confusion` (extra: use the class method `set_threshold()` to vary the decision threshold used):
 
 ```{r conf-mat, exercise=TRUE}
-learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task = tsk("spam"))
-model_prediction <- learner$predict(task = tsk("spam"))
+pima_task <-  tsk("pima")
+pima_task$
+learner <-
+learner$train(task = )
+model_prediction <-
 
 model_prediction$
 model_prediction$set_threshold(...)
 model_prediction$
 ```
 
-```{r conf-mat-solution}
+```{r conf-mat-hint}
+# Define the model as previously
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task = tsk("spam"))
-model_prediction <- learner$predict(task = tsk("spam"))
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
+```
+
+```{r conf-mat-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data()))) 
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
 
 model_prediction$confusion
 model_prediction$set_threshold(0.2)
@@ -177,6 +229,8 @@ model_prediction$confusion
 4. Finally, plot the ROC (with `autoplot()` using the keyword `"roc"`). Do also calculate the AUC and mmce with the class method `score()` (extra: use the class method `set_threshold()` to vary the decision threshold used):
 
 ```{r roc-auc, exercise=TRUE}
+pima_task <-  tsk("pima")
+pima_task$
 learner <-
 learner$train(task = )
 model_prediction <-
@@ -187,9 +241,11 @@ model_prediction$score(list(...))
 
 ```{r roc-auc-hint-1}
 # Use the previously defined objects
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task = tsk("spam"))
-model_prediction <- learner$predict(task = tsk("spam"))
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
 ```
 
 ```{r roc-auc-hint-2}
@@ -208,9 +264,11 @@ model_prediction$set_threshold(0.2)
 ```
 
 ```{r roc-auc-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
 learner <- lrn("classif.log_reg", predict_type = "prob")
-learner$train(task = tsk("spam"))
-model_prediction <- learner$predict(task = tsk("spam"))
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
 autoplot(model_prediction, "roc")
 
 model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
@@ -221,8 +279,8 @@ model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
 
 ```{r roc-auc-quiz, echo=FALSE}
 question("Which statements are true?",
-  answer("The AUC with about 97 % is very good.", correct = TRUE),
-  answer("The model is able to classify 1619 out of 1813 correct as nonspams."),
+  answer("The AUC with about 86 % is good.", correct = TRUE),
+  answer("The model is able to classify 74 out of 130 correct as negative."),
   answer("Using the prediction of the train data is the ordinary and correct way of calculating the ROC."),
   answer("The calculation of the ROC should be done on a test set.", correct = TRUE),
   answer("The AUC is not effected by the threshold whereas the mmce is.", correct = TRUE)
@@ -262,6 +320,7 @@ resampleChecker = function (label, user_code, check_code, envir_result, evaluate
 ```{r logreg-res, exercise=TRUE, exercise.checker=resampleChecker}
 learner <- 
 task <- 
+task$
 res_desc <-
 
 set.seed(123)
@@ -274,8 +333,10 @@ learner <- lrn("classif.log_reg", predict_type = "prob")
 ```
 
 ```{r logreg-res-hint-2}
-# Access the task with the query 'spam'
-task <- tsk("spam")
+# Access the task with the query 'pima' and filter for the complete cases 
+# afterwards
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 ```
 
 ```{r logreg-res-hint-3}
@@ -285,7 +346,8 @@ res_desc <- rsmp("cv", folds = 3L)
 
 ```{r logreg-res-solution}
 learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
@@ -294,7 +356,8 @@ res <- resample(task, learner, res_desc)
 
 ```{r logreg-res-check}
 learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
@@ -321,6 +384,7 @@ predCheck = function (label, user_code, check_code, envir_result, evaluate_resul
 ```{r test-pred-res, exercise=TRUE, exercise.checker=predCheck}
 learner <- 
 task <- 
+task$
 res_desc <- 
 
 set.seed(123)
@@ -331,7 +395,8 @@ test_prediction <-
 ```{r test-pred-res-hint-1}
 # Use the objects defined previously
 learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
@@ -345,7 +410,8 @@ test_prediction <- res$prediction()
 
 ```{r test-pred-res-solution}
 learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
@@ -355,7 +421,8 @@ test_prediction <- res$prediction()
 
 ```{r test-pred-res-check}
 learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
@@ -368,6 +435,7 @@ test_prediction <- res$prediction()
 ```{r roc-auc-res, exercise=TRUE}
 learner <- 
 task <- 
+task$
 res_desc <- 
 
 set.seed(123)
@@ -380,7 +448,8 @@ test_prediction$score(...)
 ```{r roc-auc-res-hint-1}
 # Use the objects defined previously
 learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
@@ -405,7 +474,8 @@ test_prediction$set_threshold(0.2)
 
 ```{r roc-auc-res-solution}
 learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
@@ -420,11 +490,13 @@ test_prediction$score(msr("classif.auc"))
 
 ```{r resampl-roc-auc, exercise=TRUE}
 learner <- lrn("classif.log_reg", predict_type = "prob")
-task <- tsk("spam")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
 res_desc <- rsmp("cv", folds = 3L)
 
 set.seed(123)
 res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
 
 autoplot(res, "roc")
 res$score(msr("classif.auc"))
