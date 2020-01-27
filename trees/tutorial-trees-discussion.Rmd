@@ -292,11 +292,15 @@ plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
 ```{r cart-viz-hyperpars-quiz, echo=FALSE}
+# mlr3 does not support minbucket as a parameter at the moment
+
 question("Which statements are true?",
   answer("Reducing just the complexity `cp` leads to bigger trees."),
-  answer("Reducing complexity `cp`, minsplit, and minbucket at the same time leads to bigger trees.", correct = TRUE),
-  answer("It doesn't make sense to choose minsplit bigger than minbucket.", correct = TRUE),
-  answer("A very small minbucket leads to smaller trees."),
+  answer("Reducing complexity `cp`, minsplit at the same time leads to bigger trees.", correct = TRUE),
+  #answer("Reducing complexity `cp`, minsplit, and minbucket at the same time leads to bigger trees.", correct = TRUE),
+  #answer("It doesn't make sense to choose minsplit bigger than minbucket.", correct = TRUE),
+  answer("A very small minsplit leads to smaller trees."),
+  #answer("A very small minbucket leads to smaller trees."),
   answer("The bigger the tree the more unstable its structure becomes.", correct = TRUE)
 )
 ```
