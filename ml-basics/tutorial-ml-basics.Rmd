@@ -82,8 +82,8 @@ learnerChecker = function (learner_name)
     # Hashing of the learner.
     learner_processor = "
     learner = ', learner_name, '
-    ll_short_name = learner$short_name
-    ll_par_vals = learner$par.vals
+    ll_short_name = learner$id
+    ll_par_vals = learner$param_set
     ll_class = class(learner)
     "
     setup_state(sol_code = paste0(check_code, learner_processor), stu_code = paste0(user_code, learner_processor))
@@ -120,10 +120,9 @@ modelChecker = function (model_name)
     model_processor = "
     model = ', model_name, '
     model_hash = digest::digest(c(
-      sort(model$features),
-      model$task.desc$target,
-      model$task.desc$size,
-      model$task.desc$type
+      sort(model$state$train_task$feature_names),
+      model$state$train_task$target_names,
+      model$state$train_task$task_type
     ))
     "
     setup_state(sol_code = paste0(check_code, model_processor), stu_code = paste0(user_code, model_processor))
@@ -136,7 +135,7 @@ modelChecker = function (model_name)
 
     model_processor = "
     model = ', model_name, '
-    learner = model$learner
+    learner = model
     "
     msg = learnerChecker("learner")(label, paste0(user_code, model_processor), paste0(check_code, model_processor), envir_result, evaluate_result, ...)
     if (! msg$correct)
