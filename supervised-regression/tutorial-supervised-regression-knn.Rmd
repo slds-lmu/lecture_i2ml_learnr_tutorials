@@ -147,13 +147,13 @@ kknn_learner$train(iris_task)
 
 #### *(P)* Visualize decision boundaries
 
-Again, define the `kknn_learner` and visualize the prediction of the learner with `plot_prediction()`. Rerun the code for different `k`. What can you observe by varying the hyperparameter?
+Again, define the `kknn_learner` and visualize the prediction of the learner with `plot_learner_prediction()`. Rerun the code for different `k`. What can you observe by varying the hyperparameter?
 
 ```{r kknn-visualization, exercise=TRUE}
 iris_task <-
 kknn_learner <-
 
-plot_prediction(learner = kknn_learner, task = iris_task)
+plot_learner_prediction(learner = kknn_learner, task = iris_task)
 ```
 
 ```{r kknn-visualization-solution}
