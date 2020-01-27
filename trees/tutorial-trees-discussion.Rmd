@@ -166,7 +166,7 @@ spirals_task <-
 learner_cart <-
 learner_cart$
 
-rpart.plot(...)
+rpart.plot(..., roundint = F)
 plot_learner_prediction(learner = ..., task = ...)
 ```
 
@@ -186,7 +186,7 @@ learner_cart$train(spirals_task)
 
 ```{r cart-viz-hint-2}
 # Call 'rpart.plot' of the fitted rpart model. You can access the model via the 'learner.model' element of the model
-rpart.plot(learner_cart$state$model)
+rpart.plot(learner_cart$state$model, roundint = F)
 ```
 
 ```{r cart-viz-hint-3}
@@ -206,7 +206,7 @@ spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target =
 learner_cart <- lrn("classif.rpart", minsplit = 20, cp = 0.01)
 learner_cart$train(spirals_task)
 
-rpart.plot(learner_cart$state$model)
+rpart.plot(learner_cart$state$model, roundint = F)
 plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
@@ -234,7 +234,7 @@ spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target =
 learner_cart <- lrn("classif.rpart", minsplit = 20, cp = 0.01)
 learner_cart$train(spirals_task)
 
-rpart.plot(learner_cart$state$model)
+rpart.plot(learner_cart$state$model, roundint = F)
 plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
@@ -252,7 +252,7 @@ spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target =
 learner_cart <- lrn("classif.rpart", minsplit = 20, cp = 0.01)
 learner_cart$train(spirals_task)
 
-rpart.plot(learner_cart$state$model)
+rpart.plot(learner_cart$state$model, roundint = F)
 plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
@@ -287,7 +287,7 @@ cp <- 0.01
 learner_cart <- lrn("classif.rpart", minsplit = minsplit, cp = cp)
 learner_cart$train(spirals_task)
 
-rpart.plot(learner_cart$state$model)
+rpart.plot(learner_cart$state$model, roundint = F)
 plot_learner_prediction(learner = learner_cart, task = spirals_task)
 ```
 
