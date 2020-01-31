@@ -4,7 +4,7 @@
 
 *Theoretical (T)*
 
-- Be able do differentiate between regression and classification tasks
+- Be able to differentiate between regression and classification tasks
 - Understand what the data generating process is.
 
 *Practical (P)*
