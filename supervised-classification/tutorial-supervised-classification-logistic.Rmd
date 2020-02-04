@@ -16,9 +16,9 @@
 ### Preparation
 
 1.  *(T)* Watch the following video  (sorry, rather low volume...):
-    <center>
-    ![Logistic regression](){width="75%"}
-    </center>
+<center>
+![Logistic regression](){width="75%"}
+</center>
 
 1.  *(P)* Make sure that you have understood how to define tasks and learners and how to train a learner in `mlr3`.
 
@@ -28,9 +28,9 @@
 
 ```{r logi-quiz1, echo=FALSE}
 question("Which statements are true?",
-    answer("Logistic regression can be fitted by maximum likelihood with numerical optimization or solved analytically."),
-    answer("Logistic regression follows a generative approach"),
-    answer("In logistic regression, the parameter vector $\\theta$ that maximizes the model's likelihood is identical to the one minimizing its empirical risk.", correct = TRUE)
+         answer("Logistic regression can be fitted by maximum likelihood with numerical optimization or solved analytically."),
+         answer("Logistic regression follows a generative approach"),
+         answer("In logistic regression, the parameter vector $\\theta$ that maximizes the model's likelihood is identical to the one minimizing its empirical risk.", correct = TRUE)
 )
 ```
 
@@ -43,7 +43,7 @@ and transform `Survived` into a factor variable:
 titanicChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
 {
   setup_state(sol_code = check_code, stu_code = user_code)
-
+  
   msg = errorToMessage(expr = {
     ex() %>% check_object("my_titanic", undefined_msg = "No object \'my_titanic\' found! Please name your data frame as \'my_titanic\'.")
     ex() %>% check_object("my_titanic") %>% check_column("Survived") %>% check_equal()
@@ -52,7 +52,7 @@ titanicChecker = function (label, user_code, check_code, envir_result, evaluate_
   })
   if (! is.null(msg))
     return(msg)
-
+  
   return(list(message = "Great job! :)", correct = TRUE, location = "append"))
 }
 ```
@@ -61,8 +61,8 @@ titanicChecker = function (label, user_code, check_code, envir_result, evaluate_
 library(titanic)
 
 my_titanic <-
-my_titanic$Survived <-
-```
+  my_titanic$Survived <-
+  ```
 
 ```{r titanic-data-hint-1}
 # Install and library the titanic package or use the namespace titanic to load the 'titanic_train' dataset
@@ -101,14 +101,15 @@ my_titanic$Survived <- factor(my_titanic$Survived)
 ```
 
 ```{r titanic-train, exercise=TRUE, exercise.lines=8, exercise.checker=modelChecker("learner_logreg")}
+library(titanic)
 my_titanic <-
-my_titanic$Survived <-
-task_titanic <-
-learner_logreg <-
-model_titanic <-
-```
-
-```{r titanic-train-hint-1}
+  my_titanic$Survived <-
+  task_titanic <-
+  learner_logreg <-
+  model_titanic <-
+  ```
+  
+  ```{r titanic-train-hint-1}
 # We have to define a classification task since we are classifying if a passenger survived or not we
 task_titanic <- TaskClassif$new(id = "titanic_task", backend = my_titanic, 
                                 target = "Survived")
@@ -125,7 +126,8 @@ learner_logreg$train(task_titanic)
 ```
 
 ```{r titanic-train-solution}
-my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+library(titanic)
+my_titanic <- na.omit(titanic_train[, c("Survived", "Age", "Fare")])
 my_titanic$Survived <- factor(my_titanic$Survived)
 task_titanic <- TaskClassif$new(id = "titanic_task", backend = my_titanic, 
                                 target = "Survived")
@@ -135,7 +137,8 @@ learner_logreg$train(task_titanic)
 
 
 ```{r titanic-train-check}
-my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+library(titanic)
+my_titanic <- na.omit(titanic_train[, c("Survived", "Age", "Fare")])
 my_titanic$Survived <- factor(my_titanic$Survived)
 task_titanic <- TaskClassif$new(id = "titanic_task", backend = my_titanic, 
                                 target = "Survived")
@@ -146,14 +149,16 @@ learner_logreg$train(task_titanic)
 Finally, visualize the model with `plot_learner_prediction()`:
 
 ```{r titanic-viz, exercise=TRUE}
+library(titanic)
 my_titanic <-
-task_titanic <-
-learner_logreg <-
-
-plot_learner_prediction(learner = ..., task = ...)
+  task_titanic <-
+  learner_logreg <-
+  
+  plot_learner_prediction(learner = ..., task = ...)
 ```
 
 ```{r titanic-viz-solution}
+library(titanic)
 my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
 my_titanic$Survived <- factor(my_titanic$Survived)
 task_titanic <- TaskClassif$new(id = "titanic_task", backend = my_titanic, 
@@ -166,12 +171,12 @@ plot_learner_prediction(learner = learner_logreg, task = task_titanic)
 #### *(P)* Training a logistic regression with non-linear decision boundaries
 
 ```{r titanic-non-linear-setup}
-polynomialTrafo <- function (data, feature, degree) {
+polynomialTrafo <- function(data, feature, degree) {
   feature_idx <- which(feature == names(data))
   # df_poly <- as.data.frame(poly(data[[feature]], degree))
-
+  
   # I think this is ok here, the boundaries looks so crappy with poly ...
-  df_poly <- as.data.frame(do.call(cbind, lapply(seq_len(degree), function (d) data[[feature]]^d)))
+  df_poly <- as.data.frame(do.call(cbind, lapply(seq_len(degree), function(d) data[[feature]]^d)))
   names(df_poly) <- paste0(feature, ".poly", seq_len(degree))
   return(cbind(data[, -feature_idx, drop = FALSE], df_poly))
 }
@@ -179,20 +184,22 @@ polynomialTrafo <- function (data, feature, degree) {
 
 The next demonstration shows how to include the features `Age` and `Fare` as polynomials and the effect on the decision boundary. As mentioned in the video, it is possible to transform a linear classifier into a non-linear classifier by just mapping features into a higher dimensional feature space (feature map):
 
-```{r titanic-non-linear, exercise.lines=6, exercise=TRUE}
+```{r titanic-non-linear, exercise.lines=30, exercise=TRUE}
 library(ggplot2)
 
-# Change degree and threshold here:
-degree <- 3
+# Change degrees and threshold here:
+degree <- c(Age = 4,  Fare = 3)
 threshold <- 0.5
 
 # You can leave this code as it is, just vary degree and threshold above
 # and see how the prediction surface change:
 my_titanic <- na.omit(titanic::titanic_train[, c("Survived", "Age", "Fare")])
+# use square root of fare to make visualisation more appealing (values at lower end more spread out...)
+my_titanic$Fare <- sqrt(my_titanic$Fare)
 my_titanic$Survived <- factor(my_titanic$Survived)
 
-task_data <- polynomialTrafo(my_titanic, "Age", degree)
-task_data <- polynomialTrafo(task_data, "Fare", degree)
+task_data <- polynomialTrafo(my_titanic, "Age", degree["Age"])
+task_data <- polynomialTrafo(task_data, "Fare", degree["Fare"])
 
 titanic_task <- TaskClassif$new(id = "titanic_task", backend = task_data, 
                                 target = "Survived")
@@ -210,8 +217,8 @@ age_fare_grid <- expand.grid(
   Fare = seq(min(my_titanic$Fare), max(my_titanic$Fare), length.out = 100)
 )
 age_fare_grid_polys <- cbind(
-  polynomialTrafo(age_fare_grid[,"Age",drop=FALSE], "Age", degree),
-  polynomialTrafo(age_fare_grid[,"Fare",drop=FALSE], "Fare", degree)
+  polynomialTrafo(age_fare_grid[, "Age", drop = FALSE], "Age", degree["Age"]),
+  polynomialTrafo(age_fare_grid[, "Fare", drop = FALSE], "Fare", degree["Fare"])
 )
 age_fare_grid_polys_prediction <- 
   titanic_learner$predict_newdata(age_fare_grid_polys)
@@ -220,16 +227,19 @@ age_fare_grid_polys_prediction$set_threshold(threshold = threshold)
 age_fare_grid$pred <- age_fare_grid_polys_prediction$response
 age_fare_grid$probs <- age_fare_grid_polys_prediction$prob[,1]
 
-ggplot() +
-  geom_point(data = age_fare_grid, aes(x = Age, y = Fare, color = as.factor(pred), alpha = ifelse(probs < 0.5, 1 - probs, probs)),
-    show.legend = FALSE) +
-  geom_point(data = subset(my_titanic, ! correct_prediction),
-           color = "white", size = 3, mapping = aes(x = Age, y = Fare, shape = as.factor(Survived)),
-           show.legend = FALSE) +
-  geom_point(data = subset(my_titanic, ! correct_prediction),
-           color = "black", size = 3, mapping = aes(x = Age, y = Fare), show.legend = FALSE,
-           shape = c(1,2)[as.factor(subset(my_titanic, ! correct_prediction)$Survived)]) +
-  geom_point(data = my_titanic, aes(x = Age, y = Fare, shape = as.factor(Survived)), size = 2) +
-  scale_shape_manual(values = c(16, 17), name = "Survived")
+ggplot(mapping = aes(x = Age, y = Fare)) +
+  geom_tile(data = age_fare_grid, color = NA,
+            aes(fill = as.factor(pred), 
+                alpha = ifelse(probs < threshold, 1 - probs, probs)),
+            show.legend = FALSE) +
+  geom_point(data = subset(my_titanic, !correct_prediction),
+             color = "black", size = 2, alpha = .7, show.legend = FALSE,
+             shape = c(1,2)[as.factor(subset(my_titanic, !correct_prediction)$Survived)]) +
+  geom_point(data = my_titanic, aes(shape = as.factor(Survived)), size = 2, alpha = .3) +
+  scale_shape_manual(values = c(16, 17), name = "Survived") + 
+  labs(caption = "Misclassified observations marked with strong outlines.")
+# confusion matrix:
+table(target = my_titanic$Survived,
+      prediction = logreg_train_predictions)
 ```
 
