@@ -66,7 +66,7 @@ question("Which statements are true?",
 #### *(P)* The pima dataset
 
 The pima dataset contains diagnostic measurements, with which one wants to 
-predict if an individuum has diabetes or not.
+predict if an individual has diabetes or not.
 The task is predefined in `mlr3` and can be accessed with the query `pima`:
 
 ```{r pima-show_task, exercise=TRUE}
