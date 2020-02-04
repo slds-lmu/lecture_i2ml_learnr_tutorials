@@ -9,7 +9,7 @@
 
 *Practical (P)*
 
-- Get to know how to fit classifiers in `mlr`
+- Get to know how to fit classifiers in `mlr3`
 
 ### Preparation
 
@@ -41,36 +41,37 @@ question("Which statements are true?",
 
 #### *(P)* Qualitative comparison of LDA, QDA, and naive Bayes
 
-In this demo we want to compare LDA, QDA, and naive Bayes by looking at the decision boundaries (hint: with `listLearners(properties = "multiclass")` you get a list with all available learners suited for multiclass classification). Use `plotLearnerPrediction()` to visualize the decision boundaries for the features `Sepal.Length` and `Sepal.Width`. You can use the build in iris task `iris.task` of `mlr`. Store the plot for each model and plot them underneath each other with `grid.arrange()` from the `gridExtra` package:
+In this demo we want to compare LDA, QDA, and naive Bayes by looking at the decision boundaries (hint: with `mlr_learners` you get a list with all available learners. If their `properties` attribute contains `multiclass` they are suited for multiclass classification). Use `plot_learner_prediction()` to visualize the decision boundaries for the features `Sepal.Length` and `Sepal.Width`. You can use the build in iris task `"iris"` of `mlr3`. Store the plot for each model and plot them underneath each other with `grid.arrange()` from the `gridExtra` package:
 
 
 ```{r generative-approaches, exercise=TRUE, exercise.lines=8, fig.height=8}
 set.seed(123)
-gg1 = plotLearnerPrediction(..., task = iris.task, features = ...)
-gg2 = plotLearnerPrediction(..., task = iris.task, features = ...)
-gg3 = plotLearnerPrediction(..., task = iris.task, features = ...)
+task <- tsk("iris")
+task$select(c("Sepal.Length", "Sepal.Width"))
+
+gg1 <- plot_learner_prediction(..., task = task)
+gg2 <- plot_learner_prediction(..., task = task)
+gg3 <- plot_learner_prediction(..., task = task)
 
 gridExtra::grid.arrange(gg1, gg2, gg3, ncol = 1)
 ```
 
 ```{r generative-approaches-hint-1}
-# The mlr learner are:
-"classif.lda"
-"classif.qda"
-"classif.naiveBayes"
-# You can directly use the string instead of a learner.
-```
-
-```{r generative-approaches-hint-2}
-# You can specify the used features in 'plotLearnerPrediction()' by setting the features argument:
-plotLearnerPrediction("classif.lda", task = iris.task, features = c("Sepal.Length", "Sepal.Width"))
+# The mlr3 learner are:
+lrn("classif.lda", predict_type = "prob")
+lrn("classif.qda", predict_type = "prob")
+lrn("classif.naive_bayes", predict_type = "prob")
 ```
 
 
 ```{r generative-approaches-solution}
-gg1 = plotLearnerPrediction("classif.lda", task = iris.task, features = c("Sepal.Length", "Sepal.Width"))
-gg2 = plotLearnerPrediction("classif.qda", task = iris.task, features = c("Sepal.Length", "Sepal.Width"))
-gg3 = plotLearnerPrediction("classif.naiveBayes", task = iris.task, features = c("Sepal.Length", "Sepal.Width"))
+set.seed(123)
+task <- tsk("iris")
+task$select(c("Sepal.Length", "Sepal.Width"))
+
+gg1 = plot_learner_prediction(lrn("classif.lda", predict_type = "prob"), task = task)
+gg2 = plot_learner_prediction(lrn("classif.qda", predict_type = "prob"), task = task)
+gg3 = plot_learner_prediction(lrn("classif.naive_bayes", predict_type = "prob"), task = task)
 
 gridExtra::grid.arrange(gg1, gg2, gg3, ncol = 1)
 ```
