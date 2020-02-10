@@ -14,8 +14,13 @@ library(learnr)
 # devtools::install_github("datacamp/testwhat")
 library(testwhat)
 library(checkmate)
-library(mlr)
-library(ranger)
+library(mlr3)
+library(mlr3learners)
+library(mlr3viz)
+library(mlr3tuning)
+library(paradox)
+library(lgr)
+lgr::get_logger("mlr3")$set_threshold("warn")
 
 errorToMessage = function (expr)
 {
@@ -34,7 +39,7 @@ taskChecker = function (task_name)
     setup_state(sol_code = check_code, stu_code = user_code)
     msg = errorToMessage(expr = {
       ex() %>% check_object("', task_name, '", undefined_msg = "No object \'', task_name,
-        '\' found! Please name your task as \'', task_name, '\'.")
+                   '\' found! Please name your task as \'', task_name, '\'.")
     })
     if (! is.null(msg))
       return(msg)
@@ -43,16 +48,16 @@ taskChecker = function (task_name)
     task_processor = "
     task = ', task_name, '
     task_hash = digest::digest(c(
-      digest::digest(sort(sapply(task$env$data, digest::digest))),
+      digest::digest(sort(sapply(task$data(), digest::digest))),
       class(task),
-      digest::digest(task$task.desc$target)
+      digest::digest(task$target_names)
     ))
     "
     setup_state(sol_code = paste0(check_code, task_processor), stu_code = paste0(user_code, task_processor))
 
     msg = errorToMessage(expr = {
-      ex() %>% check_object("task") %>% check_element("task.desc")
-      ex() %>% check_object("task") %>% check_element("env")
+      ex() %>% check_object("task") %>% check_element("task_type")
+      ex() %>% check_object("task") %>% check_element("backend") 
       ex() %>% check_object("task_hash") %>% check_equal()
     })
     if (! is.null(msg))
@@ -65,20 +70,8 @@ taskChecker = function (task_name)
   return(fun)
 }
 
-learnerChecker = function (learner_name, check_predict_type = FALSE)
+learnerChecker = function (learner_name)
 {
-  if (check_predict_type) {
-    def_pred_type_txt = "
-    ll_pred_type = learner$predict.type
-    "
-    check_pred_type_txt = "
-    ex() %>% check_object(\"ll_pred_type\") %>% check_equal()
-    "
-  } else {
-    def_pred_type_txt = "\n"
-    check_pred_type_txt = "\n"
-  }
-
   # Super ugly, but scoping within the Rmds semms weird...
   fun_txt = paste0('
   fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
@@ -86,7 +79,7 @@ learnerChecker = function (learner_name, check_predict_type = FALSE)
     setup_state(sol_code = check_code, stu_code = user_code)
     msg = errorToMessage(expr = {
       ex() %>% check_object("', learner_name, '", undefined_msg = "No object \'', learner_name,
-        '\' found! Please name your learner as \'', learner_name, '\'.")
+                   '\' found! Please name your learner as \'', learner_name, '\'.")
     })
     if (! is.null(msg))
       return(msg)
@@ -94,18 +87,16 @@ learnerChecker = function (learner_name, check_predict_type = FALSE)
     # Hashing of the learner.
     learner_processor = "
     learner = ', learner_name, '
-    ll_short_name = learner$short_name
-    ll_par_vals = learner$par.vals
-    ll_class = class(learner)',
-    def_pred_type_txt, '
+    ll_short_name = learner$id
+    ll_par_vals = learner$param_set
+    ll_class = class(learner)
     "
     setup_state(sol_code = paste0(check_code, learner_processor), stu_code = paste0(user_code, learner_processor))
 
     msg = errorToMessage(expr = {
       ex() %>% check_object("ll_short_name") %>% check_equal("Have you used the correct learner?")
       ex() %>% check_object("ll_par_vals") %>% check_equal("The chosen hyperparameter aren\'t correct!")
-      ex() %>% check_object("ll_class") %>% check_equal()',
-      check_pred_type_txt, '
+      ex() %>% check_object("ll_class") %>% check_equal()
     })
     if (! is.null(msg))
       return(msg)
@@ -117,7 +108,7 @@ learnerChecker = function (learner_name, check_predict_type = FALSE)
   return(fun)
 }
 
-modelChecker = function (model_name, check_pred_type = FALSE)
+modelChecker = function (model_name)
 {
   fun_txt = paste0('
   fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
@@ -125,7 +116,7 @@ modelChecker = function (model_name, check_pred_type = FALSE)
     setup_state(sol_code = check_code, stu_code = user_code)
     msg = errorToMessage(expr = {
       ex() %>% check_object("', model_name, '", undefined_msg = "No object \'', model_name,
-        '\' found! Please name your model as \'', model_name, '\'.")
+                   '\' found! Please name your model as \'', model_name, '\'.")
     })
     if (! is.null(msg))
       return(msg)
@@ -134,10 +125,9 @@ modelChecker = function (model_name, check_pred_type = FALSE)
     model_processor = "
     model = ', model_name, '
     model_hash = digest::digest(c(
-      sort(model$features),
-      model$task.desc$target,
-      model$task.desc$size,
-      model$task.desc$type
+      sort(model$state$train_task$feature_names),
+      model$state$train_task$target_names,
+      model$state$train_task$task_type
     ))
     "
     setup_state(sol_code = paste0(check_code, model_processor), stu_code = paste0(user_code, model_processor))
@@ -150,9 +140,9 @@ modelChecker = function (model_name, check_pred_type = FALSE)
 
     model_processor = "
     model = ', model_name, '
-    learner = model$learner
+    learner = model
     "
-    msg = learnerChecker("learner", ', check_pred_type, ')(label, paste0(user_code, model_processor), paste0(check_code, model_processor), envir_result, evaluate_result, ...)
+    msg = learnerChecker("learner")(label, paste0(user_code, model_processor), paste0(check_code, model_processor), envir_result, evaluate_result, ...)
     if (! msg$correct)
       return(msg)
 

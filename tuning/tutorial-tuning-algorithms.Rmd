@@ -19,7 +19,7 @@
     ![](){width="75%"}
     </center>
 
-1. *(P)* Read the tutorial about [tuning](https://mlr.mlr-org.com/articles/tutorial/tune.html)
+1. *(P)* Read the tutorial about [tuning](https://mlr3book.mlr-org.com/tuning.html)
 
 ### Exercises
 
@@ -44,7 +44,7 @@ question("Which statements are true?",
 
 #### *(P)* The sonar task
 
-In this hands-on we want to tune a random forest using the `classif.ranger` learner. The goal is to find hyperparameter values for `mtry` and `min.node.size` to achieve a high AUC. The task we are using is the `sonar.task`. Taking a look at the help page of the task (`??mlbench::Sonar`) gives a nice description:
+In this hands-on we want to tune a random forest using the `classif.ranger` learner. The goal is to find hyperparameter values for `mtry` and `min.node.size` to achieve a high AUC. The task we are using is the task `"sonar"`. Taking a look at the help page of the task (`??mlbench::Sonar`) gives a nice description:
 
 > This is the data set used by Gorman and Sejnowski in their study of the classification of sonar signals using a neural network [1]. The task is to train a network to discriminate between sonar signals bounced off a metal cylinder and those bounced off a roughly cylindrical rock.
 >
@@ -53,24 +53,24 @@ In this hands-on we want to tune a random forest using the `classif.ranger` lear
 > The label associated with each record contains the letter "R" if the object is a rock and "M" if it is a mine (metal cylinder). The numbers in the labels are in increasing order of aspect angle, but they do not encode the angle directly.
 
 ```{r sonar-task, exercise=TRUE}
-sonar.task
+tsk("sonar")
 ```
 
 #### *(P)* Define the learner and parameter set
 
-As mentioned above, we want to find good values for `mtry` and `min.node.size`. Therefore, define a hyperparameter space using `makeParamSet()`. Before defining the parameter set define the `ranger` learner (do also note that we want to optimize for the AUC which requires the estimation of probabilities):
+As mentioned above, we want to find good values for `mtry` and `min.node.size`. Therefore, define a hyperparameter space using `ParamSet$new()`. Before defining the parameter set define the `ranger` learner (do also note that we want to optimize for the AUC which requires the estimation of probabilities):
 
-```{r ranger-learner, exercise=TRUE, exercise.checker=learnerChecker("learner", TRUE)}
-learner = makeLearner(...)
+```{r ranger-learner, exercise=TRUE, exercise.checker=learnerChecker("learner")}
+learner <- lrn(...)
 ```
 
 ```{r ranger-learner-solution}
-# Use the 'ranger.learner' with 'predict.type = "prob"' to prepare the learner for predicting probabilities
-learner = makeLearner("classif.ranger", predict.type = "prob")
+# Use the 'ranger.learner' with 'predict_type = "prob"' to prepare the learner for predicting probabilities
+learner <- lrn("classif.ranger", predict_type = "prob")
 ```
 
 ```{r ranger-learner-check}
-learner = makeLearner("classif.ranger", predict.type = "prob")
+learner <- lrn("classif.ranger", predict_type = "prob")
 ```
 
 Now, define the parameter set with:
@@ -79,88 +79,131 @@ Now, define the parameter set with:
 - $\texttt{min.node.size} \in [1,50]$
 
 ```{r tuning-ps, exercise=TRUE, exercise.checker=createChecker("param_set")}
-param_set = makeParamSet(
-  ..., # mtry
-  ...  # min.node.size
-)
+param_set <- ParamSet$new(list(
+   ..., # mtry
+   ... # min.node.size
+))
 ```
 
 ```{r tuning-ps-hint-1}
-# To add individual parameter to the space use the make<param.type>Param family.
 # To see all available parameter, it's type, the range, and if it is tuneable or not
-# with 'getParamSet("classif.ranger")'
-getParamSet("classif.ranger")
+# with 'learner$param_set'
+learner$param_set
 ```
 
 ```{r tuning-ps-solution}
-param_set = makeParamSet(
-  makeIntegerParam("mtry", lower = 1, upper = 30),
-  makeIntegerParam("min.node.size", lower = 1, upper = 50)
-)
+param_set <- ParamSet$new(list(
+   ParamInt$new("mtry", lower = 1L, upper = 30L),
+   ParamInt$new("min.node.size", lower = 1L, upper = 50L)
+))
 ```
 
 ```{r tuning-ps-check}
-param_set = makeParamSet(
-  makeIntegerParam("mtry", lower = 1, upper = 30),
-  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+param_set <- ParamSet$new(list(
+   ParamInt$new("mtry", lower = 1L, upper = 30L), 
+   ParamInt$new("min.node.size", lower = 1L, upper = 50L)
+))
+```
+
+#### *(P)* Choose the general tuning scenario and resampling strategy
+
+Set 50 iterations as the stopping criterion for the tuner. For the resampling of each value we use a 3-fold cross-validation. As the measure optimized by the tuner use the AUC:
+
+```{r tuning-strategy, exercise=TRUE, exercise.checker=createChecker(c("instance"))}
+learner <- ...
+param_set <- ...
+res_desc <- ...
+evals50 <- term(...)
+  
+instance <- TuningInstance$new(
+  task = ...,
+  learner = ...,
+  resampling = ...,
+  measures = ...,
+  param_set = ...,
+  terminator = ...
 )
 ```
 
-#### *(P)* Choose the tuning and resampling strategy
-
-As tuning strategy use random search with 100 iterations. For the resampling of each value we use a 3-fold cross-validation:
-
-```{r tuning-strategy, exercise=TRUE, exercise.checker=createChecker(c("tune_ctrl", "res_desc"))}
-tune_ctrl = ...
-res_desc = ...
-```
-
 ```{r tuning-strategy-hint-1}
-# Random search can be defined by calling 'maketunecontrolRandom()'
-makeTuneControlRandom(...)
+# Use the objects as defined before
+learner <- lrn("classif.ranger", predict_type = "prob")
+param_set <- ParamSet$new(list(
+   ParamInt$new("mtry", lower = 1L, upper = 30L), 
+   ParamInt$new("min.node.size", lower = 1L, upper = 50L)
+))
 ```
 
 ```{r tuning-strategy-hint-2}
-# to specify the number of iterations (or number of randomly sampled values) use the argument 'maxit'
-makeTunecontrolRandom(maxit = 100L)
+# As resampling description use 3-fold cross-validation
+res_desc <- rsmp("cv", folds = 3L)
 ```
 
 ```{r tuning-strategy-hint-3}
-# As resampling description use 3-fold cross-validation
-res_desc = makeResampleDesc(method = "CV", iters = 3L)
-res_desc = cv3
+# to specify the number of iterations, use the 'evals' option and set n_evals to 50
+evals50 <- term("evals", n_evals = 50L)
+```
+
+```{r tuning-strategy-hint-4}
+# The measure we want to optimize is the AUC
+msr("classif.auc")
 ```
 
 ```{r tuning-strategy-solution}
-tune_ctrl = makeTuneControlRandom(maxit = 100L)
-res_desc = makeResampleDesc("CV", iters = 3L)
+learner <- lrn("classif.ranger", predict_type = "prob")
+param_set <- ParamSet$new(list(
+   ParamInt$new("mtry", lower = 1L, upper = 30L), 
+   ParamInt$new("min.node.size", lower = 1L, upper = 50L)
+))
+res_desc <- rsmp("cv", folds = 3L)
+evals50 <- term("evals", n_evals = 50L)
+  
+instance <- TuningInstance$new(
+  task = tsk("sonar"),
+  learner = learner,
+  resampling = res_desc,
+  measures = msr("classif.auc"),
+  param_set = param_set,
+  terminator = evals50
+)
 ```
 
 ```{r tuning-strategy-check}
-tune_ctrl = makeTuneControlRandom(maxit = 100L)
-res_desc = makeResampleDesc("CV", iters = 3L)
+learner <- lrn("classif.ranger", predict_type = "prob")
+param_set <- ParamSet$new(list(
+   ParamInt$new("mtry", lower = 1L, upper = 30L), 
+   ParamInt$new("min.node.size", lower = 1L, upper = 50L)
+))
+res_desc <- rsmp("cv", folds = 3L)
+evals50 <- term("evals", n_evals = 50L)
+  
+instance <- TuningInstance$new(
+  task = tsk("sonar"),
+  learner = learner,
+  resampling = res_desc,
+  measures = msr("classif.auc"),
+  param_set = param_set,
+  terminator = evals50
+)
 ```
 
 #### *(P)* Run and visualize the tuning
 
-Finally, tune the learner with `tuneParams()`. To do so, you have to collect all previously defined objects and specify the measure we are trying to optimize. **Note** that the tuning could take some time to finish.
+Finally, create a random search tuner und use it to tune the tuning scenario `instance` with `tune()`. **Note** that the tuning could take some time to finish.
 
 ```{r, include=FALSE}
 tuningChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
 {
   add_code = "
-  df_tune = tune_res$opt.path$env$path
+    res = instance$archive()
   "
 
   setup_state(sol_code = paste0(check_code, add_code), stu_code = paste0(user_code, add_code))
 
   msg = errorToMessage(expr = {
-    ex() %>% check_object("learner")
-    ex() %>% check_object("tune_ctrl") %>% check_equal()
-    ex() %>% check_object("res_desc") %>% check_equal()
-    ex() %>% check_object("df_tune") %>% check_column("mtry") %>% check_equal()
-    ex() %>% check_object("df_tune") %>% check_column("min.node.size") %>% check_equal()
-    ex() %>% check_object("df_tune") %>% check_column("auc.test.mean") %>% check_equal()
+    ex() %>% check_object("instance") %>% check_column("param_set") %>% check_equal()
+    ex() %>% check_object("instance") %>% check_column("result") %>% check_equal()
+    ex() %>% check_object("res") %>% check_column("params") %>% check_equal()
   })
   if (! is.null(msg))
     return(msg)
@@ -172,86 +215,117 @@ tuningChecker = function (label, user_code, check_code, envir_result, evaluate_r
 ```{r tuning-exec, exercise=TRUE, exercise.lines=25, exercise.timelimit=300L, exercise.checker=tuningChecker}
 library(ggplot2)
 
-learner =
-param_set =
-tune_ctrl =
-res_desc =
+learner <- ...
+param_set <- ...
+res_desc <- ...
+evals50 <- term(...)
+  
+instance <- TuningInstance$new(
+  task = ...,
+  learner = ...,
+  resampling = ...,
+  measures = ...,
+  param_set = ...,
+  terminator = ...
+)
 
 set.seed(314)
-tune_res = tuneParams(...)
-tune_res
-
+tuner <- tnr(...)
+tuner$
+# 'Best' model
+instance$result
+  
 # Visualization
-tune_data = generateHyperParsEffectData(tune_res)
-ggplot(data = tune_data$data, aes(x = mtry, y = min.node.size, color = auc.test.mean)) + geom_point()
+res <- instance$archive()
+par_combs <- as.data.frame(matrix(unlist(res$params), nrow = length(res$params), byrow = T))
+colnames(par_combs) <- names(res$params[[1]])
+par_combs$auc <- res$classif.auc
+ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = auc)) + geom_point()
 ```
 
 ```{r tuning-exec-hint-1}
 # Use the objects defined previously
-learner = makeLearner("classif.ranger", predict.type = "prob")
-
-param_set = makeParamSet(
-  makeIntegerParam("mtry", lower = 1, upper = 30),
-  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+learner <- lrn("classif.ranger", predict_type = "prob")
+param_set <- ParamSet$new(list(
+   ParamInt$new("mtry", lower = 1L, upper = 30L), 
+   ParamInt$new("min.node.size", lower = 1L, upper = 50L)
+))
+res_desc <- rsmp("cv", folds = 3L)
+evals50 <- term("evals", n_evals = 50L)
+  
+instance <- TuningInstance$new(
+  task = tsk("sonar"),
+  learner = learner,
+  resampling = res_desc,
+  measures = msr("classif.auc"),
+  param_set = param_set,
+  terminator = evals50
 )
-
-tune_ctrl = makeTuneControlRandom(maxit = 100L)
-res_desc = makeResampleDesc("CV", iters = 3L)
 ```
 
 ```{r tuning-exec-hint-2}
-# Use the function 'tuneParams()' to finally conduct tuning
-?tuneParams()
+# Create a tuner with random search strategy
+tuner <- tnr("random_search")
 ```
 
 ```{r tuning-exec-hint-3}
-# Set the learner ('learner'), task ('task'), resampling strategy ('resampling'),
-# parameter set ('par.set'), tuning strategy ('control'), and the measure ('measrues')
-# to optimize in 'tuneParams()'
-tune_res = tuneParams(learner, task = sonar.task, resampling = res_desc,
-  par.set = param_set, control = tune_ctrl, measures = auc, show.info = FALSE)
+# Tune the tuning scenario `instance`
+tuner$tune(instance)
 ```
 
 ```{r tuning-exec-solution}
 library(ggplot2)
 
-learner = makeLearner("classif.ranger", predict.type = "prob")
-
-param_set = makeParamSet(
-  makeIntegerParam("mtry", lower = 1, upper = 30),
-  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+learner <- lrn("classif.ranger", predict_type = "prob")
+param_set <- ParamSet$new(list(
+   ParamInt$new("mtry", lower = 1L, upper = 30L), 
+   ParamInt$new("min.node.size", lower = 1L, upper = 50L)
+))
+res_desc <- rsmp("cv", folds = 3L)
+evals50 <- term("evals", n_evals = 50L)
+  
+instance <- TuningInstance$new(
+  task = tsk("sonar"),
+  learner = learner,
+  resampling = res_desc,
+  measures = msr("classif.auc"),
+  param_set = param_set,
+  terminator = evals50
 )
 
-tune_ctrl = makeTuneControlRandom(maxit = 100L)
-res_desc = makeResampleDesc("CV", iters = 3L)
-
 set.seed(314)
-tune_res = tuneParams(learner, task = sonar.task, resampling = res_desc,
-  par.set = param_set, control = tune_ctrl, measures = auc, show.info = FALSE)
-tune_res
+tuner <- tnr("random_search")
+tuner$tune(instance)
+# 'Best' model
+instance$result
 
-tune_data = generateHyperParsEffectData(tune_res)
-ggplot(data = tune_data$data, aes(x = mtry, y = min.node.size, color = auc.test.mean)) + geom_point()
+# Visualization
+res <- instance$archive()
+par_combs <- as.data.frame(matrix(unlist(res$params), nrow = length(res$params), byrow = T))
+colnames(par_combs) <- names(res$params[[1]])
+par_combs$auc <- res$classif.auc
+ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = auc)) + geom_point()
 ```
 
 ```{r tuning-exec-check}
-library(ggplot2)
-
-learner = makeLearner("classif.ranger", predict.type = "prob")
-
-param_set = makeParamSet(
-  makeIntegerParam("mtry", lower = 1, upper = 30),
-  makeIntegerParam("min.node.size", lower = 1, upper = 50)
+learner <- lrn("classif.ranger", predict_type = "prob")
+param_set <- ParamSet$new(list(
+   ParamInt$new("mtry", lower = 1L, upper = 30L), 
+   ParamInt$new("min.node.size", lower = 1L, upper = 50L)
+))
+res_desc <- rsmp("cv", folds = 3L)
+evals50 <- term("evals", n_evals = 50L)
+  
+instance <- TuningInstance$new(
+  task = tsk("sonar"),
+  learner = learner,
+  resampling = res_desc,
+  measures = msr("classif.auc"),
+  param_set = param_set,
+  terminator = evals50
 )
 
-tune_ctrl = makeTuneControlRandom(maxit = 100L)
-res_desc = makeResampleDesc("CV", iters = 3L)
-
 set.seed(314)
-tune_res = tuneParams(learner, task = sonar.task, resampling = res_desc,
-  par.set = param_set, control = tune_ctrl, measures = auc, show.info = FALSE)
-tune_res
-
-tune_data = generateHyperParsEffectData(tune_res)
-ggplot(data = tune_data$data, aes(x = mtry, y = min.node.size, color = auc.test.mean)) + geom_point()
+tuner <- tnr("random_search")
+tuner$tune(instance)
 ```
