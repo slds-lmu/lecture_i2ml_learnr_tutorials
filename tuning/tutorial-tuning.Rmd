@@ -20,6 +20,7 @@ library(mlr3viz)
 library(mlr3tuning)
 library(paradox)
 library(lgr)
+library(ranger)
 lgr::get_logger("mlr3")$set_threshold("warn")
 
 errorToMessage = function (expr)

@@ -18,7 +18,7 @@
 1.  *(T)* Watch the following videos:
     <center>
     ![Basic Techniques](https://youtu.be/A1cx4FkS0lw){width="75%"}
-    ![Nested Resampling Motivation](){width="75%"}
+    ![Nested Resampling Motivation](https://youtu.be/_GVysctg5sY){width="75%"}
     ![Training - Validation - Testing](https://youtu.be/8LdpxLyH34c){width="75%"}
     ![Nested Resampling](https://youtu.be/-d338rc076s){width="75%"}
     </center>
