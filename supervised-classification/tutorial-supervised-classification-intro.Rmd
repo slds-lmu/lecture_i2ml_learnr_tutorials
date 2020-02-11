@@ -15,9 +15,9 @@
 1.  *(T)* Watch the following video:
     <center>
     <!-- ![](https://youtu.be/ZuGbjJAETdA){width="75%"} -->
-    ![Classification tasks](){width="75%"}
-    ![Basic definitions](){width="75%"}
-    ![Linear classifiers](){width="75%"}
+    ![Classification tasks](https://youtu.be/JhNydqlMVeE){width="75%"}
+    ![Basic definitions](https://youtu.be/cURlX3q69kk){width="75%"}
+    ![Linear classifiers](https://youtu.be/wR43JOYxTZM){width="75%"}
     </center>
 
 

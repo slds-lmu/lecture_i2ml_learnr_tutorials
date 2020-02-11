@@ -15,9 +15,9 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following video  (sorry, rather low volume...):
+1.  *(T)* Watch the following video:
 <center>
-![Logistic regression](){width="75%"}
+![Logistic regression](https://youtu.be/TLb29_fEzhU){width="75%"}
 </center>
 
 1.  *(P)* Make sure that you have understood how to define tasks and learners and how to train a learner in `mlr3`.

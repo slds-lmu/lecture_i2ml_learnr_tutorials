@@ -11,9 +11,10 @@
 
 ### Preparation
 
-1.  *(T)* Watch the following video:
+1.  *(T)* Watch the following videos:
     <center>
-    ![](){width="75%"}
+    ![Introduction](https://youtu.be/tu_XGcRcpcU){width="75%"}
+    ![Problem Definition](https://youtu.be/Eo7iqMOeILY){width="75%"}
     </center>
 
 
