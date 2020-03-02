@@ -31,7 +31,7 @@
     </center>
     <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-2.pdf" target="_blank">Slideset Part 2</a> -->
 
-1. *(P)* Read the `mlr3` tutorial about [roc curves](https://mlr3book.mlr-org.com/binary.html)
+1. *(P)* Read the `mlr3` tutorial about [roc curves](https://mlr3book.mlr-org.com/binary-classification.html)
 1. *(P)* You should have done the tutorial on resampling
 
 ### Exercises
