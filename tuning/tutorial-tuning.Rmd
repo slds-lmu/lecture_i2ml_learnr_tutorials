@@ -1,0 +1,190 @@
+---
+title: "Introduction to Machine Learning - Tuning"
+output:
+  learnr::tutorial:
+    theme: cosmo
+    css: css/custom.css
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(magrittr)
+library(learnr)
+# library(testthat)
+# devtools::install_github("datacamp/testwhat")
+library(testwhat)
+library(checkmate)
+library(mlr3)
+library(mlr3learners)
+library(mlr3viz)
+library(mlr3tuning)
+library(paradox)
+library(lgr)
+library(ranger)
+lgr::get_logger("mlr3")$set_threshold("warn")
+
+errorToMessage = function (expr)
+{
+  e = try(expr = expr, silent = TRUE)
+  if (inherits(e, "try-error"))
+    return(list(message = attr(e, "condition")$message, correct = FALSE, location = "append"))
+  return(NULL)
+}
+
+taskChecker = function (task_name)
+{
+  # Super ugly, but scoping within the Rmds semms weird...
+  fun_txt = paste0('
+  fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+  {
+    setup_state(sol_code = check_code, stu_code = user_code)
+    msg = errorToMessage(expr = {
+      ex() %>% check_object("', task_name, '", undefined_msg = "No object \'', task_name,
+                   '\' found! Please name your task as \'', task_name, '\'.")
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    # Hashing of the data to check independently of column order etc.
+    task_processor = "
+    task = ', task_name, '
+    task_hash = digest::digest(c(
+      digest::digest(sort(sapply(task$data(), digest::digest))),
+      class(task),
+      digest::digest(task$target_names)
+    ))
+    "
+    setup_state(sol_code = paste0(check_code, task_processor), stu_code = paste0(user_code, task_processor))
+
+    msg = errorToMessage(expr = {
+      ex() %>% check_object("task") %>% check_element("task_type")
+      ex() %>% check_object("task") %>% check_element("backend") 
+      ex() %>% check_object("task_hash") %>% check_equal()
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+  }
+  ')
+  eval(parse(text = fun_txt))
+  return(fun)
+}
+
+learnerChecker = function (learner_name)
+{
+  # Super ugly, but scoping within the Rmds semms weird...
+  fun_txt = paste0('
+  fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+  {
+    setup_state(sol_code = check_code, stu_code = user_code)
+    msg = errorToMessage(expr = {
+      ex() %>% check_object("', learner_name, '", undefined_msg = "No object \'', learner_name,
+                   '\' found! Please name your learner as \'', learner_name, '\'.")
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    # Hashing of the learner.
+    learner_processor = "
+    learner = ', learner_name, '
+    ll_short_name = learner$id
+    ll_par_vals = learner$param_set
+    ll_class = class(learner)
+    "
+    setup_state(sol_code = paste0(check_code, learner_processor), stu_code = paste0(user_code, learner_processor))
+
+    msg = errorToMessage(expr = {
+      ex() %>% check_object("ll_short_name") %>% check_equal("Have you used the correct learner?")
+      ex() %>% check_object("ll_par_vals") %>% check_equal("The chosen hyperparameter aren\'t correct!")
+      ex() %>% check_object("ll_class") %>% check_equal()
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+  }
+  ')
+  eval(parse(text = fun_txt))
+  return(fun)
+}
+
+modelChecker = function (model_name)
+{
+  fun_txt = paste0('
+  fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+  {
+    setup_state(sol_code = check_code, stu_code = user_code)
+    msg = errorToMessage(expr = {
+      ex() %>% check_object("', model_name, '", undefined_msg = "No object \'', model_name,
+                   '\' found! Please name your model as \'', model_name, '\'.")
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    # Hashing of the model.
+    model_processor = "
+    model = ', model_name, '
+    model_hash = digest::digest(c(
+      sort(model$state$train_task$feature_names),
+      model$state$train_task$target_names,
+      model$state$train_task$task_type
+    ))
+    "
+    setup_state(sol_code = paste0(check_code, model_processor), stu_code = paste0(user_code, model_processor))
+
+    msg = errorToMessage(expr = {
+      ex() %>% check_object("model_hash") %>% check_equal()
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    model_processor = "
+    model = ', model_name, '
+    learner = model
+    "
+    msg = learnerChecker("learner")(label, paste0(user_code, model_processor), paste0(check_code, model_processor), envir_result, evaluate_result, ...)
+    if (! msg$correct)
+      return(msg)
+
+    return(msg)
+  }
+  ')
+  eval(parse(text = fun_txt))
+  return(fun)
+}
+
+createChecker = function (object_names)
+{
+  assert_character(object_names)
+  fun = paste('
+  fun = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+  {
+    setup_state(sol_code = check_code, stu_code = user_code)
+
+    msg = errorToMessage(expr = {
+    ',
+    paste(paste0("ex() %>% check_object(\"", object_names, "\") %>% check_equal()"), collapse = "\n      "),
+    '
+    })
+    if (! is.null(msg))
+      return(msg)
+
+    return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+  }
+  ', collapse = "\n")
+  eval(parse(text = fun))
+  return(fun)
+}
+
+options(width = 100)
+tutorial_options(exercise.eval = FALSE, exercise.timelimit = 20L)
+```
+
+
+```{r, child="tutorial-tuning-intro.Rmd"}
+```
+
+```{r, child="tutorial-tuning-algorithms.Rmd"}
+```
+

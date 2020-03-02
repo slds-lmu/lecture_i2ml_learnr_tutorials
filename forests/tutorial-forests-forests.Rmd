@@ -1,0 +1,264 @@
+## Random Forests
+
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Understand the concept of random forests 
+- See the differences between trees, forests and bagging
+- Learn about the proximity measure that can be extracted from a forest
+
+*Practical (P)*
+
+- Know how to train a random forest model using `mlr3`
+- Understand how the number of trees affects the performance
+
+
+
+### Preparation
+
+1.  *(T)* Watch the following videos:
+    <center>
+    ![Introduction](https://youtu.be/chberfdaTwc){width="75%"}
+    ![Benchmarking Trees, Forests, and Bagging K-NN](https://youtu.be/uOamholBaZ0){width="75%"}
+    ![Proximities](https://youtu.be/RGa0Uc6ZbX4){width="75%"}
+    </center>
+
+1.  *(P)* Make sure you've done the tutorial on trees and the tutorial on resampling.
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r forest-quiz-forests, echo=FALSE}
+question("Which statements are true?",
+  answer("The OOB error shares similarities with cross-validation estimation. It can also be used for a quicker model selection.", correct = TRUE),
+  answer("In random forests for regression, a good rule of thumb is to use mtry$=\\sqrt(p)$", correct = TRUE),
+  answer("Proximities are used in replacing missing data, but not in locating outliers.")
+)
+```
+
+
+#### *(P)* Define the `mlr3` learner
+
+For this exercise use the same task as for the tree tutorial:
+```{r spiral-task-rf, exercise=TRUE}
+library(mlbench)
+library(ggplot2)
+
+set.seed(314)
+spirals <- mlbench.spirals(500, sd = 0.1)
+spirals <- as.data.frame(spirals)
+spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target = "classes")
+
+# Visualization of the data
+ggplot(data = spirals, aes(x.1, x.2, color = classes)) + geom_point()
+```
+
+Define the learner with `predict_type = "prob"` and `num.trees = 1000`. We are using the `classif.ranger`. Visualize the learner with `plot_learner_prediction()`:
+
+```{r rf-learner, exercise=TRUE, exercise.timelimit=120L, exercise.checker=learnerChecker("rf_learner")}
+library(mlbench)
+
+set.seed(314)
+spirals <- mlbench.spirals(500, sd = 0.1)
+spirals <- as.data.frame(spirals)
+spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target = "classes")
+
+rf_learner = lrn(...)
+plot_learner_prediction(rf_learner, spirals_task)
+```
+
+```{r rf-learner-hint-1}
+# Define the learner with hyperparameter 'num.trees = 1000' and 'predict_type = "prob"'
+rf_learner <- lrn("classif.ranger", num.trees = 1000, predict_type = "prob")
+
+# Hint: All hyperparameters can be accesed by the 'param_set' field
+rf_learner$param_set
+```
+
+```{r rf-learner-solution}
+library(mlbench)
+
+set.seed(314)
+spirals <- mlbench.spirals(500, sd = 0.1)
+spirals <- as.data.frame(spirals)
+spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target = "classes")
+
+rf_learner <- lrn("classif.ranger", num.trees = 1000, predict_type = "prob")
+
+plot_learner_prediction(rf_learner, spirals_task)
+```
+
+```{r rf-learner-check}
+library(mlbench)
+
+set.seed(314)
+spirals <- mlbench.spirals(500, sd = 0.1)
+spirals <- as.data.frame(spirals)
+spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target = "classes")
+
+rf_learner <- lrn("classif.ranger", num.trees = 1000, predict_type = "prob")
+
+```
+
+#### *(P)* Benchmarking the random forest
+
+Now it's time to try different values for the number of trees and see if this has any influence on the performance. Additionally, we want to compare the random forests to a single CART. For this, we define four different learners:
+
+1. A `classif.rpart` without any custom hyperparameters
+1. A `classif.ranger` with 500 trees
+1. A `classif.ranger` with 1000 trees
+1. A `classif.ranger` with 1500 trees
+
+After defining the learners conduct the benchmark using the `benchmark()` function. Use a 10-fold cross-validation as resampling technique. Finally, visualize the benchmark with `autoplot()` for the measures `auc` and `mmce`.
+
+**Note:** Defining the same learner multiple times for a benchmark requires different ids for each learner (see `id` argument of the learners below).
+
+
+```{r, include=FALSE}
+benchmarkChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+
+  add_code = "
+    bmr_results = as.data.frame(bmr$aggregate())[,
+      c('resampling_id', 'iters', 'classif.ce')]
+    bmr_results = bmr_results[order(bmr_results$classif.ce),]
+    learner_params = sort(as.vector(sapply(bmr$learners$learner, function(x) unlist(x$param_set$values))))
+  "
+
+  setup_state(sol_code = paste0(check_code, add_code), stu_code = paste0(user_code, add_code))
+
+  msg = errorToMessage(expr = {
+    # ex() %>% check_object("learners")
+    ex() %>% check_object("spirals_task")
+    # ex() %>% check_object("res_desc") %>% check_equal()
+    ex() %>% check_object("bmr") 
+    ex() %>% check_object("bmr_results") %>% check_equal()
+    ex() %>% check_object("learner_params") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+```
+
+```{r rf-benchmark, exercise=TRUE, exercise.timelimit=120L, exercise.checker=benchmarkChecker}
+library(mlbench)
+
+set.seed(314)
+spirals <- mlbench.spirals(500, sd = 0.1)
+spirals <- as.data.frame(spirals)
+spirals_task <- 
+
+cart_learner <- lrn("classif.rpart", predict_type = "prob")
+rf_learner_500 <- lrn(id = "rf500", "classif.ranger", num.trees = ..., predict_type = "prob")
+rf_learner_1000 <- lrn(id = "rf1000", "classif.ranger", num.trees = ..., predict_type = "prob")
+rf_learner_1500 <- lrn(id = "rf1500", "classif.ranger", num.trees = ..., predict_type = "prob")
+
+design <- benchmark_grid(
+  tasks = ...,
+  learners = ...,
+  resamplings = ...
+)
+
+bmr <- benchmark(design)
+
+autoplot(bmr, measure = ...)
+autoplot(bmr, measure = ...)
+```
+
+```{r rf-benchmark-hint-1}
+# Use the objects previously defined
+library(mlbench)
+
+set.seed(314)
+spirals <- mlbench.spirals(500, sd = 0.1)
+spirals <- as.data.frame(spirals)
+spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target = "classes")
+```
+
+```{r rf-benchmark-hint-2}
+# Define each learner separately
+cart_learner <- lrn("classif.rpart", predict_type = "prob")
+rf_learner_500 <- lrn(id = "rf500", "classif.ranger", num.trees = 500, predict_type = "prob")
+rf_learner_1000 <- lrn(id = "rf1000", "classif.ranger", num.trees = 1000, predict_type = "prob")
+rf_learner_1500 <- lrn(id = "rf1500", "classif.ranger", num.trees = 1500, predict_type = "prob")
+```
+
+```{r rf-benchmark-hint-3}
+# To create the benchmark design wrap the learners into a list and pass them to 'benchmark_grid()' 
+# and define the task and the resampling strategy.
+# Finally pass the design to `benchmark()` function.
+ 
+design <- benchmark_grid(
+  tasks = spirals_task,
+  learners = list(cart_learner, rf_learner_500, rf_learner_1000, rf_learner_1500),
+  resamplings = rsmp("cv", folds = 10)
+)
+
+bmr <- benchmark(design)
+```
+
+```{r rf-benchmark-hint-4}
+# Pass the measures of interest to the `autoplot` function.
+autoplot(bmr, measure = msr("classif.ce"))
+autoplot(bmr, measure = msr("classif.auc"))
+```
+
+```{r rf-benchmark-solution}
+library(mlbench)
+
+set.seed(314)
+spirals <- mlbench.spirals(500, sd = 0.1)
+spirals <- as.data.frame(spirals)
+spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target = "classes")
+
+cart_learner <- lrn("classif.rpart", predict_type = "prob")
+rf_learner_500 <- lrn(id = "rf500", "classif.ranger", num.trees = 500, predict_type = "prob")
+rf_learner_1000 <- lrn(id = "rf1000", "classif.ranger", num.trees = 1000, predict_type = "prob")
+rf_learner_1500 <- lrn(id = "rf1500", "classif.ranger", num.trees = 1500, predict_type = "prob")
+
+design <- benchmark_grid(
+  tasks = spirals_task,
+  learners = list(cart_learner, rf_learner_500, rf_learner_1000, rf_learner_1500),
+  resamplings = rsmp("cv", folds = 10)
+)
+
+bmr <- benchmark(design)
+
+autoplot(bmr, measure = msr("classif.ce"))
+autoplot(bmr, measure = msr("classif.auc"))
+```
+
+```{r rf-benchmark-check}
+library(mlbench)
+
+set.seed(314)
+spirals <- mlbench.spirals(500, sd = 0.1)
+spirals <- as.data.frame(spirals)
+spirals_task <- TaskClassif$new(id = "spirals_task", backend = spirals, target = "classes")
+
+cart_learner <- lrn("classif.rpart", predict_type = "prob")
+rf_learner_500 <- lrn(id = "rf500", "classif.ranger", num.trees = 500, predict_type = "prob")
+rf_learner_1000 <- lrn(id = "rf1000", "classif.ranger", num.trees = 1000, predict_type = "prob")
+rf_learner_1500 <- lrn(id = "rf1500", "classif.ranger", num.trees = 1500, predict_type = "prob")
+
+design <- benchmark_grid(
+  tasks = spirals_task,
+  learners = list(cart_learner, rf_learner_500, rf_learner_1000, rf_learner_1500),
+  resamplings = rsmp("cv", folds = 10)
+)
+
+bmr <- benchmark(design)
+```
+
+```{r rf-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("CART outperforms the random forest."),
+  answer("Trying different values for the number of trees does not affect the performance.", correct = TRUE),
+  answer("Tuning the number of trees can give a nice performance boost.")
+)
+```

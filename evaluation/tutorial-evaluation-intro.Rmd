@@ -1,0 +1,30 @@
+## Introduction to Performance Evaluation
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn what performance estimation is and why it is important
+
+### Preparation
+
+1.  *(T)* Watch the following video:
+    <center>
+    ![](https://youtu.be/B5PAwfDYt30){width="75%"}
+    </center>
+
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r intro-quiz, echo=FALSE}
+question("Which statements are true?",
+    answer("We want to know how accurately a fitted model will predict target variable values in new, previously unseen data.", correct = TRUE),
+    answer("All outer losses can also be used as inner loss."),
+    answer("The data generating process is the true underlying phenomenon
+  creating the data.", correct = TRUE)
+)
+```
+

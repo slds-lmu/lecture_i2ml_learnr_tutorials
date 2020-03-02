@@ -13,7 +13,8 @@ rmarkdown::run("01-intro/01_tutorial.Rmd")
 
 **NOTE:** It seems that the app is not correctly loaded when calling `run` from the terminal. Opening the `tutorial.Rmd` in RStudio and clicking the `Run document` will properly build the app.
 
-**NOTE:** `learnr` saves the state of all tutorials in `file.path(rappdirs::user_data_dir(), "R", "learnr", "tutorial", "storage")`, if you are developing, delete this every time before you re-run the app for testing. 
+**NOTE:** `learnr` saves the state of all tutorials in `file.path(rappdirs::user_data_dir(), "R", "learnr", "tutorial", "storage")`, if you are developing, delete this every time before you re-run the app for testing:
+Just do `unlink(file.path(rappdirs::user_data_dir(), "R", "learnr", "tutorial", "storage"))`.
 
 
 ## Run on shinyapps.io

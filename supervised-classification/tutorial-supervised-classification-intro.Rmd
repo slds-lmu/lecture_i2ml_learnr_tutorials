@@ -1,0 +1,46 @@
+## Introduction
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Get an idea of what classification means
+- Understand the structure of classification problems
+- Understand the difference between classifiers producing labels, probabilities and scores
+- Understand the two fundamental approaches: generative and discriminant
+- Learn about linear classifiers as a subclass of classification models
+
+### Preparation
+
+1.  *(T)* Watch the following video:
+    <center>
+    <!-- ![](https://youtu.be/ZuGbjJAETdA){width="75%"} -->
+    ![Classification tasks](https://youtu.be/JhNydqlMVeE){width="75%"}
+    ![Basic definitions](https://youtu.be/cURlX3q69kk){width="75%"}
+    ![Linear classifiers](https://youtu.be/wR43JOYxTZM){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+
+```{r classi-quiz1, echo=FALSE}
+question("Which statements are true?",
+    answer("Classification is part of supervised learning.", correct = TRUE),
+    answer("Scoring classifiers output numbers between 0 and 1"),
+    answer("Probabilistic classifiers output numbers between 0 and 1", correct = TRUE),
+    answer("With scoring classifiers one can obtain class labels by using a threshold", correct = TRUE),
+    answer("The decision boundary is independent of the used model."),
+    answer("For the discriminant approach we must have a loss function for minimization.", correct = TRUE),
+    answer("The generative and discriminant approach are basically the same."),
+    answer("The generative approach is a probabilistic approach.", correct = TRUE),
+    answer("Binary classification uses two discriminant functions."),
+    answer("Linear classifiers can just learn linear decision boundaries."),
+    answer("Logistic regression is an example for the discriminant approach.", correct = TRUE),
+    answer("Linear classifiers specify the discriminant function with linear functions.", correct = TRUE)
+)
+
+```
+

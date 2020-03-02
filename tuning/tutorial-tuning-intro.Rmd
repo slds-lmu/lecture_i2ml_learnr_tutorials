@@ -1,0 +1,41 @@
+## Introduction
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn why tuning is important
+- Get an idea how tuning works
+
+
+
+### Preparation
+
+1.  *(T)* Watch the following videos:
+    <center>
+    ![Introduction](https://youtu.be/lG4Ul1Liq-U){width="75%"}
+    ![Problem Definition](https://youtu.be/Eo7iqMOeILY){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r tuning-quiz-intro, echo=FALSE}
+question("Which statements are true?",
+  answer("Tuning means optimizing hyperparameters.", correct = TRUE),
+  answer("Doing tuning well is hard; nested resampling can help.", correct = TRUE),
+  answer("Good tuning is crucial to achieve good performance for all ML algorithms."),
+  # answer("Parallelization is trivial for tuning.", correct = TRUE),
+  answer("Tuning optimizes the inner loss.")
+  # answer("How well tuning works depends on the learner and the impact of the hyperparameters on that learner.", correct = TRUE),
+  # answer("Grid search often works better than random search."),
+  # answer("Grid search scales exponentially with the dimension of the parameter space.", correct = TRUE),
+  # answer("Grid search evaluates many points from the parameter space that aren't of interest.", correct = TRUE),
+  # answer("Random search works often better due to it's better exploration of the hyperparameter space.", correct = TRUE),
+  # answer("Random search scales very well with the dimension of the hyperparameter space."),
+  # answer("Random search as well as grid search has the problem of discretization.")
+)
+```
+

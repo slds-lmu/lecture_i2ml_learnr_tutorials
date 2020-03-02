@@ -1,0 +1,36 @@
+## Variable Importance and Discussion
+
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn what variable/feature importance is and how to compute it
+- Understand the pros and cons of random forests
+
+
+
+
+### Preparation
+
+1.  *(T)* Watch the following videos (sorry, rather low volume...):
+    <center>
+    ![Feature Importance](https://youtu.be/cw4qG9ePZ9Y){width="75%"}
+    ![Discussion](https://youtu.be/9bqNhq6OUUk){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r forest-quiz-vid, echo=FALSE}
+question("Which statements are true?",
+    answer("To compute permutation variable importance for feature j, we permute the feature and see how the performance changes (in OOB observations).", correct = TRUE),
+    answer("The higher the variable importance, the more important the variable is for the model/ the prediction.", correct = TRUE),
+  answer("The random forest is a bad out of the box model and requires tuning of hyperparameters."),
+  answer("Random forests and trees can be used for high-dimensional data.", correct = TRUE)
+)
+```
+
+

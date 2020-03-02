@@ -1,0 +1,503 @@
+## Evaluation Measures for Classification
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Get familiar with simple performance measures for classification
+- Get familiar with confusion matrix and ROC
+- Know how to evaluate unbalanced binary classification problems
+
+*Practical (P)*
+
+- Calculation of confusion matrices
+- Plotting of the ROC
+- Calculating the AUC
+
+
+### Preparation
+
+1.  *(T)* Watch the following videos:
+    <center>
+    ![](https://youtu.be/bHwUwrbCHEU){width="75%"}
+    </center>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-1.pdf" target="_blank">Slideset Part 1</a> -->
+    <center>
+    ![](https://youtu.be/BH4oCliBzZI){width="75%"}
+    </center>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-1.pdf" target="_blank">Slideset Part 1</a> -->
+    <center>
+    ![](https://youtu.be/m5We8ITYEVk){width="75%"}
+    </center>
+    <!-- <a href="https://github.com/compstat-lmu/lecture_i2ml/blob/master/slides-pdf/slides-roc-2.pdf" target="_blank">Slideset Part 2</a> -->
+
+1. *(P)* Read the `mlr3` tutorial about [roc curves](https://mlr3book.mlr-org.com/binary-classification.html)
+1. *(P)* You should have done the tutorial on resampling
+
+### Exercises
+
+
+#### *(T)* Quiz
+
+```{r measures-classification-quiz, echo=FALSE}
+question("Which statements are true?",
+    answer("Logistic regression minimizes the binomial loss.", correct = TRUE),
+    answer("The Brier score is like the MSE just with probabilities.", correct = TRUE),
+    answer("The log-loss punishes being very wrong less than the Brier score."),
+    answer("Accuracy and mean classification error are calculated using the predicted probabilities."),
+    answer("The confusion matrix tabulates the true against predicted classes.", correct = TRUE),
+    answer("A misclassification error rate of 0.5% is always great.")
+)
+```
+
+
+#### *(T)* Quiz
+
+```{r ROC-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("If the proportion of positive to negative instances in the training data changes, the ROC curve will not change."),
+  answer("If the proportion of positive to negative instances in the test data changes, the ROC curve will not change.", correct = TRUE),
+  answer("Several evaluation metrics can be derived from a confusion matrix.", correct = TRUE),
+  answer("The area under the ROC curve is called AUC.", correct = TRUE),
+  answer("AUC = 0 means that the model is optimal.")
+)
+```
+
+#### *(P)* The pima dataset
+
+The pima dataset contains diagnostic measurements, with which one wants to 
+predict if an individual has diabetes or not.
+The task is predefined in `mlr3` and can be accessed with the query `pima`:
+
+```{r pima-show_task, exercise=TRUE}
+tsk("pima")$head()
+?mlbench::PimaIndiansDiabetes
+```
+
+We only want to consider the complete cases. Use the `filter` method combined with
+the `complete.cases` function therefor:
+
+```{r pima-task, exercise=TRUE, exercise.lines=5, exercise.checker=taskChecker("pima_task")}
+pima_task <-  tsk("pima")
+pima_task$
+```
+
+```{r pima-task-hint}
+# With `which` we get the indices of the complete cases
+which(complete.cases(pima_task$data()))
+```
+
+```{r pima-task-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+```
+
+```{r pima-task-check}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+```
+
+#### *(P)* A first model
+
+1. As a first approach, we want to train a logistic regression on the whole task. Therefore, define the model and train it. Set the `predict_type` of the learner to `"prob"`:
+
+```{r pima-logreg-train, exercise=TRUE, exercise.lines=5, exercise.checker=modelChecker("learner")}
+pima_task <-  tsk("pima")
+pima_task$
+learner <-
+learner$train(task = )
+```
+
+```{r pima-logreg-train-hint-1}
+# Only complete cases
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+```
+
+```{r pima-logreg-train-hint-2}
+# Use 'classif.log_reg' as learner with 'predict.type = prob'
+learner <- lrn("classif.log_reg", predict_type = "prob")
+```
+
+```{r pima-logreg-train-hint-3}
+# Use the pima task defined before
+task = pima_task
+```
+
+```{r pima-logreg-train-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+```
+
+```{r pima-logreg-train-check}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task <- pima_task)
+```
+
+2. Calculate the prediction on the whole task with the class method `predict()` of the learner object:
+
+```{r, include=FALSE}
+predCheck = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("model_prediction") %>% check_element("data") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+```
+
+```{r pima-logreg-pred, exercise=TRUE, exercise.lines=5, exercise.checker=predCheck}
+pima_task <-  tsk("pima")
+pima_task$
+learner <-
+learner$train(task = )
+model_prediction <-
+```
+
+```{r pima-logreg-pred-hint-1}
+# Define the model as previously
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+```
+
+```{r pima-logreg-pred-hint-2}
+# Predict using the learner object
+model_prediction <- learner$predict(task = pima_task)
+```
+
+```{r pima-logreg-pred-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
+```
+
+```{r pima-logreg-pred-check}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
+```
+
+3. Print the confusion matrix for the `model_prediction` by accessing its class property `confusion` (extra: use the class method `set_threshold()` to vary the decision threshold used):
+
+```{r conf-mat, exercise=TRUE}
+pima_task <-  tsk("pima")
+pima_task$
+learner <-
+learner$train(task = )
+model_prediction <-
+
+model_prediction$
+model_prediction$set_threshold(...)
+model_prediction$
+```
+
+```{r conf-mat-hint}
+# Define the model as previously
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
+```
+
+```{r conf-mat-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data()))) 
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
+
+model_prediction$confusion
+model_prediction$set_threshold(0.2)
+model_prediction$confusion
+```
+
+4. Finally, plot the ROC (with `autoplot()` using the keyword `"roc"`). Do also calculate the AUC and mmce with the class method `score()` (extra: use the class method `set_threshold()` to vary the decision threshold used):
+
+```{r roc-auc, exercise=TRUE}
+pima_task <-  tsk("pima")
+pima_task$
+learner <-
+learner$train(task = )
+model_prediction <-
+
+autoplot(...)
+model_prediction$score(list(...))
+```
+
+```{r roc-auc-hint-1}
+# Use the previously defined objects
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
+```
+
+```{r roc-auc-hint-2}
+# The ROC can be easily plotted with
+autoplot(model_prediction, "roc")
+```
+
+```{r roc-auc-hint-3}
+# To calculate the performance on a prediction object use its class method 'score()' 
+model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
+```
+
+```{r roc-auc-hint-4}
+# To set the threshold of a prediction object use its class method `set_threshold()`
+model_prediction$set_threshold(0.2)
+```
+
+```{r roc-auc-solution}
+pima_task <-  tsk("pima")
+pima_task$filter(rows = which(complete.cases(pima_task$data())))
+learner <- lrn("classif.log_reg", predict_type = "prob")
+learner$train(task = pima_task)
+model_prediction <- learner$predict(task = pima_task)
+autoplot(model_prediction, "roc")
+
+model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
+model_prediction$set_threshold(0.2)
+model_prediction$score(list(msr("classif.auc"), msr("classif.ce")))
+```
+
+
+```{r roc-auc-quiz, echo=FALSE}
+question("Which statements are true?",
+  answer("The AUC with about 86 % is good.", correct = TRUE),
+  answer("The model is able to classify 74 out of 130 correct as negative."),
+  answer("Using the prediction of the train data is the ordinary and correct way of calculating the ROC."),
+  answer("The calculation of the ROC should be done on a test set.", correct = TRUE),
+  answer("The AUC is not effected by the threshold whereas the mmce is.", correct = TRUE)
+)
+```
+
+#### *(P)* ROC and AUC on test data
+
+Using just the train dataset for predictions leads to overoptimistic ROC and AUC estimations. In this section we use `resample()` to obtain predictions of the whole dataset obtained by
+
+1. To get a correct ROC use resample to evaluate the learner with a 3-fold cross validation:
+
+```{r, include=FALSE}
+resampleChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  msg = learnerChecker("learner")(label, user_code, check_code, envir_result, evaluate_result)
+  if (! is.null(msg))
+    if(is.null(msg[["correct"]]))
+      return(msg)
+    else if(! msg[["correct"]])
+      return(msg)
+
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+     ex() %>% check_object("res") %>% check_element("resampling") %>% check_element("id")  %>%  check_equal()
+     ex() %>% check_object("res") %>% check_element("resampling") %>% check_element("param_set")  %>%  check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+
+```
+
+```{r logreg-res, exercise=TRUE, exercise.checker=resampleChecker}
+learner <- 
+task <- 
+task$
+res_desc <-
+
+set.seed(123)
+res <- resample(task = ..., learner = ..., resampling = ...)
+```
+
+```{r logreg-res-hint-1}
+# Use 'classif.log_reg' as learner with 'predict.type = prob'
+learner <- lrn("classif.log_reg", predict_type = "prob")
+```
+
+```{r logreg-res-hint-2}
+# Access the task with the query 'pima' and filter for the complete cases 
+# afterwards
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+```
+
+```{r logreg-res-hint-3}
+# Use a 3-fold cross validation for resampling
+res_desc <- rsmp("cv", folds = 3L)
+```
+
+```{r logreg-res-solution}
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+```
+
+```{r logreg-res-check}
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+```
+
+2. The Resampling object has a class method `prediction()`. This method returns a Prediction object which contains the test predictions of each fold, therefore we have test based predictions of each observation. Extract the object from the `res` object and store it:
+
+```{r, include=FALSE}
+predCheck = function (label, user_code, check_code, envir_result, evaluate_result, ...)
+{
+  setup_state(sol_code = check_code, stu_code = user_code)
+
+  msg = errorToMessage(expr = {
+    ex() %>% check_object("test_prediction") %>% check_element("data") %>% check_equal()
+  })
+  if (! is.null(msg))
+    return(msg)
+
+  return(list(message = "Great job! :)", correct = TRUE, location = "append"))
+}
+```
+
+```{r test-pred-res, exercise=TRUE, exercise.checker=predCheck}
+learner <- 
+task <- 
+task$
+res_desc <- 
+
+set.seed(123)
+res <- resample(task = ..., learner = ..., resampling = ...)
+test_prediction <- 
+```
+
+```{r test-pred-res-hint-1}
+# Use the objects defined previously
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+```
+
+```{r test-pred-res-hint-2}
+# To access the test predictions of each call the 'prediction()' class method
+test_prediction <- res$prediction()
+```
+
+```{r test-pred-res-solution}
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
+```
+
+```{r test-pred-res-check}
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
+```
+
+3. Finally, calculate the ROC and AUC based on the `test_prediction` object:
+
+```{r roc-auc-res, exercise=TRUE}
+learner <- 
+task <- 
+task$
+res_desc <- 
+
+set.seed(123)
+res <- resample(task = ..., learner = ..., resampling = ...)
+test_prediction <- 
+autoplot(..., "roc")
+test_prediction$score(...)
+```
+
+```{r roc-auc-res-hint-1}
+# Use the objects defined previously
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
+```
+
+```{r roc-auc-res-hint-2}
+# The ROC can be easily plotted with
+autoplot(test_prediction, "roc")
+```
+
+```{r roc-auc-res-hint-3}
+# To calculate the performance on a prediction object use its class method 'score()' 
+test_prediction$score(msr("classif.auc"))
+```
+
+```{r roc-auc-res-hint-4}
+# To set the threshold of a prediction object use its class method `set_threshold()`
+test_prediction$set_threshold(0.2)
+```
+
+```{r roc-auc-res-solution}
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
+
+autoplot(test_prediction, "roc")
+test_prediction$score(msr("classif.auc"))
+```
+
+**Note** that the ROC and performance measures for each fold can also be directly computed from a Resampling object:
+
+```{r resampl-roc-auc, exercise=TRUE}
+learner <- lrn("classif.log_reg", predict_type = "prob")
+task <-  tsk("pima")
+task$filter(rows = which(complete.cases(task$data())))
+res_desc <- rsmp("cv", folds = 3L)
+
+set.seed(123)
+res <- resample(task, learner, res_desc)
+test_prediction <- res$prediction()
+
+autoplot(res, "roc")
+res$score(msr("classif.auc"))
+```

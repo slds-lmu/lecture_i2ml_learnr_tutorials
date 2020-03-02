@@ -1,0 +1,34 @@
+## Models and Learners
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Understand what learners and models are.
+
+
+### Preparation
+
+1.  *(T)* Watch the following video:
+    <center>
+    ![Models & Learners](https://youtu.be/UW1E4xO0hJQ){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r learners-quiz, echo=FALSE}
+question("Which statements are true?",
+    answer("We use the terms 'model' and 'hypothesis' synonymously.",
+        correct = TRUE),
+    answer("We use the terms 'learner' and 'inducer' synonymously.",
+        correct = TRUE),
+    answer("We use the terms 'model' and 'learner' synonymously."),
+    answer("A learner takes the data set, does some computations on it and returns the model.",
+        correct = TRUE)
+)
+```
+
+

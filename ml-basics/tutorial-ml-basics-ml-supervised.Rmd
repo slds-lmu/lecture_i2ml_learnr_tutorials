@@ -1,0 +1,37 @@
+## Introduction
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn what machine learning is about.
+- Learn about the goals of supervised machine learnig.
+
+### Preparation
+
+1.  *(T)* Watch the following videos:
+    <center>
+    ![What is ML?](https://youtu.be/CCzx4UDkzpA){width="75%"}
+    ![Supervised Learning](https://youtu.be/R_HZBY9RMmo){width="75%"}
+    </center>
+    
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r basics-quiz, echo=FALSE}
+question("Which statements are true?",
+    answer("Machine learning is a branch of statistics and computer science.", correct = TRUE),
+    answer("A model $f$  is a mapping from the feature space to the target space.", correct = TRUE),
+    answer("The goal of an ML algorithm is to yield a model that reproduces the already seen data as accurately as possible."),
+    answer("ML algorithms try to predict the target variable as accurately as possible based on the values of the features.", correct = TRUE),
+    answer("Supervised learning tasks are prediction problems.",
+        correct = TRUE),
+    answer("Unsupervised learning tries to discover structure and patterns in
+           the training data.",
+        correct = TRUE)
+)
+```
+

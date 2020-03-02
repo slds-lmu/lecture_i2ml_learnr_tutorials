@@ -1,0 +1,33 @@
+## Linear Regression
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn how linear regression models work
+- Learn how linear regression fits into the machine learning world
+
+
+### Preparation
+
+1.  *(T)* Watch the following video:
+    <center>
+    ![Linear Regression Models](https://youtu.be/XITIVU37wGY){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r lm-quiz, echo=FALSE}
+question("What statements are true?",
+    answer("The target in linear regression has to be numeric", correct = TRUE),
+    answer("The features in linear regression have to be numeric"),
+    answer("The linear model is linear regression with L2-loss", correct = TRUE),
+    answer("The hypothesis space of linear regression consists of linear functions of the features", correct = TRUE)
+    # answer("Using linear regression it is only possible to model linear effects of a feature"),
+    # answer("Overfitting is a present danger in polynomial regression", correct = TRUE)
+)
+```
+

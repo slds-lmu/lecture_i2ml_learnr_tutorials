@@ -1,0 +1,96 @@
+## More Methods
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Become familiar with LDA, QDA, k-NN and the Naive Bayes classifier
+
+
+*Practical (P)*
+
+- Get to know how to fit classifiers in `mlr3`
+
+### Preparation
+
+1.  Watch the following video:
+    <center>
+    ![Discriminant analysis](https://youtu.be/inIhdMwQ4Ik){width="75%"}
+    ![Naive bayes](https://youtu.be/inIhdMwQ4Ik){width="75%"}
+    ![k-NN](https://youtu.be/WkECa1jRTmw){width="75%"}
+    </center>
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r classif-approaches-quiz, echo=FALSE}
+question("Which statements are true?",
+    answer("In LDA, each class density is modeled as a multivariate Gaussian with unequal covariance."),
+    answer("LDA is a linear classifier", correct = TRUE),
+    answer("LDA follows a generative approach", correct = TRUE),
+    answer("In QDA, each class density is modeled as a multivariate Gaussian with equal covariance"),
+    answer("QDA follows a generative approach", correct = TRUE),
+    answer("QDA requires estimation of more parameters than LDA", correct = TRUE),
+    answer("Naive Bayes assumes that the features are independent within each outcome class y.", correct = TRUE),
+    answer("Naive Bayes follows a generative approach", correct = TRUE),
+    answer("k-NN can be used in regression and classification", correct = TRUE),
+    answer("k-NN is a probabilistic classifier", correct = TRUE)
+)
+```
+
+#### *(P)* Qualitative comparison of LDA, QDA, and naive Bayes
+
+In this demo we want to compare LDA, QDA, and naive Bayes by looking at the decision boundaries (hint: with `mlr_learners` you get a list with all available learners. If their `properties` attribute contains `multiclass` they are suited for multiclass classification). Use `plot_learner_prediction()` to visualize the decision boundaries for the features `Sepal.Length` and `Sepal.Width`. You can use the build in iris task `"iris"` of `mlr3`. Store the plot for each model and plot them underneath each other with `grid.arrange()` from the `gridExtra` package:
+
+
+```{r generative-approaches, exercise=TRUE, exercise.lines=8, fig.height=8}
+library(ggplot2)
+
+set.seed(123)
+task <- tsk("iris")
+task$select(c("Sepal.Length", "Sepal.Width"))
+
+gg1 <- plot_learner_prediction(..., task = task) +
+   guides(alpha = "none", shape = "none")
+gg2 <- plot_learner_prediction(..., task = task) +
+   guides(alpha = "none", shape = "none")
+gg3 <- plot_learner_prediction(..., task = task) +
+   guides(alpha = "none", shape = "none")
+
+gridExtra::grid.arrange(gg1, gg2, gg3, ncol = 1)
+```
+
+```{r generative-approaches-hint-1}
+# The mlr3 learner are:
+lrn("classif.lda", predict_type = "prob")
+lrn("classif.qda", predict_type = "prob")
+lrn("classif.naive_bayes", predict_type = "prob")
+```
+
+
+```{r generative-approaches-solution}
+library(ggplot2)
+
+set.seed(123)
+task <- tsk("iris")
+task$select(c("Sepal.Length", "Sepal.Width"))
+
+gg1 = plot_learner_prediction(lrn("classif.lda", predict_type = "prob"), task = task) +
+   guides(alpha = "none", shape = "none")
+gg2 = plot_learner_prediction(lrn("classif.qda", predict_type = "prob"), task = task) +
+   guides(alpha = "none", shape = "none")
+gg3 = plot_learner_prediction(lrn("classif.naive_bayes", predict_type = "prob"), task = task) +
+   guides(alpha = "none", shape = "none")
+
+gridExtra::grid.arrange(gg1, gg2, gg3, ncol = 1)
+```
+
+```{r lda-qda-naiveBayes-quiz, echo=FALSE}
+question("What can you observe?",
+  answer("The decision boundaries of all classifiers looks equal."),
+  answer("The naive Bayes classifier has linear decision boundaries due to the simple construction."),
+  answer("LDA is the only classifier with linear decision boundaries.", correct = TRUE),
+  answer("QDA has non-linear decision boundaries due to the different covariances in each class.", correct = TRUE)
+)
+```

@@ -1,0 +1,31 @@
+## Bagging 
+
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn why and how bagging works
+
+
+
+
+### Preparation
+
+1.  *(T)* Watch the following video:
+    <center>
+    ![Bagging Ensembles](https://youtu.be/hRBeeFpfMZQ){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r forest-quiz-bagging, echo=FALSE}
+question("Which statements are true?",
+  answer("Bagging works best for unstable learners.", correct = TRUE),
+  answer("For stable estimation methods, bagging mostly degrades performance.")
+)
+```
+

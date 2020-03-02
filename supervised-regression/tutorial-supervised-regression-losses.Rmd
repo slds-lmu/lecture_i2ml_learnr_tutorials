@@ -1,0 +1,25 @@
+## Loss Functions
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Learn about losses L1 and L2 which can be used for regression
+
+### Preparation
+
+1. *(T)* Watch the following video:
+    <center>
+    ![Loss Fuctions for Regression](https://youtu.be/Syrzezpj2FY){width="75%"}
+    </center>
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r loss-quiz, echo=FALSE}
+question("Which statements are true?",
+    answer("The absolute loss function is more sensitive to outliers than the quadratic loss function."),
+    answer("Optimization of L2 loss is easier than of L1 loss", correct = TRUE)
+)
+```

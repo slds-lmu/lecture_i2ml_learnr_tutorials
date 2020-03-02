@@ -1,0 +1,31 @@
+## Components of a learner
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Be able to differentiate between regression and classification tasks
+
+
+### Preparation
+
+1.  *(T)* Watch the following video:
+    <center>
+    ![Components of a Learner](https://youtu.be/zaB7WioK1Kw){width="75%"}
+    </center>
+
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r components-quiz, echo=FALSE}
+question("Which statements are true?",
+    answer("For a given hypothesis class $H$, different optimization procedures can be used to find the best model $f \\in H$.", correct = TRUE),
+    answer("Providing two different training data sets to a learner will result in the same optimal model $f$."),
+    answer("The *representation* of a learner defines its hypothesis class $H$.", correct = TRUE),
+    answer("Supervised learning consists of three components: Hypothesis Space, Risk, and Optimization", correct = TRUE)
+)
+```
+

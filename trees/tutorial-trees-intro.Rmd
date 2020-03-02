@@ -1,0 +1,32 @@
+## Introduction
+
+### Study Goals
+
+*Theoretical (T)*
+
+- Get to know the idea of CART
+
+
+
+### Preparation
+
+1.  *(T)* Watch the following videos:
+    <center>
+    ![Introduction](https://youtu.be/R_PqefI-ON8){width="75%"}
+    </center>
+
+
+### Exercises
+
+#### *(T)* Quiz
+
+```{r tree-quiz-intro, echo=FALSE}
+question("Which statements about CART are true?",
+  answer("The prediction function defined by a CART divides the feature space into disjoint hyperrectangles.", correct = TRUE),
+    answer("The root node contains all data", correct = TRUE),
+    answer("The leaf node contains all data"),
+    answer("Observations can end up in several leaf nodes at the same time."),
+    answer("The CART algorithm recursively splits nodes into child nodes.", correct = TRUE)
+)
+```
+
