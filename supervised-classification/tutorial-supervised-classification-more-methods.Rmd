@@ -16,7 +16,7 @@
 1.  Watch the following video:
     <center>
     ![Discriminant analysis](https://youtu.be/inIhdMwQ4Ik){width="75%"}
-    ![Naive bayes](https://youtu.be/inIhdMwQ4Ik){width="75%"}
+    ![Naive bayes](https://youtu.be/bvAYZsIt04U){width="75%"}
     ![k-NN](https://youtu.be/WkECa1jRTmw){width="75%"}
     </center>
 
