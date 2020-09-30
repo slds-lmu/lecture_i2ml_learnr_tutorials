@@ -166,8 +166,8 @@ instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
-  measures = msr("classif.auc"),
-  param_set = param_set,
+  measure = msr("classif.auc"),
+  search_space = param_set,
   terminator = evals50
 )
 ```
@@ -185,8 +185,8 @@ instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
-  measures = msr("classif.auc"),
-  param_set = param_set,
+  measure = msr("classif.auc"),
+  search_space = param_set,
   terminator = evals50
 )
 ```
@@ -240,11 +240,8 @@ tuner$
 instance$result
   
 # Visualization
-res <- instance$archive()
-par_combs <- as.data.frame(matrix(unlist(res$params), nrow = length(res$params), byrow = T))
-colnames(par_combs) <- names(res$params[[1]])
-par_combs$auc <- res$classif.auc
-ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = auc)) + geom_point()
+par_combs <- instance$archive$data()
+ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = classif.auc)) + geom_point()
 ```
 
 ```{r tuning-exec-hint-1}
@@ -262,7 +259,7 @@ instance <- TuningInstanceSingleCrit$new(
   learner = learner,
   resampling = res_desc,
   measure = msr("classif.auc"),
-  param_set = param_set,
+  search_space = param_set,
   terminator = evals50
 )
 ```
@@ -304,11 +301,8 @@ tuner$optimize(instance)
 instance$result
 
 # Visualization
-res <- instance$archive()
-par_combs <- as.data.frame(matrix(unlist(res$params), nrow = length(res$params), byrow = T))
-colnames(par_combs) <- names(res$params[[1]])
-par_combs$auc <- res$classif.auc
-ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = auc)) + geom_point()
+par_combs <- instance$archive$data()
+ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = classif.auc)) + geom_point()
 ```
 
 ```{r tuning-exec-check}
