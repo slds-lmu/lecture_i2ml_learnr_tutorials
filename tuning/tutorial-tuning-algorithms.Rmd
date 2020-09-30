@@ -117,14 +117,14 @@ Set 50 iterations as the stopping criterion for the tuner. For the resampling of
 learner <- ...
 param_set <- ...
 res_desc <- ...
-evals50 <- term(...)
+evals50 <- trm(...)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = ...,
   learner = ...,
   resampling = ...,
-  measures = ...,
-  param_set = ...,
+  measure = ...,
+  search_space = ...,
   terminator = ...
 )
 ```
@@ -145,7 +145,7 @@ res_desc <- rsmp("cv", folds = 3L)
 
 ```{r tuning-strategy-hint-3}
 # to specify the number of iterations, use the 'evals' option and set n_evals to 50
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
 ```
 
 ```{r tuning-strategy-hint-4}
@@ -160,9 +160,9 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
@@ -179,9 +179,9 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
@@ -222,14 +222,14 @@ library(ggplot2)
 learner <- ...
 param_set <- ...
 res_desc <- ...
-evals50 <- term(...)
+evals50 <- trm(...)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = ...,
   learner = ...,
   resampling = ...,
-  measures = ...,
-  param_set = ...,
+  measure = ...,
+  search_space = ...,
   terminator = ...
 )
 
@@ -255,9 +255,9 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
@@ -274,7 +274,7 @@ tuner <- tnr("random_search")
 
 ```{r tuning-exec-hint-3}
 # Tune the tuning scenario `instance`
-tuner$tune(instance)
+tuner$optimize(instance)
 ```
 
 ```{r tuning-exec-solution}
@@ -286,9 +286,9 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
@@ -299,7 +299,7 @@ instance <- TuningInstance$new(
 
 set.seed(314)
 tuner <- tnr("random_search")
-tuner$tune(instance)
+tuner$optimize(instance)
 # 'Best' model
 instance$result
 
@@ -318,9 +318,9 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
@@ -331,5 +331,5 @@ instance <- TuningInstance$new(
 
 set.seed(314)
 tuner <- tnr("random_search")
-tuner$tune(instance)
+tuner$optimize(instance)
 ```
