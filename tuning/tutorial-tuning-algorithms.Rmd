@@ -199,15 +199,15 @@ Finally, create a random search tuner und use it to tune the tuning scenario `in
 tuningChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
 {
   add_code = "
-    res = instance$archive()
+    param_combs <- instance$archive$data()
   "
 
   setup_state(sol_code = paste0(check_code, add_code), stu_code = paste0(user_code, add_code))
 
   msg = errorToMessage(expr = {
-    ex() %>% check_object("instance") %>% check_column("param_set") %>% check_equal()
+    ex() %>% check_object("instance") %>% check_column("search_space") %>% check_equal()
     ex() %>% check_object("instance") %>% check_column("result") %>% check_equal()
-    ex() %>% check_object("res") %>% check_column("params") %>% check_equal()
+    ex() %>% check_object("param_combs") %>% check_column("classif.auc") %>% check_equal()
   })
   if (! is.null(msg))
     return(msg)
