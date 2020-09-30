@@ -117,14 +117,14 @@ Set 50 iterations as the stopping criterion for the tuner. For the resampling of
 learner <- ...
 param_set <- ...
 res_desc <- ...
-evals50 <- term(...)
+evals50 <- trm(...)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = ...,
   learner = ...,
   resampling = ...,
-  measures = ...,
-  param_set = ...,
+  measure = ...,
+  search_space = ...,
   terminator = ...
 )
 ```
@@ -145,7 +145,7 @@ res_desc <- rsmp("cv", folds = 3L)
 
 ```{r tuning-strategy-hint-3}
 # to specify the number of iterations, use the 'evals' option and set n_evals to 50
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
 ```
 
 ```{r tuning-strategy-hint-4}
@@ -160,14 +160,14 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
-  measures = msr("classif.auc"),
-  param_set = param_set,
+  measure = msr("classif.auc"),
+  search_space = param_set,
   terminator = evals50
 )
 ```
@@ -179,14 +179,14 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
-  measures = msr("classif.auc"),
-  param_set = param_set,
+  measure = msr("classif.auc"),
+  search_space = param_set,
   terminator = evals50
 )
 ```
@@ -199,15 +199,15 @@ Finally, create a random search tuner und use it to tune the tuning scenario `in
 tuningChecker = function (label, user_code, check_code, envir_result, evaluate_result, ...)
 {
   add_code = "
-    res = instance$archive()
+    param_combs <- instance$archive$data()
   "
 
   setup_state(sol_code = paste0(check_code, add_code), stu_code = paste0(user_code, add_code))
 
   msg = errorToMessage(expr = {
-    ex() %>% check_object("instance") %>% check_column("param_set") %>% check_equal()
+    ex() %>% check_object("instance") %>% check_column("search_space") %>% check_equal()
     ex() %>% check_object("instance") %>% check_column("result") %>% check_equal()
-    ex() %>% check_object("res") %>% check_column("params") %>% check_equal()
+    ex() %>% check_object("param_combs") %>% check_column("classif.auc") %>% check_equal()
   })
   if (! is.null(msg))
     return(msg)
@@ -222,14 +222,14 @@ library(ggplot2)
 learner <- ...
 param_set <- ...
 res_desc <- ...
-evals50 <- term(...)
+evals50 <- trm(...)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = ...,
   learner = ...,
   resampling = ...,
-  measures = ...,
-  param_set = ...,
+  measure = ...,
+  search_space = ...,
   terminator = ...
 )
 
@@ -240,11 +240,8 @@ tuner$
 instance$result
   
 # Visualization
-res <- instance$archive()
-par_combs <- as.data.frame(matrix(unlist(res$params), nrow = length(res$params), byrow = T))
-colnames(par_combs) <- names(res$params[[1]])
-par_combs$auc <- res$classif.auc
-ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = auc)) + geom_point()
+par_combs <- instance$archive$data()
+ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = classif.auc)) + geom_point()
 ```
 
 ```{r tuning-exec-hint-1}
@@ -255,14 +252,14 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
-  measures = msr("classif.auc"),
-  param_set = param_set,
+  measure = msr("classif.auc"),
+  search_space = param_set,
   terminator = evals50
 )
 ```
@@ -274,7 +271,7 @@ tuner <- tnr("random_search")
 
 ```{r tuning-exec-hint-3}
 # Tune the tuning scenario `instance`
-tuner$tune(instance)
+tuner$optimize(instance)
 ```
 
 ```{r tuning-exec-solution}
@@ -286,29 +283,26 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
-  measures = msr("classif.auc"),
-  param_set = param_set,
+  measure = msr("classif.auc"),
+  search_space = param_set,
   terminator = evals50
 )
 
 set.seed(314)
 tuner <- tnr("random_search")
-tuner$tune(instance)
+tuner$optimize(instance)
 # 'Best' model
 instance$result
 
 # Visualization
-res <- instance$archive()
-par_combs <- as.data.frame(matrix(unlist(res$params), nrow = length(res$params), byrow = T))
-colnames(par_combs) <- names(res$params[[1]])
-par_combs$auc <- res$classif.auc
-ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = auc)) + geom_point()
+par_combs <- instance$archive$data()
+ggplot(data = par_combs, aes(x = mtry, y = min.node.size, color = classif.auc)) + geom_point()
 ```
 
 ```{r tuning-exec-check}
@@ -318,18 +312,18 @@ param_set <- ParamSet$new(list(
    ParamInt$new("min.node.size", lower = 1L, upper = 50L)
 ))
 res_desc <- rsmp("cv", folds = 3L)
-evals50 <- term("evals", n_evals = 50L)
+evals50 <- trm("evals", n_evals = 50L)
   
-instance <- TuningInstance$new(
+instance <- TuningInstanceSingleCrit$new(
   task = tsk("sonar"),
   learner = learner,
   resampling = res_desc,
-  measures = msr("classif.auc"),
-  param_set = param_set,
+  measure = msr("classif.auc"),
+  search_space = param_set,
   terminator = evals50
 )
 
 set.seed(314)
 tuner <- tnr("random_search")
-tuner$tune(instance)
+tuner$optimize(instance)
 ```
