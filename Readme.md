@@ -6,9 +6,9 @@ Each day is treated interactively in form of a Shiny App.
 
 ## Run Locally
 
-To run a tutorial locally the only thing you have to do is to run `rmarkdown::run("tutorial.Rmd")` of the specific day. For instance, to run day 1 you just have to call:
+To run a tutorial locally the only thing you have to do is to run `rmarkdown::run("tutorial.Rmd")` of the specific chapter. For instance, to run the ml-basics chapter you just have to call:
 ```r
-rmarkdown::run("01-intro/01_tutorial.Rmd")
+rmarkdown::run("ml-basics/tutorial-ml-basics.Rmd")
 ```
 
 **NOTE:** It seems that the app is not correctly loaded when calling `run` from the terminal. Opening the `tutorial.Rmd` in RStudio and clicking the `Run document` will properly build the app.
